@@ -14,6 +14,8 @@
 		<typeAlias type="cn.slkj.taxi.entity.Role" alias="Role" />
 		<typeAlias type="cn.slkj.taxi.entity.Menu" alias="Menu" />
 		<typeAlias type="cn.slkj.taxi.util.PageData" alias="pd" />
+		<typeAlias type="cn.slkj.taxi.entity.Employee" alias="Employee" />
+		<typeAlias type="cn.slkj.taxi.entity.EmployeeRank" alias="EmployeeRank" />
 	</typeAliases>
 	<plugins>
 		<plugin

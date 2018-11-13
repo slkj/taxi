@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.slkj.taxi.mapper.EmployeeMapper">
+		<resultMap id="BaseResultMap" type="Employee">
+				<id column="ID" jdbcType="VARCHAR" property="id" />
+				<result column="PERSONAL_ID" jdbcType="VARCHAR" property="personalId" /><!-- 档案编号 -->
+				<result column="PERMIT_FILES_ID" jdbcType="VARCHAR" property="permitFilesId" /><!-- 许可案卷编号 -->
+				<result column="NAME" jdbcType="VARCHAR" property="name" />
+				<result column="SEX" jdbcType="VARCHAR" property="sex" />
+				<result column="BORNDATE" jdbcType="VARCHAR" property="borndate" />
+				<result column="NATIONALITY" jdbcType="VARCHAR" property="nationality" />
+				<result column="IDCARD" jdbcType="VARCHAR" property="idcard" />
+				<result column="EDUCATED" jdbcType="VARCHAR" property="educated" />
+				<result column="PHONE" jdbcType="VARCHAR" property="phone" />
+				<result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+				<result column="DRIVE_CARD" jdbcType="VARCHAR" property="driveCard" />
+				<result column="DRIVE_START_DATE" jdbcType="VARCHAR" property="driveStartDate" />
+				<result column="DRIVE_TYPE" jdbcType="VARCHAR" property="driveType" />
+				<result column="CYZG_CARD" jdbcType="VARCHAR" property="cyzgCard" />
+				<result column="REGISTER_DATE" jdbcType="VARCHAR" property="registerDate" />
+				<result column="CANCEL_DATE" jdbcType="VARCHAR" property="cancelDate" />
+				<result column="FWZLJD_CARD" jdbcType="VARCHAR" property="fwzljdCard" />
+				<result column="FWZLJD_REPAIR_DATE" jdbcType="VARCHAR" property="fwzljdRepairDate" />
+				<result column="CARID" jdbcType="VARCHAR" property="carid" />
+				<result column="CARTYPE" jdbcType="VARCHAR" property="cartype" />
+				<result column="COMPANY" jdbcType="VARCHAR" property="company" />
+				<result column="OLD_COMPANY" jdbcType="VARCHAR" property="oldCompany" />
+				<result column="ENGAGE_CONN" jdbcType="VARCHAR" property="engageConn" />
+				<result column="ENGAGE_TIME" jdbcType="VARCHAR" property="engageTime" />
+				<result column="CONTRACT_STRCOUNT" jdbcType="VARCHAR" property="contractSrtCount" />
+				<result column="CONTRACT_ENDCOUNT" jdbcType="VARCHAR" property="contractEndCount" />
+				<result column="APPROVAL_HOURS" jdbcType="VARCHAR" property="approvalHours" />
+				<result column="DECISION_HOURS" jdbcType="VARCHAR" property="decisionHours" />
+				<result column="TRAINING_UNIT" jdbcType="VARCHAR" property="trainingUnit" />
+				<result column="STATUS" jdbcType="VARCHAR" property="status" />
+				<result column="INFO_PAGES" jdbcType="VARCHAR" property="infoPages" />
+				<result column="EXAM_PAGES" jdbcType="VARCHAR" property="examPages" />
+				<result column="INVALID" jdbcType="VARCHAR" property="invalid" />
+				<result column="SFHZ" jdbcType="VARCHAR" property="sfhz" />
+				<result column="EXP_REG" jdbcType="VARCHAR" property="expReg" />
+				<result column="RE_CYZG_DATE" jdbcType="VARCHAR" property="reCyzgDate" />
+				<result column="SHZT" jdbcType="VARCHAR" property="shzt" />
+				<result column="ADDTIME" jdbcType="VARCHAR" property="addtime" />
+		</resultMap>
+
+		<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="Employee">
+				<result column="PHOTO" jdbcType="LONGVARBINARY" property="photo" />
+		</resultMap>
+
+		<resultMap extends="BaseResultMap" id="ResultMapRank" type="Employee">
+				<result column="PHOTO" jdbcType="LONGVARBINARY" property="photo" />
+				<result column="YEAR" jdbcType="VARCHAR" property="year" />
+				<result column="RANK" jdbcType="VARCHAR" property="rank" />
+		</resultMap>
+
+		<sql id="Base_Column_List">
+				ID, PERSONAL_ID, PERMIT_FILES_ID, NAME, SEX, BORNDATE, NATIONALITY,
+				IDCARD, EDUCATED,
+				PHONE, ADDRESS,
+				DRIVE_CARD, DRIVE_START_DATE, DRIVE_TYPE, CYZG_CARD,
+				REGISTER_DATE,
+				CANCEL_DATE, FWZLJD_CARD, FWZLJD_REPAIR_DATE,
+				CARID, CARTYPE, COMPANY,
+				OLD_COMPANY,
+				ENGAGE_CONN, ENGAGE_TIME, CONTRACT_STRCOUNT , CONTRACT_ENDCOUNT, APPROVAL_HOURS,
+				DECISION_HOURS, STATUS, INFO_PAGES, EXAM_PAGES,
+				SFHZ, EXP_REG, RE_CYZG_DATE, SHZT, ADDTIME
+		</sql>
+
+		<sql id="Blob_Column_List">
+				PHOTO
+		</sql>
+
+		<select id="listPage" parameterType="hashMap" resultMap="BaseResultMap">
+				select
+				<include refid="Base_Column_List" />
+				from tb_employee
+				<where>
+						<if test="company != null and company != ''"> <!-- 公司检索条件 -->
+								AND COMPANY like '%'+ #{company}+'%'
+						</if>
+						<if test="name != null and name != ''">
+								AND NAME LIKE '%'+ #{name}+'%'
+						</if>
+						<if test="status != null and status != ''">
+								AND STATUS = #{status}
+						</if>
+				</where>
+		</select>
+		<select id="selectOne" parameterType="hashMap" resultMap="BaseResultMap">
+				select
+				<include refid="Base_Column_List" />
+				from tb_employee
+				where ID = #{id}
+		</select>
+		<delete id="deleteById" parameterType="hashMap">
+				DELETE FROM TB_ROLE WHERE ID = #{id} AND ID != '1'
+		</delete>
+
+		<select id="slistPage" parameterType="hashMap" resultMap="BaseResultMap">
+				select
+				<include refid="Base_Column_List" />
+				from tb_employee
+<!-- 				where 	COMPANY =  #{company} -->
+		</select>
+</mapper>
