@@ -23,6 +23,8 @@ public class TestServiceImplTest {
 		PageData pd = new PageData();
 		List<Menu> list = service.listAllMenu(pd );
 		for (Menu menu : list) {
+			
+			
 			System.out.println(menu.toString());
 		}
 	}
