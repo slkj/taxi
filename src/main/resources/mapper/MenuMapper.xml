@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.slkj.taxi.mapper.MenuMapper">
+
+		<select id="listAllParentMenu" resultType="Menu" parameterType="pd">
+				SELECT * FROM SYS_MODULE WHERE parent_id =#{pid}
+				ORDER BY SORT
+		</select>
+		<select id="listAllMenu" resultType="Menu">
+				SELECT * FROM SYS_MODULE
+				<where>
+						<if test="pid != null and pid != ''">
+								AND parent_id = #{pid}
+						</if>
+						<if test="priority != null  and priority != ''">
+								AND PRIORITY &lt; #{priority}
+						</if>
+				</where>
+				ORDER BY SORT
+		</select>
+</mapper>
