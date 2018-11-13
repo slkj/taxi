@@ -11,4 +11,12 @@ public interface MenuMapper {
 
 	public List<Menu> listAllMenu(PageData pd);
 
+	public int save(PageData pd);
+
+	public int edit(PageData pd);
+
+	public int delete(String id);
+
+	public List<Menu> getSubMenu(PageData pd);
+
 }

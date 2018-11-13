@@ -24,4 +24,20 @@ public class MenuService {
 	public List<Menu> listAllMenu(PageData pd) {
 		return menuMapper.listAllMenu(pd);
 	}
+
+	public int delete(String id) {
+		return menuMapper.delete(id);
+	}
+
+	public int edit(PageData pd) {
+		return menuMapper.edit(pd);
+	}
+
+	public int save(PageData pd) {
+		return menuMapper.save(pd);
+	}
+
+	public List<Menu> getSubMenu(PageData pd) {
+		return menuMapper.getSubMenu(pd);
+	}
 }

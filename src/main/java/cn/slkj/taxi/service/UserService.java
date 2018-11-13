@@ -29,13 +29,13 @@ import cn.slkj.taxi.util.PageData;
 public class UserService {
 	@Autowired
 	private UserMapper userMapper;
-//	public List<User> selectAllUser(HashMap<String, Object> hashMap) {
-//		return userMapper.selectAllUser(hashMap);
-//	}
-//
-//	public User selectOne(HashMap<String, Object> hashMap) {
-//		return userMapper.queryOne(hashMap);
-//	}
+	// public List<User> selectAllUser(HashMap<String, Object> hashMap) {
+	// return userMapper.selectAllUser(hashMap);
+	// }
+	//
+	// public User selectOne(HashMap<String, Object> hashMap) {
+	// return userMapper.queryOne(hashMap);
+	// }
 
 	public User getUserByNameAndPwd(PageData pd) {
 		return userMapper.getUserByNameAndPwd(pd);
@@ -51,5 +51,9 @@ public class UserService {
 
 	public int deleteUser(String id) {
 		return userMapper.deleteUser(id);
+	}
+
+	public int editUser(PageData pd) {
+		return userMapper.editUser(pd);
 	}
 }

@@ -47,14 +47,6 @@
 				</ul>
 			</div>
 		</div>
-		<div class="viewui-notice">
-			<i class="fa fa-volume-up"></i>
-			<div class="notice-box ellipsis" onmouseout="marqueeInterval[0]=setInterval('startMarquee()',marqueeDelay)"
-				onmouseover="clearInterval(marqueeInterval[0])"></div>
-			<div class="notice-opt">
-				<a href="javascript:;" class="fa fa-caret-up"></a> <a href="javascript:;" class="fa fa-caret-down"></a>
-			</div>
-		</div>
 	</div>
 	<!-- // 头部 -->
 

@@ -16,4 +16,6 @@ public interface UserMapper {
 	int saveUser(PageData pd);
 
 	int deleteUser(String id);
+
+	int editUser(PageData pd);
 }

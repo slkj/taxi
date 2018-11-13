@@ -2,33 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.slkj.taxi.mapper.UserMapper">
 
-		<select id="getUserByNameAndPwd" parameterType="pd"  resultType="User">
-				SELECT * FROM SYS_USER
-				<where>
-						<if test="username != null and password != null">
-								AND USERNAME = #{username} AND PASSWORD = #{password}
-						</if>
-				</where>
-		</select>
-		<select id="getAllUsers" parameterType="pd"  resultType="User">
-				SELECT * FROM SYS_USER
-				<where>
-						<if test="username != null and password != null">
-								AND USERNAME = #{username} AND PASSWORD = #{password}
-						</if>
-				</where>
-		</select>
-		
-		<insert id="saveUser" parameterType="pd">
-				INSERT INTO sys_user(
-				username ,password,status ,realname,sex ,email ,phone
-				,create_time ,lastTime ,remark ,address ,departName
-				)
-				VALUES(#{username },#{password},#{status },#{realname},#{sex
-				},#{email },#{phone },#{create_time },#{lastTime },#{remark },#{address
-				},#{departName} )
-		</insert>
-		<delete id="deleteUser" parameterType="string">
-				DELETE FROM SYS_USER WHERE ID=#{id}
-		</delete>
+	<select id="getUserByNameAndPwd" parameterType="pd" resultType="User">
+		SELECT * FROM SYS_USER
+		<where>
+			<if test="username != null and password != null">
+				AND USERNAME = #{username} AND PASSWORD = #{password}
+			</if>
+		</where>
+	</select>
+	<select id="getAllUsers" parameterType="pd" resultType="User">
+		SELECT * FROM SYS_USER
+		<where>
+			<if test="username != null and password != null">
+				AND USERNAME = #{username} AND PASSWORD = #{password}
+			</if>
+		</where>
+	</select>
+
+	<insert id="saveUser" parameterType="pd">
+		INSERT INTO SYS_USER( username ,password,status ,realname,sex ,email ,phone
+		,create_time ,lastTime ,remark ,address ,departName )
+		VALUES(#{username },#{password},#{status },#{realname},#{sex},#{email
+		},#{phone },#{create_time },#{lastTime },#{remark
+		},#{address},#{departName} )
+	</insert>
+	<delete id="deleteUser" parameterType="string">
+		DELETE FROM SYS_USER WHERE ID=#{id}
+	</delete>
+
+	<update id="editUser" parameterType="pd">
+		UPDATE SYS_USER SET username = #{username} ,STATUS=#{status} ,EMAIL=#{email},REALNAME=#{realname},SEX=#{sex},PHONE=#{phone}, REMARK=#{remark} WHERE ID = #{id}
+	</update>
 </mapper>

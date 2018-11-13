@@ -16,21 +16,24 @@
 				<div class="btnbar-tools">
 					<a href="javascript:;" class="add" id="newData"><i class="fa fa-plus-square success"></i>添加</a>
 				</div>
-				<table id="userList_dg"></table>
+				<table id="roleList_dg"></table>
 			</div>
 		</div>
 	</div>
 	<!-- 新增和编辑数据 -->
 	<div class="dig-wrapper" id="newData-wrapper" style="text-align: center;">
-		<div class="form-column1">
-			<div class="form-column-left">
-				<input class="easyui-textbox" id="rolenameText" style="width: 350px" data-options="required:true">
+		<form id="vui_sample" class="easyui-form">
+			<input type="hidden" name="id">
+			<div class="form-column1">
+				<div class="form-column-left">
+					<input class="easyui-textbox" id="rolenameText" name="name" style="width: 350px" data-options="required:true">
+				</div>
 			</div>
-		</div>
-		<div class="form-btnBar ">
-			<input type="submit" name="" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
-				style="width: 80px" />
-		</div>
+			<div class="form-btnBar ">
+				<input type="submit" name="" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
+					style="width: 80px" />
+			</div>
+		</form>
 	</div>
 	<script src="../assets/js/jquery2.1.1.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery.easyui.min.js" type="text/javascript"></script>
@@ -38,7 +41,7 @@
 	<script src="../assets/js/layer.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
-			$('#userList_dg').datagrid({
+			$('#roleList_dg').datagrid({
 				url : '../role/list',//url调用Action方法  
 				loadMsg : '数据装载中......',
 				singleSelect : true,//为true时只能选择单行  
@@ -71,7 +74,7 @@
 					{field : 'opt',title : '操作',align : 'center',width: 50,formatter : function(value, row) {
 							var s = '<div class ="updateBtn">';
 							s += '<a href="javascript:;" title="删除"  onclick="delRole('+row.id+')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-							s += ' <a href="javascript:void(0);;" title="编辑" onclick="editRow('+row.id+'); class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+							s += ' <a href="javascript:void(0);;" title="编辑" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
 							return s;
 						}
 					} ] ];
@@ -90,7 +93,7 @@
 				async : false,
 				success : function(data) {
 					if (data) {
-						$('#userList_dg').datagrid('reload');// 刷新datagrid
+						$('#roleList_dg').datagrid('reload');// 刷新datagrid
 						layer.close(layer.index); 
 					} else {
 						msgShow('系统提示', '出现异常');
@@ -110,12 +113,26 @@
 				async : false,
 				success : function(data) {
 					if (data) {
-						$('#userList_dg').datagrid('reload');// 刷新datagrid
+						$('#roleList_dg').datagrid('reload');// 刷新datagrid
 					} else {
 						msgShow('系统提示', '出现异常');
 					}
 				}
 			});
+		}
+		function editRow() {
+			var row = $('#roleList_dg').datagrid('getSelected');
+			if (row) {
+				layer.open({
+					type : 1,
+					title : "用户信息",
+					skin : 'layui-layer-rim', //加上边框
+					area : [ '490px', '160px' ], //宽高
+					content : $('#newData-wrapper'),
+					zIndex : 1000
+				});
+				$("#vui_sample").form("load", row);
+			}
 		}
 	</script>
 </body>

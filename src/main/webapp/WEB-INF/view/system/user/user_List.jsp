@@ -36,6 +36,7 @@
 	<div class="dig-wrapper" id="newData-wrapper">
 		<div class="form1-column" title="表单示例">
 			<form id="vui_sample" class="easyui-form" >
+				<input type="hidden" name="id">
 				<div class="form-column1">
 					<div class="form-column-left">
 						<input class="easyui-textbox" name="username" style="width: 100%" data-options="label:'用户名称',required:true">
@@ -113,7 +114,7 @@
 					{field : 'opt',title : '操作',align : 'center',	formatter : function(value, row) {
 						var s = '<div class ="updateBtn">';
 						s += '<a href="javascript:void(0);" title="删除"  onclick="delRow('+row.id+')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-						s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow('+row.id+'); class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+						s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
 						return s;
 						}
 					} ] ];
@@ -158,10 +159,24 @@
 					if (data) {
 						$('#userList_dg').datagrid('reload');// 刷新datagrid
 					} else {
-// 						msgShow('系统提示', '出现异常');
+						msgShow('系统提示', '出现异常');
 					}
 				}
 			});
+		}
+		function editRow() {
+			var row = $('#userList_dg').datagrid('getSelected');
+			if (row) {
+				layer.open({
+					type : 1,
+					title : "用户信息",
+					skin : 'layui-layer-rim', //加上边框
+					area : [ '490px', '350px' ], //宽高
+					content : $('#newData-wrapper'),
+					zIndex : 1000
+				});
+				$("#vui_sample").form("load", row);
+			}
 		}
 	</script>
 </body>

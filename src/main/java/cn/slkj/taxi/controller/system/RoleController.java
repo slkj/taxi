@@ -53,7 +53,6 @@ public class RoleController extends BaseController {
 		try {
 			pd = getPageData();
 			String name = pd.getString("name");
-
 			Role role = new Role();
 			role.setName(name);
 			int i = roleService.saveRole(role);

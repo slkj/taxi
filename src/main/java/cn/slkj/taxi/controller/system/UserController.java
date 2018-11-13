@@ -22,6 +22,7 @@ import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.UserService;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.Tools;
 
 /**
  * 
@@ -64,16 +65,23 @@ public class UserController extends BaseController {
 		PageData pd = new PageData();
 		try {
 			pd = getPageData();
-			int i = userService.saveUser(pd);
-			return i > 0 ? true : false;
+			int rti = 0;
+			String id = pd.getString("id");
+			if (Tools.notEmpty(id)) {
+				rti = userService.editUser(pd);
+			} else {
+				rti = userService.saveUser(pd);
+			}
+			return rti > 0 ? true : false;
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 			return false;
 		}
 	}
+
 	@ResponseBody
 	@RequestMapping({ "/delete" })
-	
+
 	public boolean delete(@RequestParam String id) throws Exception {
 		try {
 			int i = userService.deleteUser(id);

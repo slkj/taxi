@@ -1,17 +1,30 @@
 package cn.slkj.taxi.controller.system;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Menu;
+import cn.slkj.taxi.entity.Menus;
 import cn.slkj.taxi.service.MenuService;
+import cn.slkj.taxi.util.AppUtil;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.Tools;
+import cn.slkj.taxi.util.Tree;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/menu")
@@ -25,10 +38,42 @@ public class MenuController extends BaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/listAllParentMenu")
-	public List<Menu> listAllParentMenu() {
+	@RequestMapping(value = "/menusListByUser")
+	public Map<String, Object> menusListByUser() {
 		PageData pd = getPageData();
-		return menuService.listAllParentMenu(pd);
+		List<Menu> oneLeveList = menuService.listAllParentMenu(pd);
+		List<Menus> oneLeve = new ArrayList<>();
+		for (int i = 0; i < oneLeveList.size(); i++) {
+			Menu module = oneLeveList.get(i);
+			Menus menus = new Menus();
+			menus.setMenuid(module.getId());
+			menus.setMenuname(module.getName());
+			menus.setParentMenu(module.getParent_id());
+			menus.setIcon(module.getIcon());
+			menus.setUrl(module.getUrl());
+			oneLeve.add(menus);
+		}
+
+		List<Menu> menusList = menuService.getSubMenu(pd);
+		List<Menus> menuslist = new ArrayList<>();
+		for (int i = 0; i < menusList.size(); i++) {
+			Menu module = menusList.get(i);
+			Menus menus = new Menus();
+			menus.setMenuid(module.getId());
+			menus.setMenuname(module.getName());
+			menus.setParentMenu(module.getParent_id());
+			menus.setIcon(module.getIcon());
+			menus.setUrl(module.getUrl());
+			menuslist.add(menus);
+		}
+		// 拼装树形json字符串
+		List<Menus> json = new TreeBuilder().buildTree(menuslist);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("oneLeve", oneLeve);
+		resultMap.put("menus", json);
+		JSONObject jsonString = JSONObject.fromObject(resultMap);
+//		return jsonString.toString();
+		return resultMap;
 	}
 
 	@ResponseBody
@@ -37,6 +82,48 @@ public class MenuController extends BaseController {
 		PageData pd = getPageData();
 		List<Menu> list = menuService.listAllMenu(pd);
 		return makeTree(list);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getCombotree")
+	public List<Tree> getCombotree() {
+		PageData pd = getPageData();
+		pd.put("priority", 3);
+		List<Menu> list = menuService.listAllMenu(pd);
+		return toTree(list, "0");
+	}
+
+	@ResponseBody
+	@RequestMapping(value = { "/add" }, method = { RequestMethod.POST })
+	public boolean add() throws Exception {
+		PageData pd = new PageData();
+		try {
+			pd = getPageData();
+			String id = pd.getString("id");
+			int rti = 0;
+			if (Tools.notEmpty(id)) {
+				rti = menuService.edit(pd);
+			} else {
+				rti = menuService.save(pd);
+			}
+			return rti > 0 ? true : false;
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+			return false;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping({ "/delete" })
+
+	public boolean delete(@RequestParam String id) throws Exception {
+		try {
+			int i = menuService.delete(id);
+			return i > 0 ? true : false;
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+			return false;
+		}
 	}
 
 	/**
@@ -78,4 +165,19 @@ public class MenuController extends BaseController {
 		children.removeAll(tmp);
 		makeChildren(tmp, children);
 	}
+
+	private List<Tree> toTree(List<Menu> list, String code) {
+		List<Tree> trees = new ArrayList<Tree>();
+		for (Menu m : list) {
+			Tree t = new Tree();
+			t.setId(m.getId() + "");
+			t.setText(m.getName());
+			if (code.equals(m.getParent_id())) {
+				t.setChildren(toTree(list, m.getId()));
+				trees.add(t);
+			}
+		}
+		return trees;
+	}
+
 }
