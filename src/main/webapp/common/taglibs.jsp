@@ -3,9 +3,8 @@
 <link href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/layout.css" rel="stylesheet" type="text/css" />
 
-
 <script src="${pageContext.request.contextPath}/assets/js/jquery2.1.1.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.easyui.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/js/easyui-lang-zh_CN.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/assets/js/layer.js" type="text/javascript"></script>
-
+<script src="${pageContext.request.contextPath}/assets/My97DatePicker/WdatePicker.js" language="javascript" type="text/javascript" ></script>

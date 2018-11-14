@@ -6,6 +6,7 @@ import java.util.List;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 import cn.slkj.taxi.entity.Employee;
+import cn.slkj.taxi.util.PageData;
 
 /**
  * 从业人员dao
@@ -25,5 +26,7 @@ public interface EmployeeMapper {
 	int deleteById(String id);
 
 	List<Employee> slistPage(HashMap<String, Object> map, PageBounds pageBounds);
+
+	int insertSelective(PageData pd);
 
 }

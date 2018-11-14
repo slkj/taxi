@@ -14,6 +14,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.mapper.EmployeeMapper;
+import cn.slkj.taxi.util.PageData;
 
 /**
  * @author maxuh
@@ -56,8 +57,31 @@ public class EmployeeService {
 		return mapper.deleteById(id);
 	}
 
+	/**
+	 * 查询报考人员
+	 * @Title: slistPage   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param map
+	 * @param: @param pageBounds
+	 * @param: @return      
+	 * @return: List<Employee>      
+	 * @throws
+	 */
 	public List<Employee> slistPage(HashMap<String, Object> map, PageBounds pageBounds) {
 		return mapper.slistPage(map, pageBounds);
+	}
+
+	/**
+	 * 保存报考人员
+	 * @Title: insertSelective   
+	 * @Description: TODO(这里用一句话描述这个方法的作用)   
+	 * @param: @param employee
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	public int insertSelective(PageData pd) {
+		return mapper.insertSelective(pd);
 	}
 
 }

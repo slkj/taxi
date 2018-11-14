@@ -3,11 +3,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>弹出式表单成功案例1</title>
-<link href="../assets/css/reset.css" rel="stylesheet" type="text/css" />
-<link href="../assets/js/themes/default/easyui.css" rel="stylesheet" type="text/css" />
-<link href="../assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="../assets/css/layout.css" rel="stylesheet" type="text/css" />
+<title>用户管理</title>
+<%@ include file="/common/taglibs.jsp"%>
 </head>
 <body scroll="no" class="body-pd10">
 	<div class="dataView-container">
@@ -71,10 +68,6 @@
 			</form>
 		</div>
 	</div>
-	<script src="../assets/js/jquery2.1.1.js" type="text/javascript"></script>
-	<script src="../assets/js/jquery.easyui.min.js" type="text/javascript"></script>
-	<script src="../assets/js/easyui-lang-zh_CN.js" type="text/javascript"></script>
-	<script src="../assets/js/layer.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
 			$('#userList_dg').datagrid({
@@ -106,7 +99,7 @@
 		function getColumns() {
 			return [ [
 					{title : '状态',field : 'status',formatter : function(value, rec) { return value == 'enabled' ? '启用' : '<span style="color:red">禁用</span>'; } },
-					{	title : '用户名',field : 'username'	},
+					{title : '用户名',field : 'username'	},
 					{title : '姓名',field : 'realname'},
 					{title : '电话',field : 'phone'},
 // 					{title : '性别',field : 'sex',formatter : function(value) {if (value == "1") {return "男";} else {return "女";}	}},
