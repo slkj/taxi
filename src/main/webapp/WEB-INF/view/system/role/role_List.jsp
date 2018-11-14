@@ -35,6 +35,15 @@
 			</div>
 		</form>
 	</div>
+	<div class="dig-wrapper" id="roleData-wrapper" style="text-align: left: ;">
+		 <div class="btnbar-tools">
+			<a href="javascript:;" class="add" onclick="roleModule()">
+				<i class="fa fa-plus-square success"></i>
+				确定
+			</a>
+		</div>
+		<ul id="reslist" style="margin-top: 15px"></ul>
+	</div>
 	<script src="../assets/js/jquery2.1.1.js" type="text/javascript"></script>
 	<script src="../assets/js/jquery.easyui.min.js" type="text/javascript"></script>
 	<script src="../assets/js/easyui-lang-zh_CN.js" type="text/javascript"></script>
@@ -74,7 +83,8 @@
 					{field : 'opt',title : '操作',align : 'center',width: 50,formatter : function(value, row) {
 							var s = '<div class ="updateBtn">';
 							s += '<a href="javascript:;" title="删除"  onclick="delRole('+row.id+')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-							s += ' <a href="javascript:void(0);;" title="编辑" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+							s += ' <a href="javascript:void(0);;" title="编辑" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o"></i></a>';
+							s += ' <a href="javascript:void(0);;" title="权限" onclick="qxRow()" class="info"><i class="fa fa-check-circle yellow"></i>权限</a></div>';
 							return s;
 						}
 					} ] ];
@@ -120,12 +130,32 @@
 				}
 			});
 		}
+		
+		function qxRow() {
+			var row = $('#roleList_dg').datagrid('getSelected');
+			if (row) {
+				layer.open({
+					type : 1,
+					title : "角色信息",
+					skin : 'layui-layer-rim', //加上边框
+					area : [ '300px', '420px' ], //宽高
+					content : $('#roleData-wrapper'),
+					zIndex : 1000
+				});
+				$('#reslist').tree({
+					url : '../menu/role2Module?roleId=' + row.id,
+					loadMsg : '数据加载中....',
+					lines : true,
+					checkbox : true
+				});
+			}
+		}
 		function editRow() {
 			var row = $('#roleList_dg').datagrid('getSelected');
 			if (row) {
 				layer.open({
 					type : 1,
-					title : "用户信息",
+					title : "角色信息",
 					skin : 'layui-layer-rim', //加上边框
 					area : [ '490px', '160px' ], //宽高
 					content : $('#newData-wrapper'),

@@ -81,16 +81,13 @@
 		}
 		oFReader.readAsDataURL(oFile);
 	}
-	 
 
 	function submitForm() {
 		var validate = $("#vui_sample").form('validate');
 		if (!validate) {
 			return validate;
 		}
-	 
-		 var formData = new FormData(document.getElementById("vui_sample"));
-		 
+		var formData = new FormData(document.getElementById("vui_sample"));
 		$.ajax({
 			url : "../employee/save",
 			type : "post",
@@ -115,7 +112,7 @@
 </script>
 </head>
 <body>
-	<form class="form-horizontal"   name="Form" id="vui_sample" method="post" enctype="multipart/form-data" onsubmit="return submitForm();">
+	<form class="form-horizontal" name="Form" id="vui_sample" method="post" enctype="multipart/form-data" onsubmit="return submitForm();">
 		<input type="hidden" name="id" id="id" value="${pd.id }" />
 		<input type="hidden" name="company" id="company" value="${pd.company }" />
 		<c:if test="${msg == 'save'}">

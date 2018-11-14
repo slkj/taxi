@@ -5,11 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +16,9 @@ import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Menu;
 import cn.slkj.taxi.entity.Menus;
 import cn.slkj.taxi.service.MenuService;
-import cn.slkj.taxi.util.AppUtil;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.Tree;
-import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -72,7 +67,7 @@ public class MenuController extends BaseController {
 		resultMap.put("oneLeve", oneLeve);
 		resultMap.put("menus", json);
 		JSONObject jsonString = JSONObject.fromObject(resultMap);
-//		return jsonString.toString();
+		// return jsonString.toString();
 		return resultMap;
 	}
 
@@ -91,6 +86,16 @@ public class MenuController extends BaseController {
 		pd.put("priority", 3);
 		List<Menu> list = menuService.listAllMenu(pd);
 		return toTree(list, "0");
+	}
+
+	@RequestMapping(value = "/role2Module")
+	@ResponseBody
+	public List<Tree> role2Module(String roleId) {
+		PageData pd = getPageData();
+		pd.put("priority", 3);
+		List<Menu> allList = menuService.listAllMenu(pd);
+		List<Menu> checkList = menuService.listAllMenu(pd);
+		return initCheckBoxTree(allList, "0", checkList);
 	}
 
 	@ResponseBody
@@ -180,4 +185,33 @@ public class MenuController extends BaseController {
 		return trees;
 	}
 
+	// 将list转换为需要的json格式
+	private List<Tree> initCheckBoxTree(List<Menu> list, String id, List<Menu> list1) {
+		List<Tree> trees = new ArrayList<Tree>();
+		for (Menu menus : list) {
+			Tree node = new Tree();
+			node.setId(menus.getId());
+			node.setText(menus.getName());
+			// node.setIconCls(menus.getRes_icon());
+			if (list1 != null) {
+				// 循环判断该角色拥有的资源，如果拥有的话，设置为选择中
+				for (int i = 0; i < list1.size(); i++) {
+					String oid = list1.get(i).getId();
+					String nid = menus.getId();
+					if (oid.equals(nid)) {
+						node.setChecked(true);
+					}
+				}
+			}
+			if (id.equals(menus.getParent_id())) {
+				node.setChildren(initCheckBoxTree(list, node.getId(), list1));
+				if (!node.getChildren().isEmpty()) {
+					node.setChecked(false);
+				}
+
+				trees.add(node);
+			}
+		}
+		return trees;
+	}
 }
