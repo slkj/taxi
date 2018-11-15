@@ -61,4 +61,23 @@
 			<value>utf-8</value>
 		</property>
 	</bean>
+	<!-- 访问拦截 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="*" />
+			<mvc:mapping path="/**" />
+			<mvc:mapping path="/**/**" />
+			<bean class="cn.slkj.taxi.interceptor.LoginHandlerInterceptor">
+				<property name="allowUrls">
+					<list>
+						<value>/login_toLogin</value>
+						<value>/login_login</value>
+						<value>/logout</value>
+						<value>/assets</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	 
 </beans>
