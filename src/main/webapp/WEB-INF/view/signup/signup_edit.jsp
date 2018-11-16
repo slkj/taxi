@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,6 +100,7 @@
 				if (res) {
 					var index = parent.layer.getFrameIndex(window.name);
 					parent.layer.close(index);
+					parent.$('#list_data').datagrid('reload');
 				} else {
 					msgShow('系统提示', '出现异常');
 				}
@@ -123,7 +126,7 @@
 				<td>
 					<span style="margin-left: 20px;">姓名：</span>
 					<span style="margin-left: 10px;">
-						<input id="name" name="name" value="${pd.name }" style="width: 120px;" type="text">
+						<input id="name" name="name" value="${pd.name }" style="width: 120px;" type="text" class="easyui-textbox" >
 					</span>
 					<span style="margin-left: 20px;">性别：</span>
 					<span style="margin-left: 10px;">
@@ -134,16 +137,26 @@
 					</span>
 					<span style="margin-left: 30px;">出生年月：</span>
 					<span style="margin-left: 10px;">
-						<input class="Wdate" id="borndate" name="borndate" value="${pd.borndate }" style="width: 120px;" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})">
+						<input class="Wdate" id="borndate" name="borndate" value="${pd.borndate}" 
+						style="width: 120px;" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})">
 					</span>
 				</td>
 				<td style="width: 124px;" rowspan="4">
-					<img id="uploadPreview" style="width: 120px; height: 160px;" />
-					<div style="text-align: center;">
-						<a href="javascript:;" class="a-upload" style="margin-top: 3px;">
-							<input id="photo" name="photo" type="file" onchange="loadImageFile();" />
-							点击上传照片
-						</a>
+					<div style="width: 120px; height: 172px; margin: 2px;">
+						<c:if test="${pd != null && pd.photo != '' && pd.photo != null}">
+							<a href="../employee/getPhoto.do?id=${pd.id}" target="_blank">
+								<img id="uploadPreview" style="width: 125px; height: 155px;" src="../employee/getPhoto?id=${pd.id}" />
+							</a>
+						</c:if>
+						<c:if test="${pd == null || pd.photo == '' || pd.photo == null}">
+							<img id="uploadPreview" style="width: 120px; height: 160px;" />
+						</c:if>
+						<div style="text-align: center;">
+							<a href="javascript:;" class="a-upload" style="margin-top: 3px;">
+								<input id="photo" name="photo" type="file" onchange="loadImageFile();" />
+								点击上传照片
+							</a>
+						</div>
 					</div>
 				</td>
 			</tr>
@@ -151,15 +164,15 @@
 				<td>
 					<span style="margin-left: 20px;">国籍：</span>
 					<span style="margin-left: 10px;">
-						<input id="nationality" name="nationality" value="${pd.nationality }" style="width: 90px;" type="text">
+						<input id="nationality" name="nationality" value="${pd.nationality }" style="width: 90px;" type="text" class="easyui-textbox" validtype="CHS">
 					</span>
 					<span style="margin-left: 20px;">身份证号：</span>
 					<span style="margin-left: 10px;">
-						<input id="idcard" name="idcard" value="${pd.idcard }" style="width: 150px;" type="text">
+						<input id="idcard" name="idcard" value="${pd.idcard }" style="width: 150px;" type="text" class="easyui-textbox" validtype="idcard">
 					</span>
 					<span style="margin-left: 20px;">文化程度：</span>
 					<span style="margin-left: 10px;">
-						<input id="educated" name="educated" value="${pd.educated }" style="width: 80px;" type="text">
+						<input id="educated" name="educated" value="${pd.educated }" style="width: 80px;" type="text" class="easyui-textbox" validtype="CHS">
 					</span>
 				</td>
 			</tr>
@@ -167,11 +180,11 @@
 				<td>
 					<span style="margin-left: 20px;">联系电话：</span>
 					<span style="margin-left: 10px;">
-						<input id="phone" name="phone" value="${pd.phone }" style="width: 180px;" type="text">
+						<input id="phone" name="phone" value="${pd.phone }" style="width: 180px;" type="text" class="easyui-textbox" validtype="mobile">
 					</span>
 					<span style="margin-left: 20px;">申报材料页数：</span>
 					<span style="margin-left: 10px;">
-						<input id="infoPages" name="infoPages" value="${pd.infoPages }" style="width: 195px;" type="number">
+						<input id="infoPages" name="infoPages" value="${pd.infoPages }" style="width: 195px;" type="text" class="easyui-numberspinner">
 					</span>
 				</td>
 			</tr>
@@ -179,11 +192,12 @@
 				<td>
 					<span style="margin-left: 20px;">驾驶证号：</span>
 					<span style="margin-left: 10px;">
-						<input id="driveCard" name="driveCard" value="${pd.driveCard }" style="width: 150px;" type="text">
+						<input id="driveCard" name="driveCard" value="${pd.driveCard }" style="width: 150px;" type="text" class="easyui-textbox" >
 					</span>
 					<span style="margin-left: 20px;">驾驶证初领日期：</span>
 					<span style="margin-left: 10px;">
-						<input class="Wdate" id="driveStartDate" name="driveStartDate" value="${pd.driveStartDate }" style="width: 215px;" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})">
+						<input class="Wdate" id="driveStartDate" name="driveStartDate" value="${pd.driveStartDate }" 
+						style="width: 215px;" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})">
 					</span>
 				</td>
 			</tr>
@@ -191,7 +205,7 @@
 				<td colspan="2">
 					<span style="margin-left: 20px;">住址：</span>
 					<span style="margin-left: 10px;">
-						<input id="address" name="address" style="width: 690px;" type="text" value="${pd.address }">
+						<input id="address" name="address" style="width: 690px;" type="text" value="${pd.address }" class="easyui-textbox" >
 					</span>
 				</td>
 			</tr>
@@ -199,7 +213,7 @@
 				<td colspan="2">
 					<span style="margin-left: 20px;">准驾车型：</span>
 					<span style="margin-left: 10px;">
-						<input id="driveType" name="driveType" style="width: 145px;" type="text" value="${pd.driveType }">
+						<input id="driveType" name="driveType" style="width: 145px;" type="text" value="${pd.driveType }" class="easyui-textbox" >
 					</span>
 					<span style="margin-left: 20px;">原属公司：</span>
 					<span style="margin-left: 10px;">
@@ -211,7 +225,7 @@
 			<tr>
 				<td class="center" colspan="2" style="text-align: center;">
 					<input type="submit" name="" value="保存" class="easyui-linkbutton btnPrimary" style="width: 80px" />
-					<input type="submit" name="" value="重置" class="easyui-linkbutton btnDefault" onclick="clearForm()" style="width: 80px" />
+					<input type="button" name="" value="重置" class="easyui-linkbutton btnDefault" onclick="clearForm()" style="width: 80px" />
 				</td>
 			</tr>
 		</table>
