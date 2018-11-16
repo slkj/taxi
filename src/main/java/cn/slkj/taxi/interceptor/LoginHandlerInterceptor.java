@@ -72,7 +72,8 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
 			return true; // 返回true，则这个方面调用后会接着调用postHandle(), afterCompletion()
 		} else {
 			System.out.println("-------用户为空----------");
-			request.getRequestDispatcher("/login_toLogin").forward(request, response);
+//			request.getRequestDispatcher("/login_toLogin").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/login_toLogin");
 			return false;
 		}
 	}

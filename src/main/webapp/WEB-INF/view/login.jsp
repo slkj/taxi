@@ -9,6 +9,9 @@
 <link type="text/css" rel="stylesheet" href="assets/default/login/css/login.css">
 <script src="assets/js/jquery2.1.1.js" type="text/javascript"></script>
 <script type="text/javascript">
+	if (window.top !== window.self) {
+		window.top.location = window.location;
+	}
 	//处理记住用户名
 	function changeCheckRembername() {
 		var rembername = document.getElementById("rembername").value;
@@ -110,16 +113,15 @@
 						</div>
 						<div style="height: 10px"></div>
 						<div class="remeber_name">
-							<b id="checked" class="normal" onclick="changeCheckRembername();"></b> <label id="login_save"
-								style="float: left;">记住用户名</label>
+							<b id="checked" class="normal" onclick="changeCheckRembername();"></b>
+							<label id="login_save" style="float: left;">记住用户名</label>
 							<div class="login-wjpw">
 								<!-- 									<a class="blue" href="javascript:;">忘记用户名？</a>&nbsp;|&nbsp;&nbsp; <a href="javascript:;"><span class="blue">忘记密码？</span></a> -->
 							</div>
 						</div>
 					</div>
 					<div class="login_ck">
-						<input name="submitBtn" id="submitBtn" type="submit" tabindex="5" class="login_btn" value="登录"
-							onclick="severCheck();">
+						<input name="submitBtn" id="submitBtn" type="submit" tabindex="5" class="login_btn" value="登录" onclick="severCheck();">
 					</div>
 				</div>
 			</div>
