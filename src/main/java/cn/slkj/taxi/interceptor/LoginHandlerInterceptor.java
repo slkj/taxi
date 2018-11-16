@@ -23,6 +23,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.util.Const;
+import cn.slkj.taxi.util.DateUtil;
 
 /**
  * @ClassName: LoginHandlerInterceptor
@@ -46,7 +47,7 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
 		if (handler instanceof HandlerMethod) {
 			StringBuilder sb = new StringBuilder(1000);
 
-			sb.append("-----------------------").append(new Date()).append("-------------------------------------\n");
+			sb.append("-----------------------").append(DateUtil.getTime()).append("-------------------------------------\n");
 			HandlerMethod h = (HandlerMethod) handler;
 			sb.append("Controller: ").append(h.getBean().getClass().getName()).append("\n");
 			sb.append("Method    : ").append(h.getMethod().getName()).append("\n");
@@ -71,6 +72,7 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter {
 			return true; // 返回true，则这个方面调用后会接着调用postHandle(), afterCompletion()
 		} else {
 			System.out.println("-------用户为空----------");
+			request.getRequestDispatcher("/login_toLogin").forward(request, response);
 			return false;
 		}
 	}

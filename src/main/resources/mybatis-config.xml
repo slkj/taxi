@@ -4,10 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<!-- 配置全局属性 -->
-	<settings>
+<!-- 	<settings> -->
 		<!-- 打印查询语句 -->
-		<setting name="logImpl" value="STDOUT_LOGGING" />
-	</settings>
+<!-- 		<setting name="logImpl" value="STDOUT_LOGGING" /> -->
+<!-- 	</settings> -->
 
 	<typeAliases>
 		<typeAlias type="cn.slkj.taxi.entity.User" alias="User" />

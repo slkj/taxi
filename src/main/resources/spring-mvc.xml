@@ -64,9 +64,7 @@
 	<!-- 访问拦截 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="*" />
 			<mvc:mapping path="/**" />
-			<mvc:mapping path="/**/**" />
 			<bean class="cn.slkj.taxi.interceptor.LoginHandlerInterceptor">
 				<property name="allowUrls">
 					<list>
