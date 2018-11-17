@@ -91,7 +91,7 @@
 					type : 2,
 					title : "报考信息",
 					skin : 'layui-layer-rim', //加上边框
-					area : [ '810px', '400px' ], //宽高
+					area : [ '810px', '420px' ], //宽高
 					content : 'goSignUpAdd',
 					zIndex : 1000
 				});
@@ -184,7 +184,7 @@
 					type : 2,
 					skin : 'layui-layer-rim', //加上边框
 					hade : [ 0.5, '#000', false ],
-					area : [ '810px', '400px' ], //宽高
+					area : [ '810px', '420px' ], //宽高
 					title : [ '报考信息', false ],
 					content : 'goSignUpEdit?id=' + row.id
 				});

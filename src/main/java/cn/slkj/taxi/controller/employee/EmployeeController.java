@@ -1,13 +1,16 @@
 /**
  * 
  */
-package cn.slkj.taxi.controller;
+package cn.slkj.taxi.controller.employee;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -310,7 +313,7 @@ public class EmployeeController extends BaseController {
 		mv.addObject("msg", "success");
 		mv.setViewName("save_result");
 		return rti > 0 ? true : false;
-//		return mv;
+		// return mv;
 	}
 
 	@RequestMapping({ "/goSignUpEdit" })
@@ -332,5 +335,64 @@ public class EmployeeController extends BaseController {
 			this.logger.error(e.toString(), e);
 		}
 		return mv;
+	}
+
+	/**
+	 * 读取照片 @Title: getOwnernamepic @Description:
+	 * TODO(这里用一句话描述这个方法的作用) @param: @param id @param: @param request @param: @param
+	 * response @param: @throws IOException @return: void @throws
+	 */
+	@RequestMapping({ "/getPhoto" })
+	public void getOwnernamepic(String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try {
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("id", id);
+			Employee employee = this.employeeService.selectOne(hashMap);
+			byte[] data = employee.getPhoto();
+			response.setContentType("image/jpg");
+			OutputStream stream = response.getOutputStream();
+			stream.write(data);
+			stream.flush();
+			stream.close();
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+	}
+
+	@RequestMapping({ "/goExamResult" })
+	public ModelAndView goExamResult() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("idcard", pd.getString("idcard"));
+				Employee employee = this.employeeService.selectOne(hashMap);
+				mv.addObject("employee", employee);
+			}
+			mv.addObject("pd", pd);
+			mv.setViewName("exam_results/exam_results_list");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+
+	@RequestMapping({ "/changeStatus" })
+	public void changeStatus(PrintWriter out) {
+		PageData pd = new PageData();
+		try {
+			pd = getPageData();
+			if ((pd.getString("id") != null) && (!"".equals(pd.getString("id")))) {
+//				this.employeeService.updateByPrimaryKeySelective(pd);
+				out.write("ok");
+			} else {
+				out.write("no");
+			}
+			out.close();
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
 	}
 }

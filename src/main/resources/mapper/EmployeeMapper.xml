@@ -99,8 +99,19 @@
 	<select id="selectOne" parameterType="hashMap" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
 		from tb_employee
-		where ID = #{id}
+		<where>
+			<if test="id != nll and id !=''">
+				ID = #{id,jdbcType=VARCHAR} 
+			</if>
+			<if test="idcard != nll and idcard !=''">
+				IDCARD = #{idcard,jdbcType=VARCHAR}
+			</if>
+			
+		</where>
+		ORDER BY ADDTIME DESC
 	</select>
 	<delete id="deleteById" parameterType="hashMap">
 		DELETE FROM tb_employee WHERE ID = #{id} AND ID != '1'
