@@ -128,7 +128,7 @@ a {
 .viewui-navmenu {
 	float: left;
 	height: 60px;
-	width: 590px
+/* 	width: 590px */
 }
 
 .viewui-navmenu .navmenu-item {

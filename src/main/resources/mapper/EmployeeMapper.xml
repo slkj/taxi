@@ -220,4 +220,128 @@
 			<if test="photo != null"> #{photo,jdbcType=LONGVARBINARY}, </if>
 		</trim>
 	</insert>
+	<update id="update" parameterType="pd">
+		update tb_employee
+		<set>
+			<if test="personalId != null">
+				PERSONAL_ID = #{personalId,jdbcType=VARCHAR},
+			</if>
+			<if test="permitFilesId != null">
+				PERMIT_FILES_ID = #{permitFilesId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="borndate != null">
+				BORNDATE = #{borndate,jdbcType=VARCHAR},
+			</if>
+			<if test="nationality != null">
+				NATIONALITY = #{nationality,jdbcType=VARCHAR},
+			</if>
+			<if test="idcard != null">
+				IDCARD = #{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="educated != null">
+				EDUCATED = #{educated,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				PHONE = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="driveCard != null">
+				DRIVE_CARD = #{driveCard,jdbcType=VARCHAR},
+			</if>
+			<if test="driveStartDate != null">
+				DRIVE_START_DATE = #{driveStartDate,jdbcType=VARCHAR},
+			</if>
+			<if test="driveType != null">
+				DRIVE_TYPE = #{driveType,jdbcType=VARCHAR},
+			</if>
+			<if test="cyzgCard != null">
+				CYZG_CARD = #{cyzgCard,jdbcType=VARCHAR},
+			</if>
+			<if test="registerDate != null">
+				REGISTER_DATE = #{registerDate,jdbcType=VARCHAR},
+			</if>
+			<if test="cancelDate != null">
+				CANCEL_DATE = #{cancelDate,jdbcType=VARCHAR},
+			</if>
+			<if test="fwzljdCard != null">
+				FWZLJD_CARD = #{fwzljdCard,jdbcType=VARCHAR},
+			</if>
+			<if test="fwzljdRepairDate != null">
+				FWZLJD_REPAIR_DATE = #{fwzljdRepairDate,jdbcType=VARCHAR},
+			</if>
+			<if test="carid != null">
+				CARID = #{carid,jdbcType=VARCHAR},
+			</if>
+			<if test="cartype != null">
+				CARTYPE = #{cartype,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				COMPANY = #{company,jdbcType=VARCHAR},
+			</if>
+			<if test="oldCompany != null">
+				OLD_COMPANY = #{oldCompany,jdbcType=VARCHAR},
+			</if>
+			<if test="engageConn != null">
+				ENGAGE_CONN = #{engageConn,jdbcType=VARCHAR},
+			</if>
+			<if test="engageTime != null">
+				ENGAGE_TIME = #{engageTime,jdbcType=VARCHAR},
+			</if>
+			<if test="contractSrtCount != null">
+				CONTRACT_STRCOUNT = #{contractSrtCount,jdbcType=VARCHAR},
+			</if>
+			<if test="contractEndCount != null">
+				CONTRACT_ENDCOUNT = #{contractEndCount,jdbcType=VARCHAR},
+			</if>
+			<if test="approvalHours != null">
+				APPROVAL_HOURS = #{approvalHours,jdbcType=VARCHAR},
+			</if>
+			<if test="decisionHours != null">
+				DECISION_HOURS = #{decisionHours,jdbcType=VARCHAR},
+			</if>
+			<if test="trainingUnit != null">
+				TRAINING_UNIT = #{trainingUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="infoPages != null">
+				INFO_PAGES = #{infoPages,jdbcType=VARCHAR},
+			</if>
+			<if test="examPages != null">
+				EXAM_PAGES = #{examPages,jdbcType=VARCHAR},
+			</if>
+			<if test="invalid != null">
+				INVALID = #{invalid,jdbcType=VARCHAR},
+			</if>
+			<if test="sfhz != null">
+				SFHZ = #{sfhz,jdbcType=VARCHAR},
+			</if>
+			<if test="expReg != null">
+				EXP_REG = #{expReg,jdbcType=VARCHAR},
+			</if>
+			<if test="reCyzgDate != null">
+				RE_CYZG_DATE = #{reCyzgDate,jdbcType=VARCHAR},
+			</if>
+			<if test="shzt != null">
+				SHZT = #{shzt,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				ADDTIME = #{addtime,jdbcType=VARCHAR},
+			</if>
+			<if test="photo != null">
+				PHOTO = #{photo,jdbcType=LONGVARBINARY},
+			</if>
+		</set>
+		where 
+			ID = #{id,jdbcType=VARCHAR} 
+	</update>
 </mapper>

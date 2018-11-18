@@ -138,7 +138,7 @@
 					<span style="margin-left: 30px;">出生年月：</span>
 					<span style="margin-left: 10px;">
 						<input class="Wdate" id="borndate" name="borndate" value="${pd.borndate}" 
-						style="width: 120px;" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})">
+						style="width: 120px;" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})">
 					</span>
 				</td>
 				<td style="width: 124px;" rowspan="4">

@@ -29,4 +29,6 @@ public interface EmployeeMapper {
 
 	int insertSelective(PageData pd);
 
+	int update(PageData pd);
+
 }

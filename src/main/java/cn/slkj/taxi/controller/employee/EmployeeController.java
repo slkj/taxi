@@ -161,8 +161,7 @@ public class EmployeeController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/employeeList", method = { RequestMethod.POST })
 	public EPager<Employee> employeeList(HttpSession session) {
-		PageData pd = new PageData();
-		pd = getPageData();
+		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
 		String sortString = "ADDTIME.DESC,PERSONAL_ID.ASC,";// 如果你想排序的话逗号分隔可以排序多列
@@ -385,7 +384,7 @@ public class EmployeeController extends BaseController {
 		try {
 			pd = getPageData();
 			if ((pd.getString("id") != null) && (!"".equals(pd.getString("id")))) {
-//				this.employeeService.updateByPrimaryKeySelective(pd);
+				this.employeeService.update(pd);
 				out.write("ok");
 			} else {
 				out.write("no");

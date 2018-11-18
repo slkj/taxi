@@ -84,4 +84,8 @@ public class EmployeeService {
 		return mapper.insertSelective(pd);
 	}
 
+	public int update(PageData pd) {
+		return mapper.update(pd);
+	}
+
 }
