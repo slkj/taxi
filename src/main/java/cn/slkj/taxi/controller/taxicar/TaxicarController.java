@@ -101,29 +101,28 @@ public class TaxicarController extends BaseController{
 	@ResponseBody
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public boolean save(@RequestParam(value="ownernamepic1", required=false) MultipartFile ownernamepic1,
-			@RequestParam(value="vehiclepic1", required=false) MultipartFile vehiclepic1
-			) {
-		    PageData pd = new PageData();
+			@RequestParam(value="vehiclepic1", required=false) MultipartFile vehiclepic1,
+			Taxicar taxicar) {
 		try {
-			pd = getPageData();
 			 if ((vehiclepic1 != null) && (!vehiclepic1.isEmpty())) {
-				 pd.put("vehiclePic", FileUtil.toByteArray(vehiclepic1.getInputStream()));
+				 //pd.put("vehiclePic", FileUtil.toByteArray(vehiclepic1.getInputStream()));
+				 taxicar.setVehiclePic(FileUtil.toByteArray(vehiclepic1.getInputStream()));
 			 }
 			 if ((ownernamepic1 != null) && (!ownernamepic1.isEmpty())) {
-				 pd.put("ownerNamePic", FileUtil.toByteArray(ownernamepic1.getInputStream()));
+				 //pd.put("ownerNamePic", FileUtil.toByteArray(ownernamepic1.getInputStream()));
+				 taxicar.setOwnerNamePic(FileUtil.toByteArray(ownernamepic1.getInputStream()));
 			 }
 			int i = -1;
-			//HttpSession session = request.getSession();			
-			pd.put("aDDTIME", DateUtil.getTime());
+			taxicar.setaDDTIME(DateUtil.getTime());
 			int rti = 0;
-			String id = pd.getString("id");
+			//String id = pd.getString("id");
+			String id = taxicar.getId();
 			if (Tools.notEmpty(id)) {
-				rti = taxicarService.edit(pd);
+				rti = taxicarService.edit(taxicar);
 			} else {
-				pd.put("id", UuidUtil.get32UUID());
-				rti = taxicarService.save(pd);
+				taxicar.setId(UuidUtil.get32UUID());
+				rti = taxicarService.save(taxicar);
 			}
-			i = taxicarService.save(pd);
 			return rti > 0 ? true : false;
 		} catch (Exception e) {
 			e.printStackTrace();

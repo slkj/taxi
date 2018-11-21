@@ -42,7 +42,7 @@
 			</if>
 		</where>
 	</select>
-	<insert  id="save" parameterType="pd">
+	<insert  id="save" parameterType="Taxicar">
 		insert into tb_taxicar
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -224,7 +224,7 @@
 		</trim>
 	</insert>
 
-	<update id="edit" parameterType="pd">
+	<update id="edit" parameterType="Taxicar">
 		update tb_taxicar
 		<set>
 			<if test="fileNum != null">

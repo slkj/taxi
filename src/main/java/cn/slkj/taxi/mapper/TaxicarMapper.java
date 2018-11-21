@@ -18,11 +18,11 @@ public interface TaxicarMapper {
 
 	public List<Taxicar> getAllList(PageData pd, PageBounds pageBounds);
 
-	public int save(PageData pd);
+	public int save(Taxicar taxicar);
 
 	public Taxicar queryOne(PageData pd);
 
-	public int edit(PageData pd);
+	public int edit(Taxicar taxicar);
 	
 	int delete(String id);
 	

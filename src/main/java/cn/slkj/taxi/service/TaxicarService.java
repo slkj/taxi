@@ -45,8 +45,8 @@ public class TaxicarService {
 	 * @return: int      
 	 * @throws
 	 */
-	public int save(PageData pd) {
-		return mapper.save(pd);
+	public int save(Taxicar taxicar) {
+		return mapper.save(taxicar);
 	}
 
 	/**
@@ -71,9 +71,9 @@ public class TaxicarService {
 	 * @return: int      
 	 * @throws
 	 */
-	public int edit(PageData pd) {
+	public int edit(Taxicar taxicar) {
 		// TODO Auto-generated method stub
-		return mapper.edit(pd);
+		return mapper.edit(taxicar);
 	}
 	
 	/**
