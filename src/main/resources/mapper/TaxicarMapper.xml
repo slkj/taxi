@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.slkj.taxi.mapper.TaxicarMapper">
+	<sql id="sql_base">
+		ID, FileNum, OpretaCertNum, PlateNum, CorpName, 
+		OwnerName, OrigOwnerName, OrigPlateNum, EmployPerson,
+		 Color, Sign, SealRecord, Address, PhoneNum, IDNumber,
+		  OwnerChange, DrvLicenseDate, VehicleInspRec, OwnerNamePic,
+		   VehiclePic, TonsSeat, CarLen, CarWidth, CarHigh, FrameNumber,
+		    EngineNumber, ADDTIME, CheckDate, TransferDate
+	</sql>
+	<sql id="sql_base1">
+		id, operatingnum, annualdate, nextannualdate, vehicle, addtime, status
+	</sql>
+
+	<select id="getAllList"  parameterType="pd" resultType="Taxicar">
+		SELECT
+		<include refid="sql_base"></include>
+		FROM TB_TAXICAR
+		<where>
+			<if test="PlateNum != null and PlateNum != ''">
+				AND PlateNum LIKE '%'+#{PlateNum}+'%'
+			</if>
+			<if test="OpretaCertNum != null and OpretaCertNum != ''">
+				AND OpretaCertNum LIKE '%'+#{OpretaCertNum}+'%'
+			</if>
+			<if test="OwnerName != null and OwnerName != ''">
+				AND OwnerName LIKE '%'+#{OwnerName}+'%'
+			</if>
+		</where>		
+	</select>
+	<select id="queryOne" parameterType="pd" resultType="Taxicar">
+		SELECT
+		<include refid="sql_base"></include>
+		FROM TB_TAXICAR
+		<where>
+			<if test="id != null and id != ''">
+				AND ID = #{id}
+			</if>
+			<if test="OpretaCertNum != null and OpretaCertNum != ''">
+				AND OpretaCertNum = #{OpretaCertNum}
+			</if>
+		</where>
+	</select>
+	<insert  id="save" parameterType="pd">
+		insert into tb_taxicar
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="fileNum != null">
+				FileNum,
+			</if>
+			<if test="opretaCertNum != null">
+				OpretaCertNum,
+			</if>
+			<if test="plateNum != null">
+				PlateNum,
+			</if>
+			<if test="corpName != null">
+				CorpName,
+			</if>
+			<if test="ownerName != null">
+				OwnerName,
+			</if>
+			<if test="origOwnerName != null">
+				OrigOwnerName,
+			</if>
+			<if test="origPlateNum != null">
+				OrigPlateNum,
+			</if>
+			<if test="employPerson != null">
+				EmployPerson,
+			</if>
+			<if test="color != null">
+				Color,
+			</if>
+			<if test="sign != null">
+				Sign,
+			</if>
+			<if test="sealRecord != null">
+				SealRecord,
+			</if>
+			<if test="address != null">
+				Address,
+			</if>
+			<if test="phoneNum != null">
+				PhoneNum,
+			</if>
+			<if test="iDNumber != null">
+				IDNumber,
+			</if>
+			<if test="ownerChange != null">
+				OwnerChange,
+			</if>
+			<if test="drvLicenseDate != null">
+				DrvLicenseDate,
+			</if>
+			<if test="vehicleInspRec != null">
+				VehicleInspRec,
+			</if>
+			<if test="tonsSeat != null">
+				TonsSeat,
+			</if>
+			<if test="carLen != null">
+				CarLen,
+			</if>
+			<if test="carWidth != null">
+				CarWidth,
+			</if>
+			<if test="carHigh != null">
+				CarHigh,
+			</if>
+			<if test="frameNumber != null">
+				FrameNumber,
+			</if>
+			<if test="engineNumber != null">
+				EngineNumber,
+			</if>
+			<if test="aDDTIME != null">
+				ADDTIME,
+			</if>
+			<if test="ownerNamePic != null">
+				OwnerNamePic,
+			</if>
+			<if test="vehiclePic != null">
+				VehiclePic,
+			</if>
+			<if test="checkDate != null">
+				CheckDate,
+			</if>
+			<if test="transferDate != null">
+				TransferDate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="fileNum != null">
+				#{fileNum,jdbcType=VARCHAR},
+			</if>
+			<if test="opretaCertNum != null">
+				#{opretaCertNum,jdbcType=VARCHAR},
+			</if>
+			<if test="plateNum != null">
+				#{plateNum,jdbcType=VARCHAR},
+			</if>
+			<if test="corpName != null">
+				#{corpName,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerName != null">
+				#{ownerName,jdbcType=VARCHAR},
+			</if>
+			<if test="origOwnerName != null">
+				#{origOwnerName,jdbcType=VARCHAR},
+			</if>
+			<if test="origPlateNum != null">
+				#{origPlateNum,jdbcType=VARCHAR},
+			</if>
+			<if test="employPerson != null">
+				#{employPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="color != null">
+				#{color,jdbcType=VARCHAR},
+			</if>
+			<if test="sign != null">
+				#{sign,jdbcType=VARCHAR},
+			</if>
+			<if test="sealRecord != null">
+				#{sealRecord,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneNum != null">
+				#{phoneNum,jdbcType=VARCHAR},
+			</if>
+			<if test="iDNumber != null">
+				#{iDNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerChange != null">
+				#{ownerChange,jdbcType=VARCHAR},
+			</if>
+			<if test="drvLicenseDate != null">
+				#{drvLicenseDate,jdbcType=VARCHAR},
+			</if>
+			<if test="vehicleInspRec != null">
+				#{vehicleInspRec,jdbcType=VARCHAR},
+			</if>
+			<if test="tonsSeat != null">
+				#{tonsSeat,jdbcType=VARCHAR},
+			</if>
+			<if test="carLen != null">
+				#{carLen,jdbcType=VARCHAR},
+			</if>
+			<if test="carWidth != null">
+				#{carWidth,jdbcType=VARCHAR},
+			</if>
+			<if test="carHigh != null">
+				#{carHigh,jdbcType=VARCHAR},
+			</if>
+			<if test="frameNumber != null">
+				#{frameNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="engineNumber != null">
+				#{engineNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="aDDTIME != null">
+				CONVERT(varchar(20), getdate(), 120 ),
+			</if>
+			<if test="ownerNamePic != null">
+				#{ownerNamePic,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="vehiclePic != null">
+				#{vehiclePic,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="checkDate != null">
+				#{checkDate,jdbcType=VARCHAR},
+			</if>
+			<if test="transferDate != null">
+				#{transferDate,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="edit" parameterType="pd">
+		update tb_taxicar
+		<set>
+			<if test="fileNum != null">
+				FileNum = #{fileNum,jdbcType=VARCHAR},
+			</if>
+			<if test="opretaCertNum != null">
+				OpretaCertNum =#{opretaCertNum,jdbcType=VARCHAR},
+			</if>
+			<if test="plateNum != null">
+				PlateNum = #{plateNum,jdbcType=VARCHAR},
+			</if>
+			<if test="corpName != null">
+				CorpName =#{corpName,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerName != null">
+				OwnerName =#{ownerName,jdbcType=VARCHAR},
+			</if>
+			<if test="origOwnerName != null">
+				OrigOwnerName =#{origOwnerName,jdbcType=VARCHAR},
+			</if>
+			<if test="origPlateNum != null">
+				OrigPlateNum =#{origPlateNum,jdbcType=VARCHAR},
+			</if>
+			<if test="employPerson != null">
+				EmployPerson =#{employPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="color != null">
+				Color =#{color,jdbcType=VARCHAR},
+			</if>
+			<if test="sign != null">
+				Sign =#{sign,jdbcType=VARCHAR},
+			</if>
+			<if test="sealRecord != null">
+				SealRecord =#{sealRecord,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				Address =#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneNum != null">
+				PhoneNum =#{phoneNum,jdbcType=VARCHAR},
+			</if>
+			<if test="iDNumber != null">
+				IDNumber =#{iDNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerChange != null">
+				OwnerChange =#{ownerChange,jdbcType=VARCHAR},
+			</if>
+			<if test="drvLicenseDate != null">
+				DrvLicenseDate =#{drvLicenseDate,jdbcType=VARCHAR},
+			</if>
+			<if test="vehicleInspRec != null">
+				VehicleInspRec =#{vehicleInspRec,jdbcType=VARCHAR},
+			</if>
+			<if test="tonsSeat != null">
+				TonsSeat =#{tonsSeat,jdbcType=VARCHAR},
+			</if>
+			<if test="carLen != null">
+				CarLen =#{carLen,jdbcType=VARCHAR},
+			</if>
+			<if test="carWidth != null">
+				CarWidth =#{carWidth,jdbcType=VARCHAR},
+			</if>
+			<if test="carHigh != null">
+				CarHigh =#{carHigh,jdbcType=VARCHAR},
+			</if>
+			<if test="frameNumber != null">
+				FrameNumber =#{frameNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="engineNumber != null">
+				EngineNumber =#{engineNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="aDDTIME != null">
+				ADDTIME = #{aDDTIME,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerNamePic != null">
+				OwnerNamePic =#{ownerNamePic,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="vehiclePic != null">
+				VehiclePic =#{vehiclePic,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="checkDate != null">
+				CheckDate =#{checkDate,jdbcType=VARCHAR},
+			</if>
+			<if test="transferDate != null">
+				TransferDate =#{transferDate,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		DELETE FROM TB_TAXICAR WHERE ID = #{id}
+	</delete>
+	
+</mapper>

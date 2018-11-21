@@ -16,6 +16,10 @@
 		<typeAlias type="cn.slkj.taxi.util.PageData" alias="pd" />
 		<typeAlias type="cn.slkj.taxi.entity.Employee" alias="Employee" />
 		<typeAlias type="cn.slkj.taxi.entity.EmployeeRank" alias="EmployeeRank" />
+		<typeAlias type="cn.slkj.taxi.entity.Enterprise" alias="Enterprise" />
+		<typeAlias type="cn.slkj.taxi.entity.EnterpriseEval" alias="EnterpriseEval" />
+		<typeAlias type="cn.slkj.taxi.entity.Taxicar" alias="Taxicar" />
+		<typeAlias type="cn.slkj.taxi.entity.TaxicarCheck" alias="TaxicarCheck" />
 	</typeAliases>
 	<plugins>
 		<plugin
