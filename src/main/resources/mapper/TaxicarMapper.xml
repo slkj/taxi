@@ -37,8 +37,8 @@
 			<if test="id != null and id != ''">
 				AND ID = #{id}
 			</if>
-			<if test="OpretaCertNum != null and OpretaCertNum != ''">
-				AND OpretaCertNum = #{OpretaCertNum}
+			<if test="opretaCertNum != null and opretaCertNum != ''">
+				AND OpretaCertNum = #{opretaCertNum}
 			</if>
 		</where>
 	</select>

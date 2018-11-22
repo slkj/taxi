@@ -57,11 +57,11 @@ public class TaxicarCheckController  extends BaseController{
 	
 	@RequestMapping("/taxicarCheckEditPage")
 	public String toTaxicarCheckEditPage() {
-		return "taxi_car/taxi_car_check_edit";
+		return "taxi_car_check/taxi_car_check_edit";
 	}
 	@RequestMapping("/taxicarTopCheckCheckPage")
 	public String toTaxicarTopCheckCheckPage() {
-		return "taxi_car/taxi_car_topcheck_check";
+		return "taxi_car_check/taxi_car_topcheck_check";
 	}
 	
 	/**

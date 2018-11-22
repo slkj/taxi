@@ -369,6 +369,9 @@
 			  if (!rFilter.test(oFile1.type)) { alert("上传图片类型不符!"); return; }
 			  oFReaderVehiclepic.readAsDataURL(oFile1);
 			}
+			function closeImageFileVehiclepic(){
+				oFReaderVehiclepic.close();
+			}
 		</script>
 </body>
 

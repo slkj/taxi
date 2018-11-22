@@ -75,7 +75,7 @@ public class TaxicarController extends BaseController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/queryOne", method = { RequestMethod.POST })
-	public Taxicar queryOne(String id) {
+	public Taxicar queryOne() {
 		PageData pd = new PageData();
 		pd = getPageData();
 		Taxicar taxicar = taxicarService.queryOne(pd);
