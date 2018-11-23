@@ -20,6 +20,8 @@
 		<typeAlias type="cn.slkj.taxi.entity.EnterpriseEval" alias="EnterpriseEval" />
 		<typeAlias type="cn.slkj.taxi.entity.Taxicar" alias="Taxicar" />
 		<typeAlias type="cn.slkj.taxi.entity.TaxicarCheck" alias="TaxicarCheck" />
+		<typeAlias type="cn.slkj.taxi.entity.Examine" alias="Examine" />
+		<typeAlias type="cn.slkj.taxi.entity.ExamineStandard" alias="ExamineStandard" />
 	</typeAliases>
 	<plugins>
 		<plugin

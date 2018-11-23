@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.slkj.taxi.mapper.ExamineMapper">
+	<select id="getExamineList" parameterType="hashMap" resultType="Examine">
+		select te.id,te.empId,te.ordinalId+tex.standard as
+		ordinal,te.scoring,te.examineTime,remark from tb_examine
+		te,tb_examineStandard tex
+		where te.ordinalId = tex.ordinal
+	</select>
+
+	<select id="getStandardList" parameterType="hashMap" resultType="ExamineStandard">
+		select * from tb_examineStandard
+	</select>
+	
+</mapper>
