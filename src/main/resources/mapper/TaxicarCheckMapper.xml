@@ -69,7 +69,8 @@
 			tb_taxicar_check
 		WHERE
 			NEXTANNUALDATE >= CONVERT(varchar(20),GETDATE(),120) AND STATUS = '0'
-		AND OPERATINGNUM = #{operatingnum}
+			AND SUBSTRING(ADDTIME,1,10) = CONVERT(varchar(20),GETDATE(),23)
+			AND OPERATINGNUM = #{operatingnum}
 	</select>
 	<update id="changeStatus"  parameterType="pd">
 		update  tb_taxicar_check

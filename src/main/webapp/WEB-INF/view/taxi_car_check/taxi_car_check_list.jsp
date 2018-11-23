@@ -366,6 +366,7 @@
 		}
 		function clearForm(){//重置表单
 			$('#vui_sample1').form('clear');
+			$("#opretaCertNum").val("");
 		}
 		//删除
 		function delRow(id) {
@@ -389,6 +390,7 @@
 				}
 		}
 		function loadAddCheckForm(){
+			$("#topsearch").show();		
 			$('#showPart').hide();
 			$('#queryData1').on('click', function() {
 				var opretaCertNum=$('#opretaCertNum').val();
