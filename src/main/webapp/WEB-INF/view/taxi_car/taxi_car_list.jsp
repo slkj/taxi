@@ -206,7 +206,10 @@
 					skin : 'layui-layer-rim', //加上边框
 					area : [ '1000px', '460px' ], //宽高
 					content : $('#newData-wrapper'),
-					zIndex : 1000
+					zIndex : 1000,
+					end:function() {
+						$('#vui_sample').form('clear');
+					}
 				});
 			});
 			$('#queryData').on('click', function() {
@@ -282,9 +285,9 @@
 	            processData: false,
 				success : function(data) {
 					if (data) {
-						$grid.datagrid('reload');// 刷新datagrid
-						layer.close(layer.index); 
-						clearForm();
+						$grid.datagrid('reload');// 刷新datagrid						
+						layer.close(layer.index); 	
+						//location.reload(true);						
 					} else {
 						msgShow('系统提示', '出现异常');
 					}
@@ -299,8 +302,11 @@
 					title : "车辆信息",
 					skin : 'layui-layer-rim', //加上边框
 					area : [ '1000px', '460px' ], //宽高
-					content : $('#newData-wrapper'),
-					zIndex : 1000
+					content :  $('#newData-wrapper'),
+					zIndex : 1000,
+					end:function() {
+						$('#vui_sample').form('clear');
+					}
 				});
 				$.ajax({
 					type : "post",
