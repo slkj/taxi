@@ -139,7 +139,10 @@
 					skin: 'layui-layer-rim', //加上边框
 					area: ['490px', '500px'], //宽高
 					content:$('#newData-wrapper'),
-					zIndex:1000
+					zIndex:1000,
+					end:function() {
+						$('#vui_sample').form('clear');
+					}
 				});
 			});
 			//查询
@@ -224,7 +227,10 @@
 					skin : 'layui-layer-rim', //加上边框
 					area : [ '490px', '500px' ], //宽高
 					content : $('#newData-wrapper'),
-					zIndex : 1000
+					zIndex : 1000,
+					end:function() {
+						$('#vui_sample').form('clear');
+					}
 				});
 				//$("#vui_sample").form("load", row);
 				$.ajax({

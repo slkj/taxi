@@ -366,7 +366,7 @@
 		}
 		function clearForm(){//重置表单
 			$('#vui_sample1').form('clear');
-			$("#opretaCertNum").val("");
+			$("#opretaCertNum").textbox('setValue','')
 		}
 		//删除
 		function delRow(id) {
