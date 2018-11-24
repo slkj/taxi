@@ -29,8 +29,8 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/maxh/Desktop/承德出租车/TAXI/WEB-INF/lib/jasperreports-6.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxh/Desktop/承德出租车/TAXI/WEB-INF/lib/QRCode.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxh/Desktop/承德出租车/TAXI/WEB-INF/lib/jbarcode-0.2.8.jar"/>
+	<classpathentry kind="lib" path="src/test/java/lib/jasperreports-6.2.2.jar"/>
+	<classpathentry kind="lib" path="src/test/java/lib/jbarcode-0.2.8.jar"/>
+	<classpathentry kind="lib" path="src/test/java/lib/QRCode.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
