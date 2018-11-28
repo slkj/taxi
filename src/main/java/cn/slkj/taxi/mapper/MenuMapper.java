@@ -20,4 +20,6 @@ public interface MenuMapper {
 
 	public List<Menu> getSubMenu(Map<String, Object> hasMap);
 
+	public List<Menu> getModuleByRoleId(PageData pd);
+
 }

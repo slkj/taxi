@@ -10,6 +10,7 @@
 <link href="../assets/css/layout.css" rel="stylesheet" type="text/css" />
 </head>
 <body scroll="no" class="body-pd10">
+
 	<div class="dataView-container">
 		<div class="table-container">
 			<div class="tabs-wrapper">
@@ -36,6 +37,7 @@
 		</form>
 	</div>
 	<div class="dig-wrapper" id="roleData-wrapper" style="text-align: left: ;">
+		<input id="roleId" type="hidden" />
 		 <div class="btnbar-tools">
 			<a href="javascript:;" class="add" onclick="roleModule()">
 				<i class="fa fa-plus-square success"></i>
@@ -80,11 +82,11 @@
 // 					{title : '删',field : 'del_opt',align : 'center',width: 10},
 // 					{title : '改',field : 'edit_opt',align : 'center',width: 10},
 // 					{title : '查',field : 'cha_opt',align : 'center',width: 10},
-					{field : 'opt',title : '操作',align : 'center',width: 50,formatter : function(value, row) {
+					{field : 'opt',title : '操作',align : 'center',width: 50,formatter : function(value, row, index) {
 							var s = '<div class ="updateBtn">';
 							s += '<a href="javascript:;" title="删除"  onclick="delRole('+row.id+')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
 							s += ' <a href="javascript:void(0);;" title="编辑" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o"></i></a>';
-							s += ' <a href="javascript:void(0);;" title="权限" onclick="qxRow()" class="info"><i class="fa fa-check-circle yellow"></i>权限</a></div>';
+							s += ' <a href="javascript:void(0);;" title="权限" onclick="qxRow('+index+')" class="info"><i class="fa fa-check-circle yellow"></i>权限</a></div>';
 							return s;
 						}
 					} ] ];
@@ -131,8 +133,9 @@
 			});
 		}
 		
-		function qxRow() {
-			var row = $('#roleList_dg').datagrid('getSelected');
+		function qxRow(index) {
+			var row = $('#roleList_dg').datagrid('getData').rows[index];
+			$("#roleId").val(row.id);
 			if (row) {
 				layer.open({
 					type : 1,
@@ -162,6 +165,43 @@
 					zIndex : 1000
 				});
 				$("#vui_sample").form("load", row);
+			}
+		}
+		/* 保存权限设置 */
+		function roleModule() {
+			var nodes = $('#reslist').tree('getChecked', [ 'checked', 'indeterminate' ]);
+			var ids = [];
+			for (var i = 0; i < nodes.length; i++) {
+				ids.push(nodes[i].id);
+			}
+			if (ids.length > 0) {
+				var param = {
+					roleid : $("#roleId").val(),
+					ids : ids
+				};
+				$.ajax({
+					url : "../role/saveRoleRes",
+					type : "POST",
+					data : param,
+					async : false,
+					dataType : "json",
+					cache : false,
+					success : function(data) {
+						if (data) {
+							$.messager.show({
+								msg : '设置成功！'
+							});
+							layer.close(layer.index); 
+						} else {
+							$.messager.show({
+								title : 'Error',
+								msg : '不好意思，出错了！'
+							});
+						}
+					}
+				});
+			} else {
+				alert("请选择分配资源!");
 			}
 		}
 	</script>

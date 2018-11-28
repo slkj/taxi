@@ -16,7 +16,6 @@ $(function() {
 		}
 	});
 	InitTopMenu();
-	InitLeftMenu("2");// 参数选择0为左侧选择第一个
 	addFristPage();
 	// 绑定 div 的鼠标事件
 	$('.navmenu-item a').click(function() {
@@ -30,9 +29,11 @@ $(function() {
 	$(".LeftMenu").parent().find(".panel-header").addClass('leftMenuTitle');
 })
 function InitTopMenu() {
+	var indexOne;
 	$.each(_menus_oneLeve, function(i, n) {
 		var str = '<li class="navmenu-item"> ';
 		if (i == 0) {
+			indexOne = n.menuid;
 			str += '<a class="item active" target="LeftList" id="tommenu_' + n.menuid + '" onClick="InitLeftMenu(\'' + n.menuid + '\')"  onfocus="this.blur();">';
 		} else {
 			str += '<a class="item" target="LeftList" id="tommenu_' + n.menuid + '" onClick="InitLeftMenu(\'' + n.menuid + '\')"  onfocus="this.blur();">';
@@ -41,11 +42,9 @@ function InitTopMenu() {
 		str += '<span class="title">' + n.menuname + '</span>';
 		str += '</a>';
 		str += '</li>';
-
-		var s = i;
 		$(".viewui-navmenu").append(str);
 	});
-
+	InitLeftMenu(indexOne);// 参数选择0为左侧选择第一个
 }
 
 // 初始化左侧

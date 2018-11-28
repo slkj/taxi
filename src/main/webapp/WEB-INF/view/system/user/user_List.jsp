@@ -46,7 +46,7 @@
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="phone" style="width: 100%" data-options="label:'联系电话:',required:true">
+						<input class="easyui-textbox" name="phone" style="width: 100%" data-options="label:'联系电话:'">
 					</div>
 				</div>
 				<div class="form-column1">
@@ -54,9 +54,21 @@
 						<input id="unitnameCombox" class="easyui-combobox" name="departName"
 							data-options="
 									label:'单位',
-									url: '../company/queryComList',
+									url: '../enterprise/queryEnterpriseList',
+									required:true,
 									valueField:'unitname',
 									textField:'unitname'"
+							style="width: 100%; height: 32px">
+					</div>
+				</div>	<div class="form-column1">
+					<div class="form-column-left">
+						<input id="unitnameCombox" class="easyui-combobox" name="roleId"
+							data-options="
+									label:'角色',
+									url: '../role/list',
+									required:true,
+									valueField:'id',
+									textField:'name'"
 							style="width: 100%; height: 32px">
 					</div>
 				</div>

@@ -31,6 +31,17 @@
 	</delete>
 
 	<update id="editUser" parameterType="pd">
-		UPDATE SYS_USER SET username = #{username} ,STATUS=#{status} ,EMAIL=#{email},REALNAME=#{realname},SEX=#{sex},PHONE=#{phone}, REMARK=#{remark} WHERE ID = #{id}
+		UPDATE SYS_USER
+		<set>
+			<if test="username != null"> username = #{username},</if>
+			<if test="status != null"> STATUS = #{status},</if>
+			<if test="email != null"> email = #{email},</if>
+			<if test="sex != null"> sex = #{sex},</if>
+			<if test="phone != null"> phone = #{phone},</if>
+			<if test="departName != null"> departName = #{departName},</if>
+			<if test="roleId != null"> roleId = #{roleId},</if>
+			<if test="remark != null"> remark = #{remark},</if>
+		</set>
+	 	WHERE ID = #{id}
 	</update>
 </mapper>

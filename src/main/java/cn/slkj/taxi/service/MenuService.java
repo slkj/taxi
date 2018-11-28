@@ -41,4 +41,8 @@ public class MenuService {
 	public List<Menu> getSubMenu(Map<String, Object> hasMap) {
 		return menuMapper.getSubMenu(hasMap);
 	}
+
+	public List<Menu> getModuleByRoleId(PageData pd) {
+		return menuMapper.getModuleByRoleId(pd);
+	}
 }

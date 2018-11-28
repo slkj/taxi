@@ -8,6 +8,7 @@
  */
 package cn.slkj.taxi.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,19 @@ public class RoleService {
 
 	public int deleteRole(Role role) {
 		return roleMapper.deleteRole(role);
+	}
+
+	public int deleteRoleRes(String roleid, String[] ids) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("roleid", roleid);
+		map.put("ids", ids);
+		return roleMapper.deleteRoleRes(map);
+	}
+
+	public int saveRoleRes(String roleid, String[] ids) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("roleid", roleid);
+		map.put("ids", ids);
+		return roleMapper.saveRoleRes(map);
 	}
 }

@@ -8,6 +8,7 @@
  */
 package cn.slkj.taxi.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import cn.slkj.taxi.entity.Role;
@@ -27,5 +28,9 @@ public interface RoleMapper {
 	public int saveRole(Role role);
 
 	public int deleteRole(Role role);
+
+	public int deleteRoleRes(HashMap<String, Object> map);
+
+	public int saveRoleRes(HashMap<String, Object> map);
 
 }

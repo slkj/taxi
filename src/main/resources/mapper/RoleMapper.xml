@@ -19,4 +19,16 @@
 		<delete id="deleteRole" parameterType="Role">
 				DELETE FROM SYS_ROLE WHERE ID=#{id}
 		</delete>
+		
+		<delete id="deleteRoleRes" parameterType="hashmap">
+			DELETE FROM SYS_ROLE_RES WHERE ROLE_ID = #{roleid}
+		</delete>
+		<insert id="saveRoleRes" parameterType="hashmap">
+			INSERT INTO SYS_ROLE_RES(ROLE_ID,MODULE_ID)
+			VALUES
+			<foreach collection="ids" item="item" index="index" separator=",">
+				(#{roleid}, #{item} )
+			</foreach>
+		</insert>
+	
 </mapper>

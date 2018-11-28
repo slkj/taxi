@@ -102,8 +102,10 @@ public class MenuController extends BaseController {
 	public List<Tree> role2Module(String roleId) {
 		PageData pd = getPageData();
 		pd.put("priority", 3);
+		pd.put("roleid", roleId);
 		List<Menu> allList = menuService.listAllMenu(pd);
-		List<Menu> checkList = menuService.listAllMenu(pd);
+//		List<Menu> checkList = menuService.listAllMenu(pd);
+		List<Menu> checkList = menuService.getModuleByRoleId(pd);
 		return initCheckBoxTree(allList, "0", checkList);
 	}
 

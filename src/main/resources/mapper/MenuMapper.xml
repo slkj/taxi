@@ -18,7 +18,11 @@
 		ORDER BY SORT
 	</select>
 	
-	
+	<select id="getModuleByRoleId" parameterType="pd" resultType="Menu">
+		SELECT <include refid="Base_Column_List"></include>  FROM 	SYS_MENU SM, SYS_ROLE_RES SRR
+		WHERE SM.ID= SRR.MODULE_ID    AND SRR.ROLE_ID= #{roleid} AND ID != '1'
+		ORDER BY SORT
+	</select>
 	
 	<select id="listAllMenu" resultType="Menu" parameterType="pd">
 		SELECT * FROM SYS_MENU 
