@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Menu;
 import cn.slkj.taxi.entity.Menus;
+import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.MenuService;
+import cn.slkj.taxi.util.Const;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.Tree;
@@ -34,9 +38,14 @@ public class MenuController extends BaseController {
 
 	@ResponseBody
 	@RequestMapping(value = "/menusListByUser")
-	public Map<String, Object> menusListByUser() {
+	public Map<String, Object> menusListByUser(HttpSession session) {
 		PageData pd = getPageData();
-		List<Menu> oneLeveList = menuService.listAllParentMenu(pd);
+		User user = (User) session.getAttribute(Const.SESSION_USER);
+		String roleId = user.getRoleId();
+		Map<String, Object> hashMap = new HashMap();
+		hashMap.put("pid", "1");
+		hashMap.put("roleid", user.getRoleId());
+		List<Menu> oneLeveList = menuService.listAllParentMenu(hashMap);
 		List<Menus> oneLeve = new ArrayList<>();
 		for (int i = 0; i < oneLeveList.size(); i++) {
 			Menu module = oneLeveList.get(i);
@@ -48,8 +57,8 @@ public class MenuController extends BaseController {
 			menus.setUrl(module.getUrl());
 			oneLeve.add(menus);
 		}
-
-		List<Menu> menusList = menuService.getSubMenu(pd);
+		System.out.println("====="+ user.getRoleId());
+		List<Menu> menusList = menuService.getSubMenu(hashMap);
 		List<Menus> menuslist = new ArrayList<>();
 		for (int i = 0; i < menusList.size(); i++) {
 			Menu module = menusList.get(i);

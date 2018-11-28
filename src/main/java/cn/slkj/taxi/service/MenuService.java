@@ -1,6 +1,7 @@
 package cn.slkj.taxi.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class MenuService {
 	@Autowired
 	private MenuMapper menuMapper;
 
-	public List<Menu> listAllParentMenu(PageData pd) {
-		return menuMapper.listAllParentMenu(pd);
+	public List<Menu> listAllParentMenu(Map<String, Object> hasMap) {
+		return menuMapper.listAllParentMenu(hasMap);
 	}
 
 	public List<Menu> listAllMenu(PageData pd) {
@@ -37,7 +38,7 @@ public class MenuService {
 		return menuMapper.save(pd);
 	}
 
-	public List<Menu> getSubMenu(PageData pd) {
-		return menuMapper.getSubMenu(pd);
+	public List<Menu> getSubMenu(Map<String, Object> hasMap) {
+		return menuMapper.getSubMenu(hasMap);
 	}
 }

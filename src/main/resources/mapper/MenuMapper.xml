@@ -4,13 +4,21 @@
 	<sql id="Base_Column_List">
 		ID,PARENT_ID,NAME,URL,ICON,PRIORITY,SORT,DESCRIPTION
 	</sql>
-	<select id="listAllParentMenu" resultType="Menu" parameterType="pd">
-		SELECT * FROM SYS_MENU WHERE parent_id =#{pid}
+	<select id="listAllParentMenu" resultType="Menu" parameterType="hashmap">
+<!-- 		SELECT * FROM SYS_MENU WHERE parent_id =#{pid} ORDER BY SORT -->
+		SELECT <include refid="Base_Column_List"></include>  FROM 	SYS_MENU SM, SYS_ROLE_RES SRR
+		WHERE SM.ID= SRR.MODULE_ID 	AND PARENT_ID = #{pid}  AND SRR.ROLE_ID= #{roleid}
 		ORDER BY SORT
 	</select>
-	<select id="getSubMenu" resultType="Menu" parameterType="pd">
-		SELECT * FROM SYS_MENU WHERE PRIORITY > 1 ORDER BY  ID
+	<select id="getSubMenu" resultType="Menu" parameterType="hashmap">
+<!-- 		SELECT * FROM SYS_MENU WHERE PRIORITY > 1 ORDER BY  ID -->
+		
+		SELECT <include refid="Base_Column_List"></include>  FROM 	SYS_MENU SM, SYS_ROLE_RES SRR
+		WHERE SM.ID= SRR.MODULE_ID  and PRIORITY > 1  AND SRR.ROLE_ID= #{roleid}
+		ORDER BY SORT
 	</select>
+	
+	
 	
 	<select id="listAllMenu" resultType="Menu" parameterType="pd">
 		SELECT * FROM SYS_MENU 

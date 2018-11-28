@@ -12,7 +12,6 @@
 	<base href="<%=basePath%>">
 
 	<!-- jsp文件头和头部 -->
-	<%@ include file="../../system/admin/top.jsp"%> 
 	
 	</head> 
 
