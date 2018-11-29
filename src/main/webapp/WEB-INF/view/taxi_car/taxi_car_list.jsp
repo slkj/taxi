@@ -208,7 +208,7 @@
 					content : $('#newData-wrapper'),
 					zIndex : 1000,
 					end:function() {
-						$('#vui_sample').form('clear');
+						clearForm();
 					}
 				});
 			});
@@ -305,7 +305,7 @@
 					content :  $('#newData-wrapper'),
 					zIndex : 1000,
 					end:function() {
-						$('#vui_sample').form('clear');
+						clearForm();
 					}
 				});
 				$.ajax({

@@ -254,7 +254,10 @@
 					skin : 'layui-layer-rim', //加上边框
 					area : [ '1000px', '560px' ], //宽高
 					content : $('#newData-wrapper'),
-					zIndex : 1000
+					zIndex : 1000,
+					end:function() {
+						clearForm();
+					}
 				});
 				loadAddCheckForm();
 			});
@@ -359,7 +362,10 @@
 					skin : 'layui-layer-rim', //加上边框
 					area : [ '1000px', '560px' ], //宽高
 					content : $('#newData-wrapper'),
-					zIndex : 1000
+					zIndex : 1000,
+					end:function() {
+						clearForm();
+					}
 				});
 				loadEditCheckForm(id,operatingnum);
 			}
