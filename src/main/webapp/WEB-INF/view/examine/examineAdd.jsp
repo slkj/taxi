@@ -15,42 +15,20 @@
 	}
 	$(function() {
 		$("#click_event, .closeForm").click(function() {
-			$("#form-wrapper").slideToggle(1000);
+			// 			$("#form-wrapper").slideToggle(1000);
+			layer.open({
+				type : 1,
+				skin : 'layui-layer-rim', //加上边框
+				area : [ '490px', '450px' ], //宽高
+				content : $('#newData-wrapper'),
+				zIndex : 1000
+			});
 		});
 	});
 </script>
 </head>
 <body scroll="no" class="body-pd10">
 	<div class="dataView-container">
-		<div class="form-wrapper hide" id="form-wrapper">
-			<div class="form2-column">
-				<form id="vui_sample" class="easyui-form" method="post" data-options="novalidate:true">
-					<h3 class="form-title">出租车从业人员服务质量信誉考核标准</h3>
-					<div class="form-column2">
-						<div class="form-column-left">
-							<input class="easyui-textbox" name="sqkf" style="width: 100%" data-options="label:'扣分条款:',required:true">
-						</div>
-						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" name="subject" style="width: 100%" data-options="label:'扣分分数:',required:true,validType:'number'">
-						</div>
-					</div>
-					<div class="form-column2">
-						<div class="form-column-left">
-							<input class="easyui-textbox" name="sqkf" style="width: 100%" data-options="label:'扣分时间:',required:true">
-						</div>
-					</div>
-					<div class="form-column1">
-						<div class="form-column-left">
-							<input class="easyui-textbox" name="message" style="width: 100%; height: 60px" data-options="label:'备注:',multiline:true">
-						</div>
-					</div>
-					<div class="form-btnBar pl75">
-						<input type="submit" name="" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()" style="width: 80px" />
-						<input type="reset" name="" value="重置" class="easyui-linkbutton btnDefault" onclick="clearForm()" style="width: 80px" />
-					</div>
-				</form>
-			</div>
-		</div>
 		<div class="table-container">
 			<div class="tabs-wrapper">
 				<form action="../examine/examineAdd" method="post" name="employeeForm" id="employeeForm">
@@ -59,7 +37,6 @@
 							<div class="colRow">
 								<input class="easyui-textbox" name="idcard" style="width: 300px">
 								<input type="button" value="查询" class="easyui-linkbutton btnPrimary" style="width: 100px" onclick="search();" />
-								<input id="click_event" type="button" value="添加" class="easyui-linkbutton btnPrimary" style="width: 100px" />
 							</div>
 						</div>
 						<div class="screen-term" style="display: block;">
@@ -86,6 +63,14 @@
 											<div class="form-column-left">
 												<input class="easyui-textbox" style="width: 100%" data-options="label:'所属公司:'" value="${employee.company }" editable="false">
 											</div>
+											<div class="form-column-left fm-left">
+												<input class="easyui-textbox" style="width: 100%" data-options="label:'剩余分数:'" value="${syFraction}" editable="false">
+											</div>
+										</div>
+										<div class="form-column2">
+											<div class="form-column-left">
+												<input id="click_event" type="button" value="扣分登记" class="easyui-linkbutton btnPrimary" style="width: 100px" />
+											</div>
 										</div>
 									</div>
 								</c:when>
@@ -99,7 +84,6 @@
 									<tr>
 										<th field=ordinal width="45%" align="left">扣分条款</th>
 										<th field="scoring" width="5%" align="center">扣分分数</th>
-										<th field="listprice" width="5%" align="center">剩余分数</th>
 										<th field="examineTime" width="5%" align="center">扣分时间</th>
 										<th field="remark" width="150px" align="left">备注</th>
 										<th field="opt" width="150px" align="left"></th>
@@ -113,7 +97,6 @@
 												<tr>
 													<td align="left">${var.ordinal }</td>
 													<td>${var.scoring }</td>
-													<td></td>
 													<td>${var.examineTime }</td>
 													<td align="left">${var.remark }</td>
 													<td></td>
@@ -132,6 +115,42 @@
 					</c:choose>
 				</form>
 			</div>
+		</div>
+	</div>
+	<div class="dig-wrapper" id="newData-wrapper">
+		<div class="form1-column" title="表单示例">
+			<form id="vui_sample" class="easyui-form" method="post" data-options="novalidate:true">
+				<div class="form-column1">
+					<div class="form-column1">
+						<div class="form-column-left">
+							<select class="easyui-combobox" name="state" data-options="label:'扣分条款:',required:true" labelPosition="top" style="width: 100%;">
+								<option value="AL">新增</option>
+								<option value="AK">已提交</option>
+								<option value="AZ">申请中</option>
+								<option value="AR">已入库</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-column1">
+						<div class="form-column-left">
+							<input class="easyui-textbox" name="name" style="width: 100%" data-options="label:'扣分分数:',required:true">
+						</div>
+					</div>
+					<div class="form-column1">
+						<div class="form-column-left">
+							<input class="easyui-textbox" name="name" style="width: 100%" data-options="label:'扣分时间',required:true">
+						</div>
+					</div>
+					<div class="form-column1">
+						<div class="form-column-left">
+							<input class="easyui-textbox" name="message" style="width: 100%; height: 60px" data-options="label:'备注:',multiline:true">
+						</div>
+					</div>
+					<div class="form-btnBar pl75">
+						<input type="submit" name="" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()" style="width: 80px" />
+						<input type="submit" name="" value="重置" class="easyui-linkbutton btnDefault" onclick="clearForm()" style="width: 80px" />
+					</div>
+			</form>
 		</div>
 	</div>
 </body>
