@@ -394,4 +394,70 @@ public class EmployeeController extends BaseController {
 			this.logger.error(e.toString(), e);
 		}
 	}
+	/**
+	 * 
+	 * @Title: list   
+	 * @Description: 死亡库  
+	 * @param: @param changeNum
+	 * @param: @return
+	 * @param: @throws Exception      
+	 * @return: ModelAndView      
+	 * @throws
+	 */
+	@RequestMapping({ "/listDiePage" })
+	public ModelAndView listDie() throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("employee/employee_list_die");
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/employeeDieList", method = { RequestMethod.POST })
+	public EPager<Employee> employeeDieList() {System.out.println("进去了么");
+		PageData pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "ADDTIME.DESC,PERSONAL_ID.ASC,";// 如果你想排序的话逗号分隔可以排序多列
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("name", pd.getString("name"));
+		hashMap.put("status", pd.getString("status"));
+		hashMap.put("company", pd.getString("company"));
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<Employee> list = employeeService.listDie(hashMap, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<Employee>(pageList.getPaginator().getTotalCount(), list);
+	}
+	/**
+	 * 
+	 * @Title: list   
+	 * @Description: 超龄库  
+	 * @param: @param changeNum
+	 * @param: @return
+	 * @param: @throws Exception      
+	 * @return: ModelAndView      
+	 * @throws
+	 */
+	@RequestMapping({ "/listOldAgePage" })
+	public ModelAndView listOldAge() throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("employee/employee_list_age");
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/employeeOldAgeList", method = { RequestMethod.POST })
+	public EPager<Employee> employeeOldAgeList() {
+		PageData pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "ADDTIME.DESC,PERSONAL_ID.ASC,";// 如果你想排序的话逗号分隔可以排序多列
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("name", pd.getString("name"));
+		hashMap.put("status", pd.getString("status"));
+		hashMap.put("company", pd.getString("company"));
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<Employee> list = employeeService.listOldAge(hashMap, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<Employee>(pageList.getPaginator().getTotalCount(), list);
+	}
 }

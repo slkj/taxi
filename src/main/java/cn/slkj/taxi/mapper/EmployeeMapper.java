@@ -30,5 +30,13 @@ public interface EmployeeMapper {
 	int insertSelective(PageData pd);
 
 	int update(PageData pd);
-
+	
+	/**
+	 * 死亡库
+	 */
+	List<Employee> listDie(HashMap<String, Object> map, PageBounds pageBounds);
+	/**
+	 * 超龄库
+	 */
+	List<Employee> listOldAge(HashMap<String, Object> map, PageBounds pageBounds);
 }

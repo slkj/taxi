@@ -17,7 +17,7 @@
 		$grid.datagrid({
 			url : '../employeeList',
 			queryParams : {
-				status : '0'
+				status : '3'
 			},
 			striped : true,
 			nowrap : false,
@@ -68,9 +68,9 @@
 				align : 'center',
 				width : 80,
 				formatter : function(value, row, index) {
-					if (value == 0) {
-						return '<div style="background-color:#7b6f6f;text-align:center;color:#FFFFFF;">报名成功</div>';
-					} 
+					if (value == 3) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">出证完成</div>';
+					}
 				}
 			}, {
 				field : 'opt',

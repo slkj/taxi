@@ -15,10 +15,7 @@
 	function initGrid() {
 		//datagrid初始化 
 		$grid.datagrid({
-			url : '../employeeList',
-			queryParams : {
-				status : '0'
-			},
+			url : 'employeeDieList',
 			striped : true,
 			nowrap : false,
 			rownumbers : true,
@@ -70,7 +67,13 @@
 				formatter : function(value, row, index) {
 					if (value == 0) {
 						return '<div style="background-color:#7b6f6f;text-align:center;color:#FFFFFF;">报名成功</div>';
-					} 
+					} else if (value == 1) {
+						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">考试通过</div>';
+					} else if (value == 2) {
+						return '<div style="background-color:#1a1a1a;text-align:center;color:#FFFFFF;">考试未通过</div>';
+					} else if (value == 3) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">出证完成</div>';
+					}
 				}
 			}, {
 				field : 'opt',

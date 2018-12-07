@@ -47,62 +47,62 @@
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="phone" style="width: 100%" data-options="label:'联系电话:',required:true">
+						<input class="easyui-textbox" name="phone" style="width: 100%" data-options="label:'联系电话:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="unitaddr" style="width: 100%" data-options="label:'单位地址:',required:true">
+						<input class="easyui-textbox" name="unitaddr" style="width: 100%" data-options="label:'单位地址:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="businessscope" style="width: 100%" data-options="label:'经营范围:',required:true">
+						<input class="easyui-textbox" name="businessscope" style="width: 100%" data-options="label:'经营范围:'">
 					</div>
 				</div>			
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="businessno" style="width: 100%" data-options="label:'经营许可证号:',required:true">
+						<input class="easyui-textbox" name="businessno" style="width: 100%" data-options="label:'经营许可证号:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="enterprisecode" style="width: 100%" data-options="label:'企业代码:',required:true">
+						<input class="easyui-textbox" name="enterprisecode" style="width: 100%" data-options="label:'企业代码:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="regcapital" style="width: 100%" data-options="label:'注册资本:',required:true">
+						<input class="easyui-textbox" name="regcapital" style="width: 100%" data-options="label:'注册资本:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="economytype" style="width: 100%" data-options="label:'经济类型:',required:true">
+						<input class="easyui-textbox" name="economytype" style="width: 100%" data-options="label:'经济类型:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="legalrepresentative" style="width: 100%" data-options="label:'法人代表:',required:true">
+						<input class="easyui-textbox" name="legalrepresentative" style="width: 100%" data-options="label:'法人代表:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="vehiclesnum" style="width: 100%" data-options="label:'车辆总数:',required:true">
+						<input class="easyui-textbox" name="vehiclesnum" style="width: 100%" data-options="label:'车辆总数:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="employeescount" style="width: 100%" data-options="label:'从业人员总数:',required:true">
+						<input class="easyui-textbox" name="employeescount" style="width: 100%" data-options="label:'从业人员总数:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="manageersonnel" style="width: 100%" data-options="label:'安全管理人员总数:',required:true">
+						<input class="easyui-textbox" name="manageersonnel" style="width: 100%" data-options="label:'安全管理人员总数:'">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="carnum" style="width: 100%" data-options="label:'企业自有车数:',required:true">
+						<input class="easyui-textbox" name="carnum" style="width: 100%" data-options="label:'企业自有车数:'">
 					</div>
 				</div>
 				<div class="form-btnBar pl75">

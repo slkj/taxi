@@ -87,5 +87,30 @@ public class EmployeeService {
 	public int update(PageData pd) {
 		return mapper.update(pd);
 	}
-
+	/**
+	 * 
+	 * @Title: listDie   
+	 * @Description: 死亡库 
+	 * @param: @param map
+	 * @param: @param pageBounds
+	 * @param: @return      
+	 * @return: List<Employee>      
+	 * @throws
+	 */
+	public List<Employee> listDie(HashMap<String, Object> map, PageBounds pageBounds) {
+		return mapper.listDie(map, pageBounds);
+	}
+	/**
+	 * 
+	 * @Title: listDie   
+	 * @Description: 超龄库 
+	 * @param: @param map
+	 * @param: @param pageBounds
+	 * @param: @return      
+	 * @return: List<Employee>      
+	 * @throws
+	 */
+	public List<Employee> listOldAge(HashMap<String, Object> map, PageBounds pageBounds) {
+		return mapper.listOldAge(map, pageBounds);
+	}
 }
