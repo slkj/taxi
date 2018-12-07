@@ -20,7 +20,7 @@ public class Examine {
 	private String empId;
 	private String ordinalId;
 	private String ordinal;
-	private String scoring;
+	private int scoring;
 	private String examineTime;
 	private String remark;
 	public String getEmpId() {
@@ -35,13 +35,13 @@ public class Examine {
 	public void setOrdinalId(String ordinalId) {
 		this.ordinalId = ordinalId;
 	}
-	public String getScoring() {
+	 
+	public int getScoring() {
 		return scoring;
 	}
-	public void setScoring(String scoring) {
+	public void setScoring(int scoring) {
 		this.scoring = scoring;
 	}
-	 
 	public String getExamineTime() {
 		return examineTime;
 	}

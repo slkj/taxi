@@ -50,13 +50,24 @@ public class ExamineController extends BaseController {
 				hashMap.put("idcard", pd.getString("idcard"));
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
-
+				
 				Integer rows = 100;
 				Integer page = 0;
 				String sortString = "";// 如果你想排序的话逗号分隔可以排序多列
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 				List<Examine> list = examineService.getExamineList(map, pageBounds);
+				
+				int fractionTotal = 100;
+				int syFraction=0;
+				for (int i = 0; i < list.size(); i++) {
+					Examine e = list.get(i);
+					syFraction = fractionTotal - e.getScoring();
+				}
+				//剩余分数
+				mv.addObject("syFraction", syFraction);
+				
+				
 				mv.addObject("staList", list);
 			}
 			mv.addObject("pd", pd);
