@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
-import cn.slkj.taxi.entity.EmployeeRegister;
-import cn.slkj.taxi.service.EmployeeRegisterService;
+import cn.slkj.taxi.entity.EmployeeRepairSign;
+import cn.slkj.taxi.service.EmployeeRepairSignService;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.PageData;
 
@@ -38,26 +38,32 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
  * 
  */
 @Controller
-@RequestMapping({"/employeeRegister"})
-public class EmployeeRegisterController extends BaseController {
+@RequestMapping({"/employeeRepairSign"})
+public class EmployeeRepairSignController extends BaseController {
 	
 	@Autowired
-	private EmployeeRegisterService employeeRegisterService;
+	private EmployeeRepairSignService employeeRepairSignService;
 
 	@RequestMapping({ "/listPage" })
 	public ModelAndView listPage() throws Exception {
 		ModelAndView mv = new ModelAndView();
 		try {			
-			mv.setViewName("employee_register/employee_register_list");			
+			mv.setViewName("employee_repair_sign/employee_repair_sign_list");			
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
 		return mv;
 	}
-	@RequestMapping({ "/checkListPage" })
-	public ModelAndView checkList(HttpSession session) throws Exception {
+	@RequestMapping({ "/fircheckListPage" })
+	public ModelAndView fircheckListPage(HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("employee_register/employee_register_checklist");
+		mv.setViewName("employee_repair_sign/employee_repair_sign_firchecklist");
+		return mv;
+	}
+	@RequestMapping({ "/seccheckListPage" })
+	public ModelAndView seccheckListPage(HttpSession session) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("employee_repair_sign/employee_repair_sign_secchecklist");
 		return mv;
 	}
 	
@@ -66,7 +72,7 @@ public class EmployeeRegisterController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list", method = { RequestMethod.POST })
-	public EPager<EmployeeRegister> employeeList(HttpSession session) {
+	public EPager<EmployeeRepairSign> employeeList(HttpSession session) {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
@@ -76,8 +82,8 @@ public class EmployeeRegisterController extends BaseController {
 		hashMap.put("status", pd.getString("status"));
 		hashMap.put("company", pd.getString("company"));
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
-		List<EmployeeRegister> list = employeeRegisterService.list(hashMap, pageBounds);
+		List<EmployeeRepairSign> list = employeeRepairSignService.list(hashMap, pageBounds);
 		PageList pageList = (PageList) list;
-		return new EPager<EmployeeRegister>(pageList.getPaginator().getTotalCount(), list);
+		return new EPager<EmployeeRepairSign>(pageList.getPaginator().getTotalCount(), list);
 	}
 }

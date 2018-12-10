@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>从业资格注册</title>
+<title>从业资格注销审核</title>
 <%@ include file="/common/taglibs.jsp"%>
 </head>
 <body scroll="no" class="body-pd10">

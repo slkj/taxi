@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
-import cn.slkj.taxi.entity.EmployeeRegister;
-import cn.slkj.taxi.service.EmployeeRegisterService;
+import cn.slkj.taxi.entity.ChangeCompany;
+import cn.slkj.taxi.service.ChangeCompanyService;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.PageData;
 
@@ -30,43 +30,38 @@ import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
-/**
- * @ClassName: EmployeeRegisterController
- * @Description: 从业资格注册
- * @author: maxh
- * @date: 2018年11月16日 下午12:06:40
- * 
- */
+
 @Controller
-@RequestMapping({"/employeeRegister"})
-public class EmployeeRegisterController extends BaseController {
+@RequestMapping({"/changeCompany"})
+public class ChangeCompanyController extends BaseController {
 	
 	@Autowired
-	private EmployeeRegisterService employeeRegisterService;
+	private ChangeCompanyService changeCompanyService;
 
 	@RequestMapping({ "/listPage" })
 	public ModelAndView listPage() throws Exception {
 		ModelAndView mv = new ModelAndView();
 		try {			
-			mv.setViewName("employee_register/employee_register_list");			
+			mv.setViewName("change_company/change_company_list");			
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
 		return mv;
 	}
 	@RequestMapping({ "/checkListPage" })
-	public ModelAndView checkList(HttpSession session) throws Exception {
+	public ModelAndView fircheckListPage(HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("employee_register/employee_register_checklist");
+		mv.setViewName("change_company/change_company_checklist");
 		return mv;
 	}
+	
 	
 	/**
 	 * 查询列表，返回easyUI数据格式
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list", method = { RequestMethod.POST })
-	public EPager<EmployeeRegister> employeeList(HttpSession session) {
+	public EPager<ChangeCompany> employeeList(HttpSession session) {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
@@ -76,8 +71,8 @@ public class EmployeeRegisterController extends BaseController {
 		hashMap.put("status", pd.getString("status"));
 		hashMap.put("company", pd.getString("company"));
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
-		List<EmployeeRegister> list = employeeRegisterService.list(hashMap, pageBounds);
+		List<ChangeCompany> list = changeCompanyService.list(hashMap, pageBounds);
 		PageList pageList = (PageList) list;
-		return new EPager<EmployeeRegister>(pageList.getPaginator().getTotalCount(), list);
+		return new EPager<ChangeCompany>(pageList.getPaginator().getTotalCount(), list);
 	}
 }

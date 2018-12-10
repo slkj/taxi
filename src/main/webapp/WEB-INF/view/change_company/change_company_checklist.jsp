@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>从业资格注册</title>
+<title>从业资格注销审核</title>
 <%@ include file="/common/taglibs.jsp"%>
 </head>
 <body scroll="no" class="body-pd10">
@@ -71,30 +71,17 @@
 		}
 		function getColumns() {
 			return [ [ {
-				title : '档案号',
-				field : 'personalId'
+				title : '资格证号',
+				field : 'cyzg_card'
 			}, {
 				title : '姓名',
 				field : 'name'
+			},  {
+				title : '变更前公司',
+				field : 'old_company'
 			}, {
-				title : '性别',
-				field : 'sex',
-				formatter : function(value) {
-					if (value == "1") {
-						return "男";
-					} else {
-						return "女";
-					}
-				}
-			},{
-				title : '从业资格证号',
-				field : 'cyzg_card'
-			}, {
-				title : '车号',
-				field : 'carid'
-			}, {
-				title : '车型',
-				field : 'cartype'
+				title : '变更后公司',
+				field : 'new_company'
 			}, {
 				title : '申请时间',
 				field : 'addtime'

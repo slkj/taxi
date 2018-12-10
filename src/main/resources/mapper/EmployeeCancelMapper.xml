@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.slkj.taxi.mapper.EmployeeCancelMapper">
+	<sql id="Base_Column_List">
+		ID, CYZG_CARD, NAME, SEX, BORNDATE, IDCARD, ADDRESS, PHONE, DRIVE_CARD, 
+		DRIVE_START_DATE, COMPANY, CARID, PASSTIME, STATUS, ADDTIME, FLAG
+	</sql>
+	<select id="list" parameterType="pd" resultType="EmployeeCancel">
+		select
+		<include refid="Base_Column_List" />
+		from tb_employee_cancel
+	</select>
+
+	<select id="selectOne" parameterType="pd"
+		resultType="EmployeeCancel">
+		select
+		<include refid="Base_Column_List" />
+		from tb_employee_cancel
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<!--  and b.PERSONAL_ID is not null and b.PERSONAL_ID != '' -->
+
+	<delete id="delete" parameterType="pd">
+		delete from
+		tb_employee_cancel
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="pd">
+		insert into tb_employee_cancel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="cyzgCard != null">
+				CYZG_CARD,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="sex != null">
+				SEX,
+			</if>
+			<if test="borndate != null">
+				BORNDATE,
+			</if>
+			<if test="idcard != null">
+				IDCARD,
+			</if>
+			<if test="address != null">
+				ADDRESS,
+			</if>
+			<if test="phone != null">
+				PHONE,
+			</if>
+			<if test="driveCard != null">
+				DRIVE_CARD,
+			</if>
+			<if test="driveStartDate != null">
+				DRIVE_START_DATE,
+			</if>
+			<if test="company != null">
+				COMPANY,
+			</if>
+			<if test="carid != null">
+				CARID,
+			</if>
+			<if test="passtime != null">
+				PASSTIME,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="addtime != null">
+				ADDTIME,
+			</if>
+			<if test="flag != null">
+				FLAG,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="cyzgCard != null">
+				#{cyzgCard,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="borndate != null">
+				#{borndate,jdbcType=VARCHAR},
+			</if>
+			<if test="idcard != null">
+				#{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="driveCard != null">
+				#{driveCard,jdbcType=VARCHAR},
+			</if>
+			<if test="driveStartDate != null">
+				#{driveStartDate,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				#{company,jdbcType=VARCHAR},
+			</if>
+			<if test="carid != null">
+				#{carid,jdbcType=VARCHAR},
+			</if>
+			<if test="passtime != null">
+				#{passtime,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				#{addtime,jdbcType=VARCHAR},
+			</if>
+			<if test="flag != null">
+				#{flag,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="pd">
+		update tb_employee_cancel
+		<set>
+			<if test="cyzgCard != null">
+				CYZG_CARD = #{cyzgCard,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="borndate != null">
+				BORNDATE = #{borndate,jdbcType=VARCHAR},
+			</if>
+			<if test="idcard != null">
+				IDCARD = #{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				ADDRESS = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				PHONE = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="driveCard != null">
+				DRIVE_CARD = #{driveCard,jdbcType=VARCHAR},
+			</if>
+			<if test="driveStartDate != null">
+				DRIVE_START_DATE = #{driveStartDate,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null">
+				COMPANY = #{company,jdbcType=VARCHAR},
+			</if>
+			<if test="carid != null">
+				CARID = #{carid,jdbcType=VARCHAR},
+			</if>
+			<if test="passtime != null">
+				PASSTIME = #{passtime,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="addtime != null">
+				ADDTIME = #{addtime,jdbcType=VARCHAR},
+			</if>
+			<if test="flag != null">
+				FLAG = #{flag,jdbcType=INTEGER},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+</mapper>
