@@ -11,6 +11,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import cn.slkj.taxi.entity.Examine;
 import cn.slkj.taxi.entity.ExamineStandard;
 import cn.slkj.taxi.mapper.ExamineMapper;
+import cn.slkj.taxi.util.PageData;
 
 /*
  * 
@@ -20,11 +21,54 @@ public class ExamineService {
 	@Autowired
 	private ExamineMapper examineMapper;
 
-	public List<Examine> getExamineList(HashMap<String, Object> map, PageBounds pageBounds) {
-		return examineMapper.getExamineList(map, pageBounds);
+	public List<Examine> getExamineListByIDCard(HashMap<String, Object> map, PageBounds pageBounds) {
+		return examineMapper.getExamineListByIDCard(map, pageBounds);
 	}
 
-	public List<ExamineStandard> getStandardList() {
-		return examineMapper.getStandardList();
+	public List<Examine> getAllList(PageData pd, PageBounds pageBounds) {
+		return examineMapper.getAllList(pd, pageBounds);
+	}
+	
+	public Examine getOne(String id) {
+		return examineMapper.getOne(id);
+	}
+	
+	/**
+	 * 
+	 * @Title: save   
+	 * @Description: 添加保存   
+	 * @param: @param enterprise
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	public int save(PageData pd) {
+		return examineMapper.save(pd);
+	}
+
+	/**
+	 * 
+	 * @Title: edit   
+	 * @Description: 编辑保存   
+	 * @param: @param enterprise
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	public int edit(PageData pd) {
+		return examineMapper.edit(pd);
+	}
+
+	/**
+	 * 
+	 * @Title: delete   
+	 * @Description: 删除   
+	 * @param: @param id
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	public int delete(String id) {
+		return examineMapper.delete(id);
 	}
 }

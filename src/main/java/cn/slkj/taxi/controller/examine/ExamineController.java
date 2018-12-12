@@ -3,24 +3,33 @@
  */
 package cn.slkj.taxi.controller.examine;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
+import cn.slkj.taxi.entity.Enterprise;
 import cn.slkj.taxi.entity.Examine;
 import cn.slkj.taxi.entity.ExamineStandard;
 import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.service.ExamineService;
+import cn.slkj.taxi.util.EPager;
+import cn.slkj.taxi.util.JsonResult;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.Tools;
+import cn.slkj.taxi.util.UuidUtil;
 
 /**
  * 
@@ -38,7 +47,34 @@ public class ExamineController extends BaseController {
 	private ExamineService examineService;
 	@Autowired
 	private EmployeeService employeeService;
-
+	
+	/* 跳转页面 */
+	@RequestMapping("/listPage")
+	public String listPage() {
+		return "examine/examine_list";
+	}
+	/**
+	 * 
+	 * @param page
+	 * @param rows
+	 * @param gsmc
+	 * @param location
+	 * @param session
+	 * @return 返回easyUI datagrid 数据格式
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/list")
+	public EPager<Examine> list() throws IOException{		
+		PageData pd = new PageData();
+		pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "examineTime.DESC";
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<Examine> list = examineService.getAllList(pd, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<Examine>(pageList.getPaginator().getTotalCount(), list);
+	}
 	@RequestMapping("/examineAdd")
 	public ModelAndView examineAdd() {
 		ModelAndView mv = new ModelAndView();
@@ -52,21 +88,20 @@ public class ExamineController extends BaseController {
 				mv.addObject("employee", employee);
 				
 				Integer rows = 100;
-				Integer page = 0;
+				Integer page = 1;
 				String sortString = "";// 如果你想排序的话逗号分隔可以排序多列
-				HashMap<String, Object> map = new HashMap<String, Object>();
+				/*HashMap<String, Object> map = new HashMap<String, Object>();*/
 				PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
-				List<Examine> list = examineService.getExamineList(map, pageBounds);
+				List<Examine> list = examineService.getExamineListByIDCard(hashMap, pageBounds);
 				
-				int fractionTotal = 100;
-				int syFraction=0;
+				//int fractionTotal = 100;
+				int syFraction=100;
 				for (int i = 0; i < list.size(); i++) {
 					Examine e = list.get(i);
-					syFraction = fractionTotal - e.getScoring();
+					syFraction = syFraction - e.getScoring();
 				}
 				//剩余分数
-				mv.addObject("syFraction", syFraction);
-				
+				mv.addObject("syFraction", syFraction);			
 				
 				mv.addObject("staList", list);
 			}
@@ -77,20 +112,86 @@ public class ExamineController extends BaseController {
 		}
 		return mv;
 	}
-
-	@RequestMapping("/standard")
-	public ModelAndView standardView() {
+	@RequestMapping({ "/goAdd" })
+	public ModelAndView goAdd() {
 		ModelAndView mv = new ModelAndView();
 		PageData pd = new PageData();
 		pd = getPageData();
-		try {
-			List<ExamineStandard> list = examineService.getStandardList();
-			mv.addObject("standardList",list);
-			mv.addObject("pd", pd);
-			mv.setViewName("examine/standard");
+		try {			
+			mv.setViewName("examine/examine_edit");
+			mv.addObject("msg", "add");
+			mv.addObject("empId", pd.getString("empId"));
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
 		return mv;
+	}
+	@RequestMapping({ "/goEdit" })
+	public ModelAndView goEdit() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			Examine ex = examineService.getOne(pd.getString("id"));
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("idcard", ex.getEmpId());
+			Employee employee = employeeService.selectOne(hashMap);
+			mv.addObject("employee", employee);
+			mv.setViewName("examine/examine_edit");
+			mv.addObject("msg", "edit");
+			mv.addObject("pd", ex);
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	/**
+	 * 
+	 * @Title: save   
+	 * @Description: 保存 
+	 * @param: @param enterprise
+	 * @param: @return      
+	 * @return: JsonResult      
+	 * @throws
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/save", method = { RequestMethod.POST })
+	public boolean save()  throws Exception{
+		
+		PageData pd = new PageData();
+		try {
+			pd = getPageData();
+			int rti = 0;
+			String id = pd.getString("id");
+			if (Tools.notEmpty(id)) {
+				rti = examineService.edit(pd);
+			} else {
+				//pd.put("id", UuidUtil.get32UUID());
+				rti = examineService.save(pd);
+			}
+			return rti > 0 ? true : false;
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+			return false;
+		}
+	}
+	
+
+	/** 批量删除 */
+	@ResponseBody
+	@RequestMapping(value = "/delete")
+	public JsonResult deletes(String id) {
+		int i = examineService.delete(id);
+		try {
+			if (i > 0) {
+				return new JsonResult(true, "");
+			} else {
+				return new JsonResult(false, "操作失败！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JsonResult(false, e.toString());
+		}
+
 	}
 }

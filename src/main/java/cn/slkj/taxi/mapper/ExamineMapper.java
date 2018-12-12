@@ -7,13 +7,17 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 import cn.slkj.taxi.entity.Examine;
 import cn.slkj.taxi.entity.ExamineStandard;
+import cn.slkj.taxi.util.PageData;
 
 /**
  *  
  */
 public interface ExamineMapper {
 	 
-	List<Examine> getExamineList(HashMap<String, Object> map, PageBounds pageBounds);
-	List<ExamineStandard> getStandardList();
-	
+	List<Examine> getExamineListByIDCard(HashMap<String, Object> map, PageBounds pageBounds);
+	List<Examine> getAllList(PageData pd, PageBounds pageBounds);
+	Examine getOne(String id);
+	int save(PageData pd);
+	int edit(PageData pd);
+	int delete(String id);
 }

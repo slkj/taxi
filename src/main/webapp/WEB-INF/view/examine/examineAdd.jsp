@@ -14,14 +14,14 @@
 		$("#employeeForm").submit();
 	}
 	$(function() {
-		$("#click_event, .closeForm").click(function() {
-			// 			$("#form-wrapper").slideToggle(1000);
+		$("#click_event").click(function() {			
 			layer.open({
-				type : 1,
+				type : 2,
 				skin : 'layui-layer-rim', //加上边框
-				area : [ '490px', '450px' ], //宽高
-				content : $('#newData-wrapper'),
-				zIndex : 1000
+				hade : [ 0.5, '#000', false ],
+				area : [ '450px', '550px' ], //宽高
+				title : [ '编辑信息', false ],
+				content : 'goAdd?empId=' + $('#idcard').val()
 			});
 		});
 	});
@@ -48,7 +48,7 @@
 												<input class="easyui-textbox" style="width: 100%" data-options="label:'姓名:'" value="${employee.name }" editable="false">
 											</div>
 											<div class="form-column-left fm-left">
-												<input class="easyui-textbox" style="width: 100%" data-options="label:'身份证号:'" value="${employee.idcard }" editable="false">
+												<input class="easyui-textbox" style="width: 100%" id="idcard" data-options="label:'身份证号:'" value="${employee.idcard }" editable="false">
 											</div>
 										</div>
 										<div class="form-column2">
@@ -117,41 +117,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="dig-wrapper" id="newData-wrapper">
-		<div class="form1-column" title="表单示例">
-			<form id="vui_sample" class="easyui-form" method="post" data-options="novalidate:true">
-				<div class="form-column1">
-					<div class="form-column1">
-						<div class="form-column-left">
-							<select class="easyui-combobox" name="state" data-options="label:'扣分条款:',required:true" labelPosition="top" style="width: 100%;">
-								<option value="AL">新增</option>
-								<option value="AK">已提交</option>
-								<option value="AZ">申请中</option>
-								<option value="AR">已入库</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-column1">
-						<div class="form-column-left">
-							<input class="easyui-textbox" name="name" style="width: 100%" data-options="label:'扣分分数:',required:true">
-						</div>
-					</div>
-					<div class="form-column1">
-						<div class="form-column-left">
-							<input class="easyui-textbox" name="name" style="width: 100%" data-options="label:'扣分时间',required:true">
-						</div>
-					</div>
-					<div class="form-column1">
-						<div class="form-column-left">
-							<input class="easyui-textbox" name="message" style="width: 100%; height: 60px" data-options="label:'备注:',multiline:true">
-						</div>
-					</div>
-					<div class="form-btnBar pl75">
-						<input type="submit" name="" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()" style="width: 80px" />
-						<input type="submit" name="" value="重置" class="easyui-linkbutton btnDefault" onclick="clearForm()" style="width: 80px" />
-					</div>
-			</form>
-		</div>
-	</div>
+	
 </body>
 </html>
