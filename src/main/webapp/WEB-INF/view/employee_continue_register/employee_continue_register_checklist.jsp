@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>从业资格注册</title>
+<title>从业资格注销审核</title>
 <%@ include file="/common/taglibs.jsp"%>
 </head>
 <body scroll="no" class="body-pd10">
@@ -26,7 +26,12 @@
 						</div>
 					</div>
 				</div>
-				
+				<div class="btnbar-tools">
+					<a href="javascript:;" class="add" id="newData">
+						<i class="fa fa-plus-square success"></i>
+						添加
+					</a>
+				</div>
 				<table id="list_data"></table>
 			</div>
 		</div>
@@ -93,16 +98,12 @@
 			}, {
 				title : '申请时间',
 				field : 'addtime'
-			}, {
+			},  {
 				title : '状态',
 				field : 'status',
 				formatter : function(value, row, index) {
-					if (value == 0) {
-						return '<div style="background-color:#7b6f6f;text-align:center;color:#FFFFFF;">待审核</div>';
-					} else if (value == 1) {
-						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">审核失败</div>';
-					} else if (value == 2) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核成功</div>';
+					if (value == 2) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">提交成功</div>';
 					}
 				}
 			}, {

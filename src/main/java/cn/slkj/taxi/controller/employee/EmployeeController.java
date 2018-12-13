@@ -164,7 +164,7 @@ public class EmployeeController extends BaseController {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
-		String sortString = "ADDTIME.DESC,PERSONAL_ID.ASC,";// 如果你想排序的话逗号分隔可以排序多列
+		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		hashMap.put("name", pd.getString("name"));
 		hashMap.put("status", pd.getString("status"));

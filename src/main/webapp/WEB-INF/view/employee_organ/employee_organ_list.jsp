@@ -108,9 +108,7 @@
 	function query() {
 		$grid.datagrid({
 			queryParams : {
-				name : $('#name').val(),
-				status : $('#status').val(),
-				company : $('#company').val()
+				parent_id : $('#parent_id').val()
 			}
 		});
 	}
@@ -123,28 +121,22 @@
 				<div class="comp-search-box">
 					<div class="screen-top">
 						<div class="colRow">
-							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
+							<input type="text" class="easyui-textbox" id="parent_id" data-options="label:'从业资格证号'" />
 						</div>
+						
 						<div class="colRow">
-							<select class="easyui-combobox" name="status" id="status" data-options="label:'状态'" style="vertical-align: top; width: 120px;">
-								<option value=""></option>
-								<option value="">全部</option>
-								<option value="0">报名成功</option>
-								<option value="1">考试通过</option>
-								<option value="2">考试未通过</option>
-								<option value="3">出证完成</option>
-							</select>
-						</div>
-						<div class="colRow">
-							<input type="text" class="easyui-textbox" id="company" data-options="label:'公司名称'" />
-						</div>
-						<div class="colRow">
-							<button class="easyui-linkbutton btnDefault" id="queryData">
+							<button class="easyui-linkbutton btnDefault" id="queryData" onclick="query()">
 								<i class="fa fa-search"></i>
 								查询
 							</button>
 						</div>
 					</div>
+				</div>
+				<div class="btnbar-tools">
+					<a href="javascript:;" class="add" id="newData">
+						<i class="fa fa-plus-square success"></i>
+						添加
+					</a>
 				</div>
 				<table id="list_data"></table>
 			</div>

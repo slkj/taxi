@@ -168,7 +168,7 @@
 							<input type="text" class="easyui-textbox" id="company" data-options="label:'公司名称'" />
 						</div>
 						<div class="colRow">
-							<button class="easyui-linkbutton btnDefault" id="queryData">
+							<button class="easyui-linkbutton btnDefault" id="queryData" onclick="query()">
 								<i class="fa fa-search"></i>
 								查询
 							</button>
