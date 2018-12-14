@@ -98,7 +98,13 @@ public class ExamineController extends BaseController {
 				int syFraction=100;
 				for (int i = 0; i < list.size(); i++) {
 					Examine e = list.get(i);
-					syFraction = syFraction - e.getScoring();
+					//判断加分减分项目
+					if(e.getOrdinal().contains("6-")) {
+						syFraction = syFraction + e.getScoring();
+					}else {
+						syFraction = syFraction - e.getScoring();
+					}
+					
 				}
 				//剩余分数
 				mv.addObject("syFraction", syFraction);			

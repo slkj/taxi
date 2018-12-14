@@ -14,7 +14,7 @@
 		$("#employeeForm").submit();
 	}
 	$(function() {
-		$("#click_event").click(function() {			
+		$("#click_event").click(function() {
 			layer.open({
 				type : 2,
 				skin : 'layui-layer-rim', //加上边框
@@ -117,6 +117,6 @@
 			</div>
 		</div>
 	</div>
-	
+
 </body>
 </html>

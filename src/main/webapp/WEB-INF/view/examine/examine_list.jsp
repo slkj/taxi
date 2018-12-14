@@ -82,7 +82,16 @@
 				field : 'ordinal'
 			}, {
 				title : '扣分分数',
-				field : 'scoring'
+				field : 'scoring',
+				align : 'right',
+				formatter : function(value, row) {
+					 if(row.ordinal.indexOf("6-") != -1 ){
+						 return "+"+value; 
+					 }else{
+						 return "-"+value; 
+					 }
+					
+				}
 			}, {
 				title : '扣分时间',
 				field : 'examineTime'

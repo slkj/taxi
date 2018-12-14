@@ -6,7 +6,7 @@
 	</sql>
 
 	<select id="getStandardList" parameterType="pd" resultType="ExamineStandard">
-		select <include refid="Base_Column_List"/> from tb_examineStandard
+		select <include refid="Base_Column_List"/> from tb_examineStandard ORDER BY stype,ordinal
 	</select>
 	<select id="getStandardById" parameterType="String" resultType="ExamineStandard">
 		SELECT <include refid="Base_Column_List"></include>  FROM 	tb_examineStandard
