@@ -16,31 +16,19 @@
 		select
 			a.ID, a.CYZG_CARD, a.NAME, a.SEX, a.BORNDATE, a.IDCARD, a.ADDRESS, a.PHONE, a.DRIVE_CARD,
 			a.DRIVE_START_DATE, a.CARID, a.CARTYPE, a.COMPANY, a.ENGAGE_CONN, a.ENGAGE_TIME, a.CONTRACT_STRCOUNT,
-			a.CONTRACT_ENDCOUNT, a.PASSTIME, a.STATUS, a.ADDTIME, b.PERSONAL_ID
+			a.CONTRACT_ENDCOUNT, a.PASSTIME, a.STATUS, a.ADDTIME, b.PERSONAL_ID as personalId
 		from tb_employee_continue_register a , tb_employee b
 		where
 		1 = 1 and a.IDCARD = b.IDCARD 
-		<if test="pd.title != null and pd.title != ''">
-			and (
-			a.CYZG_CARD like CONCAT(CONCAT('%', #{pd.title}),'%')
-			or
-			a.NAME like CONCAT(CONCAT('%', #{pd.title}),'%')
-			or
-			a.CARID like CONCAT(CONCAT('%', #{pd.title}),'%')
-			or
-			a.PHONE like CONCAT(CONCAT('%', #{pd.title}),'%')
-			or
-			a.ADDRESS like CONCAT(CONCAT('%', #{pd.title}),'%')
-			)
-		</if>
-		<if test="pd.company!=null and pd.company!=''">
-			and a.COMPANY = #{pd.company}
-		</if>
-		<if test="pd.status!=null and pd.status!=''">
-			and a.STATUS = #{pd.status}
-		</if>
-		<!-- group by a.ID -->
-		order by a.ADDTIME desc
+		<if test="name != null and name != ''"> <!-- 检索条件 -->
+				AND a.NAME like '%'+ #{name}+'%'
+			</if>
+			<if test="cyzgCard != null and cyzgCard != ''"> <!-- 检索条件 -->
+				AND a.CYZG_CARD like '%'+ #{cyzgCard}+'%'
+			</if>
+			<if test="status!=null and status!=''">
+			AND a.STATUS = #{status}
+			</if>
 	</select>
 
 	

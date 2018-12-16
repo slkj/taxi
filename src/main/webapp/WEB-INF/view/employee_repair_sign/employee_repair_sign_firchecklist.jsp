@@ -19,6 +19,18 @@
 							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
 						<div class="colRow">
+							<input type="text" class="easyui-textbox" id="cyzgCard" data-options="label:'从业资格证号'" />
+						</div>
+						<div class="colRow">
+						<select class="easyui-combobox" name="status" id="status" data-options="label:'状态'" style="vertical-align: top; width: 120px;">
+						<option value="">全部</option>
+						<option value="0">待审核</option>
+						<option value="1">待上级审批</option>
+						<option value="2">审核未通过</option>
+						<option value="3">审核通过</option>
+					  	</select>
+						</div>
+						<div class="colRow">
 							<button class="easyui-linkbutton btnDefault" id="queryData">
 								<i class="fa fa-search"></i>
 								查询
@@ -26,12 +38,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="btnbar-tools">
-					<a href="javascript:;" class="add" id="newData">
-						<i class="fa fa-plus-square success"></i>
-						添加
-					</a>
-				</div>
+				
 				<table id="list_data"></table>
 			</div>
 		</div>
@@ -46,7 +53,9 @@
 			$('#queryData').on('click', function() {
 				$grid.datagrid({
 					queryParams : {
-						name : $('#name').val()
+						name : $('#name').val(),
+						cyzgCard : $('#cyzgCard').val(),
+						status : $('#status').val()
 					}
 				});
 			});
@@ -96,8 +105,14 @@
 				title : '状态',
 				field : 'status',
 				formatter : function(value, row, index) {
-					if (value == 2) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">提交成功</div>';
+					if (value == 0) {
+						return '<div style="background-color:#7b6f6f;text-align:center;color:#FFFFFF;">待审核</div>';
+					} else if (value == 1) {
+						return '<div style="background-color:#4b4b4b;text-align:center;color:#FFFFFF;">待上级审批</div>';
+					} else if (value == 2) {
+						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">审核未通过</div>';
+					} else if (value == 3) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核通过</div>';
 					}
 				}
 			}, {

@@ -12,28 +12,18 @@
 		select
 		<include refid="Base_Column_List" />
 		from tb_employee_replace_sign
-		where
-		1 = 1
-		<if test="pd.title != null and pd.title != ''">
-			and (
-			NAME like CONCAT(CONCAT('%', #{pd.title}),'%')
-			or
-			CARID like
-			CONCAT(CONCAT('%', #{pd.title}),'%')
-			or
-			PHONE like CONCAT(CONCAT('%',
-			#{pd.title}),'%')
-			or
-			ADDRESS like CONCAT(CONCAT('%', #{pd.title}),'%')
-			)
-		</if>
-		<if test="pd.company!=null and pd.company!=''">
-			and COMPANY = #{pd.company}
-		</if>
-		<if test="pd.status!=null and pd.status!=''">
-			and STATUS = #{pd.status}
-		</if>
-		order by ADDTIME desc
+		<where>
+		<if test="name != null and name != ''"> <!-- 检索条件 -->
+				AND NAME like '%'+ #{name}+'%'
+			</if>
+			<if test="cyzgCard != null and cyzgCard != ''"> <!-- 检索条件 -->
+				AND OLD_SIGN_ID
+				 like '%'+ #{cyzgCard}+'%'
+			</if>
+			<if test="status!=null and status!=''">
+			AND STATUS = #{status}
+			</if>
+		</where>
 	</select>
 
 	<select id="selectOne" parameterType="String" resultType="EmployeeReplaceSign">

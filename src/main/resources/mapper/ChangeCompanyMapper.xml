@@ -70,7 +70,17 @@
 		select
 		<include refid="Base_Column_List" />
 		from tb_change_company
-		
+		<where>
+		<if test="name != null and name != ''"> <!-- 检索条件 -->
+				AND NAME like '%'+ #{name}+'%'
+			</if>
+			<if test="cyzgCard != null and cyzgCard != ''"> <!-- 检索条件 -->
+				AND CYZG_CARD like '%'+ #{cyzgCard}+'%'
+			</if>
+			<if test="status!=null and status!=''">
+			AND STATUS = #{status}
+			</if>
+		</where>
 	</select>
 	
 	<select id="selectOne" parameterType="String" resultType="ChangeCompany">

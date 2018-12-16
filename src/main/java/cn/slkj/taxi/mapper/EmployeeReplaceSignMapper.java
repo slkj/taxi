@@ -19,7 +19,7 @@ public interface EmployeeReplaceSignMapper {
 	 * @param pageBounds
 	 * @return
 	 */
-	List<EmployeeReplaceSign> list(HashMap<String, Object> map, PageBounds pageBounds);
+	List<EmployeeReplaceSign> list(PageData pd, PageBounds pageBounds);
 
 	EmployeeReplaceSign selectOne(HashMap<String, Object> hashMap);
 

@@ -37,8 +37,8 @@ public class EmployeeContinueRegisterService {
 	 * @param pageBounds
 	 * @return
 	 */
-	public List<EmployeeContinueRegister> list(HashMap<String, Object> map, PageBounds pageBounds) {
-		return mapper.list(map, pageBounds);
+	public List<EmployeeContinueRegister> list(PageData pd, PageBounds pageBounds) {
+		return mapper.list(pd, pageBounds);
 	}
 
 	/**

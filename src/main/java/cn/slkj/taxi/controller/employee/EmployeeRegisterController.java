@@ -70,13 +70,9 @@ public class EmployeeRegisterController extends BaseController {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
-		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("name", pd.getString("name"));
-		hashMap.put("status", pd.getString("status"));
-		hashMap.put("company", pd.getString("company"));
+		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列		
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
-		List<EmployeeRegister> list = employeeRegisterService.list(hashMap, pageBounds);
+		List<EmployeeRegister> list = employeeRegisterService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
 		return new EPager<EmployeeRegister>(pageList.getPaginator().getTotalCount(), list);
 	}

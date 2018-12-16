@@ -72,12 +72,9 @@ public class EmployeeCancelController extends BaseController {
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("name", pd.getString("name"));
-		hashMap.put("status", pd.getString("status"));
-		hashMap.put("company", pd.getString("company"));
+		pd.put("flag", Integer.valueOf(0));
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
-		List<EmployeeCancel> list = employeeCancelService.list(hashMap, pageBounds);
+		List<EmployeeCancel> list = employeeCancelService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
 		return new EPager<EmployeeCancel>(pageList.getPaginator().getTotalCount(), list);
 	}

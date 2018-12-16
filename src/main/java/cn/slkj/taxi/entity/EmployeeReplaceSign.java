@@ -12,22 +12,18 @@ public class EmployeeReplaceSign
 {
 	  private String id;
 	  private String name;
-	  private String nationality;
-	  private String cyzgCard;
 	  private String sex;
 	  private String borndate;
 	  private String idcard;
 	  private String address;
 	  private String phone;
-	  private String driveType;
-	  private String driveStartDate;
+	  private String drive_type;
+	  private String drive_start_date;
 	  private String company;
 	  private String carid;
-	  private String oldSignId;
-	  private String firstSignDate;
-	  private String firstSignDateFormat;
+	  private String old_sign_id;
+	  private String first_sign_date;
 	  private String passtime;
-	  private String passtimeFormat;
 	  private String status;
 	  private String addtime;
 	public String getId() {
@@ -41,18 +37,6 @@ public class EmployeeReplaceSign
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getNationality() {
-		return nationality;
-	}
-	public void setNationality(String nationality) {
-		this.nationality = nationality;
-	}
-	public String getCyzgCard() {
-		return cyzgCard;
-	}
-	public void setCyzgCard(String cyzgCard) {
-		this.cyzgCard = cyzgCard;
 	}
 	public String getSex() {
 		return sex;
@@ -84,17 +68,17 @@ public class EmployeeReplaceSign
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getDriveType() {
-		return driveType;
+	public String getDrive_type() {
+		return drive_type;
 	}
-	public void setDriveType(String driveType) {
-		this.driveType = driveType;
+	public void setDrive_type(String drive_type) {
+		this.drive_type = drive_type;
 	}
-	public String getDriveStartDate() {
-		return driveStartDate;
+	public String getDrive_start_date() {
+		return drive_start_date;
 	}
-	public void setDriveStartDate(String driveStartDate) {
-		this.driveStartDate = driveStartDate;
+	public void setDrive_start_date(String drive_start_date) {
+		this.drive_start_date = drive_start_date;
 	}
 	public String getCompany() {
 		return company;
@@ -108,35 +92,23 @@ public class EmployeeReplaceSign
 	public void setCarid(String carid) {
 		this.carid = carid;
 	}
-	public String getOldSignId() {
-		return oldSignId;
+	public String getOld_sign_id() {
+		return old_sign_id;
 	}
-	public void setOldSignId(String oldSignId) {
-		this.oldSignId = oldSignId;
+	public void setOld_sign_id(String old_sign_id) {
+		this.old_sign_id = old_sign_id;
 	}
-	public String getFirstSignDate() {
-		return firstSignDate;
+	public String getFirst_sign_date() {
+		return first_sign_date;
 	}
-	public void setFirstSignDate(String firstSignDate) {
-		this.firstSignDate = firstSignDate;
-	}
-	public String getFirstSignDateFormat() {
-		return firstSignDateFormat;
-	}
-	public void setFirstSignDateFormat(String firstSignDateFormat) {
-		this.firstSignDateFormat = firstSignDateFormat;
+	public void setFirst_sign_date(String first_sign_date) {
+		this.first_sign_date = first_sign_date;
 	}
 	public String getPasstime() {
 		return passtime;
 	}
 	public void setPasstime(String passtime) {
 		this.passtime = passtime;
-	}
-	public String getPasstimeFormat() {
-		return passtimeFormat;
-	}
-	public void setPasstimeFormat(String passtimeFormat) {
-		this.passtimeFormat = passtimeFormat;
 	}
 	public String getStatus() {
 		return status;
@@ -150,20 +122,7 @@ public class EmployeeReplaceSign
 	public void setAddtime(String addtime) {
 		this.addtime = addtime;
 	}
-	@Override
-	public String toString() {
-		return "EmployeeReplaceSign [id=" + id + ", name=" + name
-				+ ", nationality=" + nationality + ", cyzgCard=" + cyzgCard
-				+ ", sex=" + sex + ", borndate=" + borndate + ", idcard="
-				+ idcard + ", address=" + address + ", phone=" + phone
-				+ ", driveType=" + driveType + ", driveStartDate="
-				+ driveStartDate + ", company=" + company + ", carid=" + carid
-				+ ", oldSignId=" + oldSignId + ", firstSignDate="
-				+ firstSignDate + ", firstSignDateFormat="
-				+ firstSignDateFormat + ", passtime=" + passtime
-				+ ", passtimeFormat=" + passtimeFormat + ", status=" + status
-				+ ", addtime=" + addtime + "]";
-	}
+	
   
 	  
 }

@@ -19,7 +19,7 @@ public interface EmployeeContinueRegisterMapper {
 	 * @param pageBounds
 	 * @return
 	 */
-	List<EmployeeContinueRegister> list(HashMap<String, Object> map, PageBounds pageBounds);
+	List<EmployeeContinueRegister> list(PageData pd, PageBounds pageBounds);
 
 	EmployeeContinueRegister selectById(HashMap<String, Object> hashMap);
 

@@ -19,7 +19,7 @@ public interface ChangeCompanyMapper {
 	 * @param pageBounds
 	 * @return
 	 */
-	List<ChangeCompany> list(HashMap<String, Object> map, PageBounds pageBounds);
+	List<ChangeCompany> list(PageData pd, PageBounds pageBounds);
 
 	ChangeCompany selectOne(HashMap<String, Object> hashMap);
 

@@ -19,18 +19,22 @@
 							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
 						<div class="colRow">
+							<input type="text" class="easyui-textbox" id="cyzgCard" data-options="label:'从业资格证号'" />
+						</div>
+						<div class="colRow">
+						<select class="easyui-combobox" name="status" id="status" data-options="label:'状态'" style="vertical-align: top; width: 120px;">
+						<option value="">全部</option>
+						<option value="0">提交成功</option>
+						<option value="1">注册完成</option>
+					  	</select>
+						</div>
+						<div class="colRow">
 							<button class="easyui-linkbutton btnDefault" id="queryData">
 								<i class="fa fa-search"></i>
 								查询
 							</button>
 						</div>
 					</div>
-				</div>
-				<div class="btnbar-tools">
-					<a href="javascript:;" class="add" id="newData">
-						<i class="fa fa-plus-square success"></i>
-						添加
-					</a>
 				</div>
 				<table id="list_data"></table>
 			</div>
@@ -46,7 +50,9 @@
 			$('#queryData').on('click', function() {
 				$grid.datagrid({
 					queryParams : {
-						name : $('#name').val()
+						name : $('#name').val(),
+						cyzgCard : $('#cyzgCard').val(),
+						status : $('#status').val()
 					}
 				});
 			});
@@ -102,8 +108,10 @@
 				title : '状态',
 				field : 'status',
 				formatter : function(value, row, index) {
-					if (value == 2) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">提交成功</div>';
+					if (value == 0) {
+						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">提交成功</div>';
+					} else if (value == 1) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">注册完成</div>';
 					}
 				}
 			}, {

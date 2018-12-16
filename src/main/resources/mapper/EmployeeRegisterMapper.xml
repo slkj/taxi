@@ -26,7 +26,9 @@
 			<if test="cyzgCard != null and cyzgCard != ''"> <!-- 检索条件 -->
 				AND a.CYZG_CARD like '%'+ #{cyzgCard}+'%'
 			</if>
-		
+			<if test="status!=null and status!=''">
+			AND a.STATUS = #{status}
+			</if>
 	</select>
 
 

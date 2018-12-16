@@ -37,8 +37,8 @@ public class EmployeeCancelService {
 	 * @param pageBounds
 	 * @return
 	 */
-	public List<EmployeeCancel> list(HashMap<String, Object> map, PageBounds pageBounds) {
-		return mapper.list(map, pageBounds);
+	public List<EmployeeCancel> list(PageData pd, PageBounds pageBounds) {
+		return mapper.list(pd, pageBounds);
 	}
 
 	/**

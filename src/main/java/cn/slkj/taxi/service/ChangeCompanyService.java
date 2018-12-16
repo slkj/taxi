@@ -37,8 +37,8 @@ public class ChangeCompanyService {
 	 * @param pageBounds
 	 * @return
 	 */
-	public List<ChangeCompany> list(HashMap<String, Object> map, PageBounds pageBounds) {
-		return mapper.list(map, pageBounds);
+	public List<ChangeCompany> list(PageData pd, PageBounds pageBounds) {
+		return mapper.list(pd, pageBounds);
 	}
 
 	/**

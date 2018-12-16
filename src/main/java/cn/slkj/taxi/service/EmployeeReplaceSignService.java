@@ -37,8 +37,8 @@ public class EmployeeReplaceSignService {
 	 * @param pageBounds
 	 * @return
 	 */
-	public List<EmployeeReplaceSign> list(HashMap<String, Object> map, PageBounds pageBounds) {
-		return mapper.list(map, pageBounds);
+	public List<EmployeeReplaceSign> list(PageData pd, PageBounds pageBounds) {
+		return mapper.list(pd, pageBounds);
 	}
 
 	/**

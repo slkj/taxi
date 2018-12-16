@@ -19,7 +19,7 @@ public interface EmployeeCancelMapper {
 	 * @param pageBounds
 	 * @return
 	 */
-	List<EmployeeCancel> list(HashMap<String, Object> map, PageBounds pageBounds);
+	List<EmployeeCancel> list(PageData pd, PageBounds pageBounds);
 
 	EmployeeCancel selectOne(HashMap<String, Object> hashMap);
 
