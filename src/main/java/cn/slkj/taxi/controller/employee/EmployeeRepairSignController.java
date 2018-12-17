@@ -72,7 +72,34 @@ public class EmployeeRepairSignController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list", method = { RequestMethod.POST })
-	public EPager<EmployeeRepairSign> employeeList(HttpSession session) {
+	public EPager<EmployeeRepairSign> list(HttpSession session) {
+		PageData pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<EmployeeRepairSign> list = employeeRepairSignService.list(pd, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<EmployeeRepairSign>(pageList.getPaginator().getTotalCount(), list);
+	}
+	/**
+	 * 查询列表，返回easyUI数据格式
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/firstCheckList", method = { RequestMethod.POST })
+	public EPager<EmployeeRepairSign> firstCheckList(HttpSession session) {
+		PageData pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<EmployeeRepairSign> list = employeeRepairSignService.list(pd, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<EmployeeRepairSign>(pageList.getPaginator().getTotalCount(), list);
+	}
+	@ResponseBody
+	@RequestMapping(value = "/secondCheckList", method = { RequestMethod.POST })
+	public EPager<EmployeeRepairSign> secondCheckList(HttpSession session) {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");

@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
+import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeRegister;
+import cn.slkj.taxi.entity.Examine;
 import cn.slkj.taxi.service.EmployeeRegisterService;
+import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.PageData;
 
@@ -43,6 +46,8 @@ public class EmployeeRegisterController extends BaseController {
 	
 	@Autowired
 	private EmployeeRegisterService employeeRegisterService;
+	@Autowired
+	private EmployeeService employeeService;
 
 	@RequestMapping({ "/listPage" })
 	public ModelAndView listPage() throws Exception {
@@ -55,7 +60,7 @@ public class EmployeeRegisterController extends BaseController {
 		return mv;
 	}
 	@RequestMapping({ "/checkListPage" })
-	public ModelAndView checkList(HttpSession session) throws Exception {
+	public ModelAndView checkListPage(HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employee_register/employee_register_checklist");
 		return mv;
@@ -65,8 +70,8 @@ public class EmployeeRegisterController extends BaseController {
 	 * 查询列表，返回easyUI数据格式
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/list", method = { RequestMethod.POST })
-	public EPager<EmployeeRegister> employeeList(HttpSession session) {
+	@RequestMapping(value = "/checkList", method = { RequestMethod.POST })
+	public EPager<EmployeeRegister> checkList(HttpSession session) {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
@@ -75,5 +80,38 @@ public class EmployeeRegisterController extends BaseController {
 		List<EmployeeRegister> list = employeeRegisterService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
 		return new EPager<EmployeeRegister>(pageList.getPaginator().getTotalCount(), list);
+	}
+	@ResponseBody
+	@RequestMapping(value = "/list", method = { RequestMethod.POST })
+	public EPager<EmployeeRegister> list(HttpSession session) {
+		PageData pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列		
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<EmployeeRegister> list = employeeRegisterService.list(pd, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<EmployeeRegister>(pageList.getPaginator().getTotalCount(), list);
+	}
+	
+	@RequestMapping("/goAdd")
+	public ModelAndView examineAdd() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {System.out.println("进去了#####################");
+			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("idcard", pd.getString("idcard"));
+				Employee employee = this.employeeService.selectOne(hashMap);
+				mv.addObject("employee", employee);
+				
+			}
+			mv.addObject("pd", pd);
+			mv.setViewName("employee_register/employee_register_add");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
 	}
 }

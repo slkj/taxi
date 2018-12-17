@@ -130,7 +130,7 @@
 					</span>
 					<span style="margin-left: 20px;">性别：</span>
 					<span style="margin-left: 10px;">
-						<select style="width: 80px;" id="sex" name="sex" title="性别">
+						<select  class="easyui-combobox" style="width: 80px;" id="sex" name="sex" title="性别">
 							<option value='0'>男</option>
 							<option value='1'>女</option>
 						</select>

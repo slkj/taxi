@@ -50,11 +50,22 @@
 					}
 				});
 			});
+			//新增数据
+			$('#newData').on('click', function(){
+				layer.open({
+					type : 2,
+					skin : 'layui-layer-rim', //加上边框
+					hade : [ 0.5, '#000', false ],
+					area : [ '980px', '600px' ], //宽高
+					title : [ '编辑信息', false ],
+					content : 'goAdd'
+				});
+			});
 		});
 		function initGrid() {
 			//datagrid初始化 
 			$grid.datagrid({
-				url : '../employee/slistPage',
+				url : 'list',
 				striped : true,
 				nowrap : false,
 				rownumbers : true,
@@ -77,7 +88,7 @@
 				title : '性别',
 				field : 'sex',
 				formatter : function(value) {
-					if (value == "1") {
+					if (value == "0") {
 						return "男";
 					} else {
 						return "女";
@@ -90,17 +101,18 @@
 				title : '联系电话',
 				field : 'phone'
 			}, {
-				title : '电话',
-				field : 'phone'
-			}, {
 				title : '从业资格证号',
-				field : 'cyzgCard'
+				field : 'cyzg_card'
 			}, {
 				title : '状态',
 				field : 'status',
 				formatter : function(value, row, index) {
-					if (value == 2) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">提交成功</div>';
+					if (value == 0) {
+						return '<div style="background-color:#7b6f6f;text-align:center;color:#FFFFFF;">待审核</div>';
+					} else if (value == 1) {
+						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">审核失败</div>';
+					} else if (value == 2) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核成功</div>';
 					}
 				}
 			}, {

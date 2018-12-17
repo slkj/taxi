@@ -24,6 +24,7 @@
 		<typeAlias type="cn.slkj.taxi.entity.EmployeeRepairSign" alias="EmployeeRepairSign" />
 		<typeAlias type="cn.slkj.taxi.entity.EmployeeReplaceSign" alias="EmployeeReplaceSign" />
 		<typeAlias type="cn.slkj.taxi.entity.EmployeeContinueRegister" alias="EmployeeContinueRegister" />
+		<typeAlias type="cn.slkj.taxi.entity.EmployeeRank" alias="EmployeeRank" />
 		<typeAlias type="cn.slkj.taxi.entity.Enterprise" alias="Enterprise" />
 		<typeAlias type="cn.slkj.taxi.entity.EnterpriseEval" alias="EnterpriseEval" />
 		<typeAlias type="cn.slkj.taxi.entity.Taxicar" alias="Taxicar" />

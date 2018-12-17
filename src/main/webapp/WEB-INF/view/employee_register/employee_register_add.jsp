@@ -1,317 +1,167 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<base href="<%=basePath%>">
-		
-		<meta charset="utf-8" />
-		<title></title>
-		
-		<meta name="description" content="overview & stats" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="static/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="static/css/bootstrap-responsive.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="static/css/font-awesome.min.css" />
-		<link rel="stylesheet" href="static/css/chosen.css" />
-		<link rel="stylesheet" href="static/css/ace.min.css" />
-		<link rel="stylesheet" href="static/css/ace-responsive.min.css" />
-		<link rel="stylesheet" href="static/css/ace-skins.min.css" />
-		<link rel="stylesheet" href="static/css/datepicker.css" /><!-- 日期框 -->
-		
-		<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
-		<!--提示框-->
-		<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-		<style type="text/css">
-		body{
-			overflow-x: hidden;
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<%@ include file="/common/taglibs.jsp"%>
+<script src="${pageContext.request.contextPath}/assets/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/My97DatePicker/skin/WdatePicker.css">
+<script type="text/javascript">
+	//检索
+	function search() {
+		$("#employeeRegisterForm").submit();
+	}
+	function submitForm() {
+		var validate = $("#vui_sample").form('validate');
+		if (!validate) {
+			return validate;
 		}
-		</style>
-		
-		<!-- Attach our CSS -->
-	  	<link rel="stylesheet" href="static/css/reveal.css">	
-	  	
-		<!-- Attach necessary scripts -->
-		<script type="text/javascript" src="static/js/jquery.reveal.js"></script>
-		
-		<style type="text/css">
-			body { font-family: "HelveticaNeue","Helvetica-Neue", "Helvetica", "Arial", sans-serif; }
-			.big-link { display:block; margin-top: 100px; text-align: center; font-size: 70px; color: #06f; }
-		</style>
-		
-		<script type="text/javascript">
-			
-			//保存
-			function save(){
-				if($("#sex").val() == "0") {
-					if(ages($("#borndate").val()) >= 60 ) {
-						alert("人员超龄！");
-						return false;
-					}
-				}else {
-					if(ages($("#borndate").val()) >= 55 ) {
-						alert("人员超龄！");
-						return false;		
-					}
+		//var formData = new FormData(document.getElementById("vui_sample"));
+		var data =$("#vui_sample").serializeArray();
+		$.ajax({
+			url : "save",
+			type : "POST",
+			data : data,
+			async : false,
+			cache : false,
+			success : function(res) {
+				if (res) {
+					var index = parent.layer.getFrameIndex(window.name);
+					parent.layer.close(index);
+					parent.$('#list_data').datagrid('reload');
+				} else {
+					msgShow('系统提示', '出现异常');
 				}
-				$(top.jzts());
-				var cyzgCard = $("#cyzgCard").val();
-				var url = "<%=basePath%>employeeRegister/hashEmpCar.do?cyzgCard="+cyzgCard+"&tm="+new Date().getTime();
-				$.get(url,function(data){
-					$(top.hangge());
-					if(data=="error"){
-						alert("该人已注册过，若要重新注册，请先注销！");
-						return false;
-					}else if(data=="success"){
-						$(top.jzts());
-						var carid = $("#carid").val();
-						var url = "<%=basePath%>employeeRegister/hasEmp3.do?carid="+carid+"&tm="+new Date().getTime();
-						$.get(url,function(data){
-							$(top.hangge());
-							var obj = jQuery.parseJSON(data); 
-							if(obj.status == "error"){
-								var console = "";
-								$.each(obj.list, function(i, item){      
-										console += "姓名:" + item.NAME;
-										console += "&nbsp;&nbsp;|&nbsp;&nbsp;性别:" + ((item.SEX = 1) ? "男" : "女");
-										console += "&nbsp;&nbsp;|&nbsp;&nbsp;身份证号:" + item.IDCARD;
-										console += "&nbsp;&nbsp;|&nbsp;&nbsp;手机:" + item.PHONE + "<br>";
-									});
-								$("#alert_btn").click(); 
-								$("#title")[0].innerHTML = "该车已超过三人,无法注册!";
-								$("#alert_pages")[0].innerHTML = console;
-							}else if(obj.status=="success"){
-								$("#FormSave").submit();
-								$("#zhongxin").hide();
-								$("#zhongxin2").show();
-							}
-						});
-					}
-				}); 
 			}
-			
-
-			function ages(str) {
-				var r = str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
-				if (r == null)
-					return false;
-				var d = new Date(r[1], r[3] - 1, r[4]);
-				if (d.getFullYear() == r[1] && (d.getMonth() + 1) == r[3]
-						&& d.getDate() == r[4]) {
-					var Y = new Date().getFullYear();
-					return (Y - r[1]);
-				}
-				return "系统错误，请检查该人员出生年月是否正常";
-			}
-			
-			//检索
-			function search() {
-				$("#Form").submit();
-			}
-		</script>
-	</head>
-<body>
-		<a href="#" id="alert_btn" data-reveal-id="myModal" data-animation="fade"></a>
-		<div id="myModal" class="reveal-modal">
-			<h1 id="title"></h1>
-			<p id="alert_pages"></p>
-			<a class="close-reveal-modal">&#215;</a>
-		</div>
-		
-	<div style="margin-top: 20px;" id="zhongxin">
-		<form class="form-horizontal" action="employeeRegister/goAdd.do"
-			name="Form" id="Form" method="post">
-			<table id="table_report"
-				class="table table-striped table-bordered table-hover">
-				<tr>
-					<td><span style="margin-left: 20px;">请输入要注册人员的信息关键词：</span> <span
-						class="input-icon" style="margin-left: 10px;"> <input
-							autocomplete="off" id="nav-search-input" type="text" name="title"
-							value="${pd.title }" style="width: 200px;" placeholder="这里关键词" />
-							<i id="nav-search-icon" class="icon-search"></i>
-							<button class="btn btn-mini btn-light" onclick="search();">
-								<i id="nav-search-icon" class="icon-search"></i>
-							</button>
-					</span></td>
-				</tr>
-			</table>
-		</form>
-
-		<table style="table-layout: fixed;" id="table_report" border="1"
-			class="table table-striped table-bordered table-hover">
-			<c:choose>
-				<c:when test="${employee.size() == 1}">
-					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">从业资格证号：</span>
-							<span style="margin-left: 2px;">${employee[0].CYZG_CARD }</span></td>
-						<td colspan="4"><span style="margin-left: 10px;">身份证号码：</span>
-							<span style="margin-left: 2px;">${employee[0].IDCARD }</span></td>
-					</tr>
-					<tr>
-						<td colspan="2"><span style="margin-left: 20px;">姓名：</span> <span
-							style="margin-left: 2px;">${employee[0].NAME }</span></td>
-						<td colspan="2"><span style="margin-left: 10px;">性别：</span> <span
-							style="margin-left: 2px;"> <c:if
-									test="${employee[0].SEX == 0 }">男</c:if> <c:if
-									test="${employee[0].SEX == 1 }">女</c:if>
-						</span></td>
-						<td colspan="4"><span style="margin-left: 10px;">出生年月：</span>
-							<span style="margin-left: 2px;">${employee[0].BORNDATE }</span></td>
-					</tr>
-					<tr>
-						<td colspan="3"><span style="margin-left: 20px;">联系电话：</span>
-							<span style="margin-left: 2px;">${employee[0].PHONE }</span></td>
-						<td colspan="5"><span style="margin-left: 10px;">住址：</span> <span
-							style="margin-left: 2px;">${employee[0].ADDRESS }</span></td>
-					</tr>
-					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">驾驶证号：</span>
-							<span style="margin-left: 2px;">${employee[0].DRIVE_CARD }</span>
-						</td>
-						<td colspan="4"><span style="margin-left: 10px;">驾驶证初领日期：</span>
-							<span style="margin-left: 2px;">${employee[0].DRIVE_START_DATE }</span>
-						</td>
-					</tr>
-					
-					<form class="form-horizontal" action="employeeRegister/save.do" name="FormSave" id="FormSave" method="post">
-						<input type="hidden" name="cyzgCard" id="cyzgCard" value="${employee[0].CYZG_CARD }"/>
-						<input type="hidden" name="idcard" id="idcard" value="${employee[0].IDCARD }"/>
-						<input type="hidden" name="name" id="name" value="${employee[0].NAME }"/>
-						<input type="hidden" name="sex" id="sex" value="${employee[0].SEX }"/>
-						<input type="hidden" name="borndate" id="borndate" value="${employee[0].BORNDATE }"/>
-						<input type="hidden" name="phone" id="phone" value="${employee[0].PHONE }"/>
-						<input type="hidden" name="address" id="address" value="${employee[0].ADDRESS }"/>
-						<input type="hidden" name="driveCard" id="driveCard" value="${employee[0].DRIVE_CARD }"/>
-						<input type="hidden" name="driveStartDate" id="driveStartDate" value="${employee[0].DRIVE_START_DATE }"/>
-						<input type="hidden" name="status" id="status" value="2"/>
-						<table id="table_report" class="table table-striped table-bordered table-hover">
-						<tr>
-							<td colspan="4">
-								<span style="margin-left: 20px;">车号：</span>
-								<span style="margin-left: 2px;"><input id="carid" name="carid" value="${pd.CARID }" style="width:190px;" type="text" onblur="hashEMP3()"></span>
-							</td>
-							<td colspan="4">
-								<span style="margin-left: 10px;">车型：</span>
-								<span style="margin-left: 2px;"><input id="cartype" name="cartype" value="${pd.CARTYPE }" style="width:190px;" type="text"></span>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4">
-								<span style="margin-left: 20px;">与经营者关系：</span> 
-								<span style="margin-left: 2px;">
-									<select style="width:150px;" id="engageConn" name="engageConn" title="ENGAGE_CONN">
-										<option value="0" <c:if test="${pd.ENGAGE_CONN == 0 }">selected="selected"</c:if>>车主</option>
-										<option value="1" <c:if test="${pd.ENGAGE_CONN == 1 }">selected="selected"</c:if>>雇佣</option>
-									</select>
-								</span>
-							</td>
-							<td colspan="4">
-								<span style="margin-left: 10px;">经营时间：</span> 
-								<span style="margin-left: 2px;"> 
-									<select style="width:180px;" id="engageTime" name="engageTime" title="ENGAGE_TIME">
-										<option value="0" <c:if test="${pd.ENGAGE_TIME == 0 }">selected="selected"</c:if>>白</option>
-										<option value="1" <c:if test="${pd.ENGAGE_TIME == 1 }">selected="selected"</c:if>>夜</option>
-										<option value="2" <c:if test="${pd.ENGAGE_TIME == 2 }">selected="selected"</c:if>>白夜</option>
-									</select>
-								</span>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4">
-								<span style="margin-left: 20px;">承包起始时间：</span> 
-								<span style="margin-left: 2px;">
-									<input class="input-small input-mask-date" id="contractStrcount" name="contractStrcount" value="${pd.CONTRACT_STRCOUNT }" style="width:135px;" type="text">
-								</span>
-							</td>
-							<td colspan="4">
-								<span style="margin-left: 10px;">承包结束时间：</span> 
-								<span style="margin-left: 2px;"> 
-									<input class="input-small input-mask-date" id="contractEndcount" name="contractEndcount" value="${pd.CONTRACT_ENDCOUNT }" style="width:135px;" type="text">
-								</span>
-							</td>
-						</tr>
-						<tr>
-							<td class="center" colspan="8">
-								<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-								<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-							</td>
-						</tr>
-						</table>
-					</form>
-					
-				</c:when>
-				<c:otherwise>
-					<tr class="main_info">
-						<td colspan="8" class="center">没有相关数据</td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
-		</table>
-
-	</div>
-	<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
-	
-	
-	
-		<!-- 引入 -->
-		<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
-		<script src="static/js/bootstrap.min.js"></script>
-		<script src="static/js/ace-elements.min.js"></script>
-		<script src="static/js/ace.min.js"></script>
-		<script type="text/javascript" src="static/js/chosen.jquery.min.js"></script><!-- 单选框 -->
-		<script type="text/javascript" src="static/js/bootstrap-datepicker.min.js"></script><!-- 日期框 -->
-		<script type="text/javascript" src="static/js/jquery.maskedinput.min.js"></script>
-		<script type="text/javascript" src="static/js/bootbox.min.js"></script><!-- 确认窗口 -->
-
-		<script type="text/javascript">
-		$(top.hangge());
-		$(function() {
-			//单选框
-			$(".chzn-select").chosen(); 
-			$(".chzn-select-deselect").chosen({allow_single_deselect:true}); 
-			
-			//日期框
-			$('.date-picker').datepicker();
-			$('.input-mask-date').mask('9999-99-99');
 		});
-		
-		//判断编码一辆车是否大于三人
-		function hashEMP3(){
-			var carid = $("#carid").val();
-			var url = "<%=basePath%>employeeRegister/hasEmp3.do?carid="+carid+"&tm="+new Date().getTime();
-			$.get(url,function(data){
-				var obj = jQuery.parseJSON(data); 
-				if(obj.status == "error"){
-					var console = "";
-					$.each(obj.list, function(i, item){      
-							console += "姓名:" + item.NAME;
-							console += "&nbsp;&nbsp;|&nbsp;&nbsp;性别:" + ((item.SEX = 1) ? "男" : "女");
-							console += "&nbsp;&nbsp;|&nbsp;&nbsp;身份证号:" + item.IDCARD;
-							console += "&nbsp;&nbsp;|&nbsp;&nbsp;手机:" + item.PHONE + "<br>";
-						});
-					$("#alert_btn").click(); 
-					$("#title")[0].innerHTML = "该车已超过三人,无法注册!";
-					$("#alert_pages")[0].innerHTML = console;
-				}else{
-					var console = "";
-					$.each(obj.list, function(i, item){      
-							console += "姓名:" + item.NAME;
-							console += "&nbsp;&nbsp;|&nbsp;&nbsp;性别:" + ((item.SEX = 1) ? "男" : "女");
-							console += "&nbsp;&nbsp;|&nbsp;&nbsp;身份证号:" + item.IDCARD;
-							console += "&nbsp;&nbsp;|&nbsp;&nbsp;手机:" + item.PHONE + "<br>";
-						});
-					$("#alert_btn").click(); 
-					$("#title")[0].innerHTML = "该车共有"+ obj.list.length + "人,可继续注册";
-					$("#alert_pages")[0].innerHTML = console;
-					}
-				});
-			}
-		</script>
-	
+
+		return false;
+	}
+	function clearForm() {//重置表单
+		$('#vui_sample').form('clear');
+	}
+</script>
+</head>
+<body scroll="no" class="body-pd10">
+	<div class="dataView-container">
+		<div class="table-container">
+			<div class="tabs-wrapper">
+				
+					<div class="comp-search-box">
+					<form action="../employeeRegister/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
+						<div class="screen-top">
+							<div class="colRow">
+								<input class="easyui-textbox" name="idcard" style="width: 300px">
+								<input type="button" value="查询" class="easyui-linkbutton btnPrimary" style="width: 100px" onclick="search();" />
+							</div>
+						</div>
+						</form>
+						<form action="../employeeRegister/save" method="post" id="vui_sample">
+						<div class="screen-term" style="display: block;">
+							<c:choose>
+								<c:when test="${not empty employee}">
+									<div class="form2-column" style="margin: 0px 0px 0px 10px;">
+										<div class="form-column2">
+											<div class="form-column-left">
+												<input class="easyui-textbox" style="width: 100%" name="name" data-options="label:'姓名:'" value="${employee.name }" editable="false">
+											</div>
+											<div class="form-column-left fm-left">
+												<select  class="easyui-combobox" style="width: 80px;" name="sex"  data-options="label:'性别:'" editable="false">
+													<option value='0' <c:if test="${employee.sex == '0' }">selected</c:if>>男</option>
+													<option value='1' <c:if test="${employee.sex == '1' }">selected</c:if>>女</option>
+												</select>
+											</div>
+											<div class="form-column2">
+											<div class="form-column-left">
+												<input class="easyui-textbox" style="width: 100%" name="cyzg_card" data-options="label:'从业资格证号:'" value="${employee.cyzgCard }" editable="false">
+											</div>										
+											<div class="form-column-left fm-left">
+												<input class="easyui-textbox" style="width: 100%" name="idcard" data-options="label:'身份证号:'" value="${employee.idcard }" editable="false">
+											</div>
+											</div>
+											<div class="form-column2">
+											<div class="form-column-left">
+												<input class="easyui-textbox" style="width: 100%" name="borndate" data-options="label:'出生年月:'" value="${employee.borndate }" editable="false">
+											</div>										
+											<div class="form-column-left fm-left">
+												<input class="easyui-textbox" style="width: 100%" name="phone" data-options="label:'联系电话:'" value="${employee.phone }" editable="false">
+											</div>
+											</div>
+											<div class="form-column2">
+											<div class="form-column-left">
+												<input class="easyui-textbox" style="width: 100%" name="address" data-options="label:'住址:'" value="${employee.address }" editable="false">
+											</div>
+											
+										</div>
+										<div class="form-column2">
+											<div class="form-column-left">
+												<input class="easyui-textbox" style="width: 100%" name="drive_card" data-options="label:'驾驶证号:'" value="${employee.driveCard }" editable="false">
+											</div>
+											<div class="form-column-left fm-left">
+												<input class="easyui-textbox" style="width: 100%" name="drive_start_date" data-options="label:'驾驶证初领日期:'" value="${employee.driveStartDate}" editable="false">
+											</div>
+										</div>
+										<div class="form-column2">
+											<div class="form-column-left">
+												<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employeeRegister.carid }" >
+											</div>
+											<div class="form-column-left fm-left">
+												<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'车型:'" value="${employeeRegister.cartype}">
+											</div>
+										</div>
+										<div class="form-column2">
+											<div class="form-column-left">
+											<select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${employeeRegister.engage_conn }" >
+													<option value='0' <c:if test="${employeeRegister.engage_conn == 0 }">selected</c:if>>车主</option>
+													<option value='1' <c:if test="${employeeRegister.engage_conn == 1 }">selected</c:if>>雇佣</option>
+											</select>
+												
+											</div>
+											<div class="form-column-left fm-left">
+											<select  class="easyui-combobox" style="width: 80px;" name="engage_time"  data-options="label:'经营时间:'" value="${employeeRegister.engage_time }" >
+													<option value='0' <c:if test="${employeeRegister.engage_time == 0 }">selected</c:if>>白</option>
+													<option value='1' <c:if test="${employeeRegister.engage_time == 1 }">selected</c:if>>夜</option>
+													<option value='2' <c:if test="${employeeRegister.engage_time == 2 }">selected</c:if>>白夜</option>
+												</select>
+												
+											</div>
+										</div>
+										<div class="form-column2">
+											<div class="form-column-left">
+											<span>承包起始时间：</span>
+										<span style="margin-left:45px;"><input class="Wdate" name="contract_strcount"  value="${pd.contract_strcount }" style="width: 270px"
+										onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"></span>												
+											</div>
+											<div class="form-column-left fm-left">
+											<span>承包结束时间：</span>
+										<span style="margin-left:45px;"><input class="Wdate" name="contract_endcount"  value="${pd.contract_endcount }" style="width: 270px"
+										onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"></span>
+												
+											</div>
+										</div>
+										<div class="form-column2">
+											<div  class="form-btnBar pl75">
+												<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
+												style="width: 80px" /> 
+												<input type="submit" value="重置" class="easyui-linkbutton btnDefault"
+												onclick="clearForm()" style="width: 80px" />
+											</div>
+										</div>
+									</div>
+								</c:when>
+							</c:choose>
+						</div>
+						</form>
+					</div>
+					
+				
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

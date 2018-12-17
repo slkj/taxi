@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>从业资格注销审核</title>
+<title>从业资格注册</title>
 <%@ include file="/common/taglibs.jsp"%>
 </head>
 <body scroll="no" class="body-pd10">
@@ -19,14 +19,7 @@
 							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
 						<div class="colRow">
-							<input type="text" class="easyui-textbox" id="cyzgCard" data-options="label:'从业资格证号'" />
-						</div>
-						<div class="colRow">
-						<select class="easyui-combobox" name="status" id="status" data-options="label:'状态'" style="vertical-align: top; width: 120px;">
-						<option value="">全部</option>
-						<option value="0">提交成功</option>
-						<option value="1">注册完成</option>
-					  	</select>
+							<input type="text" class="easyui-textbox" id="cyzgCard" data-options="label:'从业资格证'" />
 						</div>
 						<div class="colRow">
 							<button class="easyui-linkbutton btnDefault" id="queryData">
@@ -35,6 +28,12 @@
 							</button>
 						</div>
 					</div>
+				</div>
+				<div class="btnbar-tools">
+					<a href="javascript:;" class="add" id="newData">
+						<i class="fa fa-plus-square success"></i>
+						添加
+					</a>
 				</div>
 				<table id="list_data"></table>
 			</div>
@@ -51,8 +50,7 @@
 				$grid.datagrid({
 					queryParams : {
 						name : $('#name').val(),
-						cyzgCard : $('#cyzgCard').val(),
-						status : $('#status').val()
+						cyzgCard : $('#cyzgCard').val()
 					}
 				});
 			});
@@ -60,7 +58,7 @@
 		function initGrid() {
 			//datagrid初始化 
 			$grid.datagrid({
-				url : 'checkList',
+				url : 'list',
 				striped : true,
 				nowrap : false,
 				rownumbers : true,
@@ -77,9 +75,6 @@
 		}
 		function getColumns() {
 			return [ [ {
-				title : '档案号',
-				field : 'personalId'
-			}, {
 				title : '姓名',
 				field : 'name'
 			}, {
@@ -92,36 +87,29 @@
 						return "女";
 					}
 				}
-			},{
+			}, {
+				title : '出生年月',
+				field : 'borndate'
+			}, {
+				title : '联系电话',
+				field : 'phone'
+			}, {
 				title : '从业资格证号',
 				field : 'cyzg_card'
-			}, {
-				title : '车号',
-				field : 'carid'
-			}, {
-				title : '车型',
-				field : 'cartype'
-			}, {
-				title : '申请时间',
-				field : 'addtime'
-			},  {
-				title : '状态',
-				field : 'status',
-				formatter : function(value, row, index) {
-					if (value == 0) {
-						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">提交成功</div>';
-					} else if (value == 1) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">注册完成</div>';
-					}
-				}
-			}, {
+			},{
+				title : '年度',
+				field : 'year'
+			},{
+				title : '评级',
+				field : 'rank'
+			},{
 				field : 'opt',
 				title : '操作',
 				align : 'center',
 				formatter : function(value, row) {
 					var s = '<div class ="updateBtn">';
-					s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-					s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+					s += '<a href="javascript:void(0);" title="查看"  onclick="delRow()" class="danger delMsg"><i class="fa fa-trash">查看</i></a>';
+					s += ' <a href="javascript:void(0);" title="打印申请表" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o">打印申请表</i></a></div>';
 					return s;
 				}
 			} ] ];

@@ -24,8 +24,9 @@
 						<div class="colRow">
 						<select class="easyui-combobox" name="status" id="status" data-options="label:'状态'" style="vertical-align: top; width: 120px;">
 						<option value="">全部</option>
-						<option value="0">提交成功</option>
-						<option value="1">注册完成</option>
+						<option value="0">待审核</option>
+						<option value="1">审核失败</option>
+						<option value="2">审核通过</option>
 					  	</select>
 						</div>
 						<div class="colRow">
@@ -35,6 +36,12 @@
 							</button>
 						</div>
 					</div>
+				</div>
+				<div class="btnbar-tools">
+					<a href="javascript:;" class="add" id="newData">
+						<i class="fa fa-plus-square success"></i>
+						添加
+					</a>
 				</div>
 				<table id="list_data"></table>
 			</div>
@@ -60,7 +67,7 @@
 		function initGrid() {
 			//datagrid初始化 
 			$grid.datagrid({
-				url : 'checkList',
+				url : 'list',
 				striped : true,
 				nowrap : false,
 				rownumbers : true,
@@ -77,9 +84,6 @@
 		}
 		function getColumns() {
 			return [ [ {
-				title : '档案号',
-				field : 'personalId'
-			}, {
 				title : '姓名',
 				field : 'name'
 			}, {
@@ -92,26 +96,25 @@
 						return "女";
 					}
 				}
+			}, {
+				title : '出生年月',
+				field : 'borndate'
+			}, {
+				title : '联系电话',
+				field : 'phone'
 			},{
-				title : '从业资格证号',
-				field : 'cyzg_card'
+				title : '原从业资格证号',
+				field : 'old_sign_id'
 			}, {
-				title : '车号',
-				field : 'carid'
-			}, {
-				title : '车型',
-				field : 'cartype'
-			}, {
-				title : '申请时间',
-				field : 'addtime'
-			},  {
 				title : '状态',
 				field : 'status',
 				formatter : function(value, row, index) {
 					if (value == 0) {
-						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">提交成功</div>';
+						return '<div style="background-color:#7b6f6f;text-align:center;color:#FFFFFF;">待审核</div>';
 					} else if (value == 1) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">注册完成</div>';
+						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">审核失败</div>';
+					} else if (value == 2) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核成功</div>';
 					}
 				}
 			}, {

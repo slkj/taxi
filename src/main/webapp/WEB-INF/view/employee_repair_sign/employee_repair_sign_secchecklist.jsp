@@ -61,7 +61,7 @@
 		function initGrid() {
 			//datagrid初始化 
 			$grid.datagrid({
-				url : 'list',
+				url : 'secondCheckList',
 				striped : true,
 				nowrap : false,
 				rownumbers : true,

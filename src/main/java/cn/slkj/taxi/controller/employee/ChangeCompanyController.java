@@ -49,7 +49,7 @@ public class ChangeCompanyController extends BaseController {
 		return mv;
 	}
 	@RequestMapping({ "/checkListPage" })
-	public ModelAndView fircheckListPage(HttpSession session) throws Exception {
+	public ModelAndView checkListPage(HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("change_company/change_company_checklist");
 		return mv;
@@ -62,6 +62,18 @@ public class ChangeCompanyController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value = "/list", method = { RequestMethod.POST })
 	public EPager<ChangeCompany> employeeList(HttpSession session) {
+		PageData pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<ChangeCompany> list = changeCompanyService.list(pd, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<ChangeCompany>(pageList.getPaginator().getTotalCount(), list);
+	}
+	@ResponseBody
+	@RequestMapping(value = "/checkList", method = { RequestMethod.POST })
+	public EPager<ChangeCompany> checkList(HttpSession session) {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");

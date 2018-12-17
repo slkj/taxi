@@ -50,7 +50,7 @@ public class EmployeeContinueRegisterController extends BaseController {
 		return mv;
 	}
 	@RequestMapping({ "/checkListPage" })
-	public ModelAndView checkList(HttpSession session) throws Exception {
+	public ModelAndView checkListPage(HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employee_continue_register/employee_continue_register_checklist");
 		return mv;
@@ -60,8 +60,20 @@ public class EmployeeContinueRegisterController extends BaseController {
 	 * 查询列表，返回easyUI数据格式
 	 */
 	@ResponseBody
+	@RequestMapping(value = "/checkList", method = { RequestMethod.POST })
+	public EPager<EmployeeContinueRegister> checkList(HttpSession session) {
+		PageData pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<EmployeeContinueRegister> list = employeeContinueRegisterService.list(pd, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<EmployeeContinueRegister>(pageList.getPaginator().getTotalCount(), list);
+	}
+	@ResponseBody
 	@RequestMapping(value = "/list", method = { RequestMethod.POST })
-	public EPager<EmployeeContinueRegister> employeeList(HttpSession session) {
+	public EPager<EmployeeContinueRegister> list(HttpSession session) {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
