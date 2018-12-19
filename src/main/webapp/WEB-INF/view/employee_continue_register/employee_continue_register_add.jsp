@@ -111,25 +111,25 @@
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${pd.carid }" >
+							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employeeRegister.carid }" >
 						</div>
 						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'车型:'" value="${pd.cartype}">
+							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'车型:'" value="${employeeRegister.cartype}">
 						</div>
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-						<select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${pd.engage_conn }" >
-								<option value='0' <c:if test="${pd.engage_conn == 0 }">selected</c:if>>车主</option>
-								<option value='1' <c:if test="${pd.engage_conn == 1 }">selected</c:if>>雇佣</option>
+						<select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${employeeRegister.engage_conn }" >
+								<option value='0' <c:if test="${employeeRegister.engage_conn == 0 }">selected</c:if>>车主</option>
+								<option value='1' <c:if test="${employeeRegister.engage_conn == 1 }">selected</c:if>>雇佣</option>
 						</select>
 							
 						</div>
 						<div class="form-column-left fm-left">
 						<select  class="easyui-combobox" style="width: 80px;" name="engage_time"  data-options="label:'经营时间:'" value="${employeeRegister.engage_time }" >
-								<option value='0' <c:if test="${pd.engage_time == 0 }">selected</c:if>>白</option>
-								<option value='1' <c:if test="${pd.engage_time == 1 }">selected</c:if>>夜</option>
-								<option value='2' <c:if test="${pd.engage_time == 2 }">selected</c:if>>白夜</option>
+								<option value='0' <c:if test="${employeeRegister.engage_time == 0 }">selected</c:if>>白</option>
+								<option value='1' <c:if test="${employeeRegister.engage_time == 1 }">selected</c:if>>夜</option>
+								<option value='2' <c:if test="${employeeRegister.engage_time == 2 }">selected</c:if>>白夜</option>
 							</select>
 							
 						</div>

@@ -134,19 +134,7 @@
 							
 						</div>
 					</div>
-					<div class="form-column2">
-						<div class="form-column-left">
-						<span>承包起始时间：</span>
-					<span style="margin-left:45px;"><input class="Wdate" name="contract_strcount"  value="${pd.contract_strcount }" style="width: 270px"
-					onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"></span>												
-						</div>
-						<div class="form-column-left fm-left">
-						<span>承包结束时间：</span>
-					<span style="margin-left:45px;"><input class="Wdate" name="contract_endcount"  value="${pd.contract_endcount }" style="width: 270px"
-					onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"></span>
-							
-						</div>
-					</div>					
+									
 						<div  class="form-btnBar pl75">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 

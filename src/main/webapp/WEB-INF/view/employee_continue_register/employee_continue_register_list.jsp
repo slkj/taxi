@@ -36,6 +36,12 @@
 						</div>
 					</div>
 				</div>
+				<div class="btnbar-tools">
+					<a href="javascript:;" class="add" id="newData">
+						<i class="fa fa-plus-square success"></i>
+						添加
+					</a>
+				</div>
 				<table id="list_data"></table>
 			</div>
 		</div>
@@ -54,6 +60,17 @@
 						cyzgCard : $('#cyzgCard').val(),
 						status : $('#status').val()
 					}
+				});
+			});
+			//新增数据
+			$('#newData').on('click', function(){
+				layer.open({
+					type : 2,
+					skin : 'layui-layer-rim', //加上边框
+					hade : [ 0.5, '#000', false ],
+					area : [ '980px', '600px' ], //宽高
+					title : [ '编辑信息', false ],
+					content : 'goAdd'
 				});
 			});
 		});

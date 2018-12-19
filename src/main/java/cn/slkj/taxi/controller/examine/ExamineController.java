@@ -53,9 +53,10 @@ public class ExamineController extends BaseController {
 	public String listPage() {
 		return "examine/examine_list";
 	}
+	
 	/**
 	 * 
-	 * @param page
+	 * @param page考核记录页面list
 	 * @param rows
 	 * @param gsmc
 	 * @param location
@@ -75,6 +76,65 @@ public class ExamineController extends BaseController {
 		PageList pageList = (PageList) list;
 		return new EPager<Examine>(pageList.getPaginator().getTotalCount(), list);
 	}
+	//考核登记页面list
+	@ResponseBody
+	@RequestMapping(value = "/listByIdCard")
+	public EPager<Examine> listByIdCard() throws IOException{		
+		PageData pd = new PageData();
+		pd = getPageData();
+		Integer rows = pd.getIntegr("rows");
+		Integer page = pd.getIntegr("page");
+		String sortString = "examineTime.DESC";
+		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+		List<Examine> list = examineService.getExamineListByIDCard(pd, pageBounds);
+		PageList pageList = (PageList) list;
+		return new EPager<Examine>(pageList.getPaginator().getTotalCount(), list);
+	}
+	//考核查询页面list
+	@RequestMapping("/listOne")
+	public ModelAndView listOne() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("idcard", pd.getString("idcard"));
+				Employee employee = this.employeeService.selectOne(hashMap);
+				mv.addObject("employee", employee);
+				
+				Integer rows = 100;
+				Integer page = 1;
+				String sortString = "";// 如果你想排序的话逗号分隔可以排序多列
+				/*HashMap<String, Object> map = new HashMap<String, Object>();*/
+				PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
+				List<Examine> list = examineService.getExamineListByIDCard(hashMap, pageBounds);
+				
+				//int fractionTotal = 100;
+				int syFraction=100;
+				for (int i = 0; i < list.size(); i++) {
+					Examine e = list.get(i);
+					//判断加分减分项目
+					if(e.getOrdinal().contains("6-")) {
+						syFraction = syFraction + e.getScoring();
+					}else {
+						syFraction = syFraction - e.getScoring();
+					}
+					
+				}
+				//剩余分数
+				mv.addObject("syFraction", syFraction);			
+				
+				mv.addObject("staList", list);
+			}
+			mv.addObject("pd", pd);
+			mv.setViewName("examine/examine_list_one");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	//考核登记页面
 	@RequestMapping("/examineAdd")
 	public ModelAndView examineAdd() {
 		ModelAndView mv = new ModelAndView();
@@ -109,7 +169,7 @@ public class ExamineController extends BaseController {
 				//剩余分数
 				mv.addObject("syFraction", syFraction);			
 				
-				mv.addObject("staList", list);
+				//mv.addObject("staList", list);
 			}
 			mv.addObject("pd", pd);
 			mv.setViewName("examine/examineAdd");

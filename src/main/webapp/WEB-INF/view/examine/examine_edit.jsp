@@ -10,8 +10,16 @@
 <script src="${pageContext.request.contextPath}/assets/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/My97DatePicker/skin/WdatePicker.css">
 <script type="text/javascript">
-	
-
+	$(function() {
+		$('#ordinalId').combotree({
+			url:'../examineStandard/getCombotree',
+			lines : true,
+			onSelect:function(node) {
+			  //alert(node.attributes.score);  
+			$('#scoring').textbox('setValue',node.attributes.score);
+			  }
+			})
+	})
 	function submitForm() {
 		var validate = $("#vui_sample").form('validate');
 		if (!validate) {
@@ -40,6 +48,9 @@
 	}
 	function clearForm() {//重置表单
 		$('#vui_sample').form('clear');
+	}
+	function getScore(){
+		alert("dd");
 	}
 </script>
 </head>
@@ -80,12 +91,14 @@
 					</c:if>
 					<div class="form-column1">
 						<div class="form-column-left">
-							<input class="easyui-combotree" id="ordinalId" name="ordinalId"  value="${pd.ordinalId }" style="width: 300px" data-options="label:'审核标准:',url :'../examineStandard/getCombotree',lines : true,required : true">
+							<input class="easyui-combotree" id="ordinalId" name="ordinalId"  
+							value="${pd.ordinalId }" style="width: 300px"
+							data-options="label:'审核标准:',required : true">
 						</div>
 					</div>
 					<div class="form-column1">
 						<div class="form-column-left">
-							<input class="easyui-textbox" name="scoring"  value="${pd.scoring }" style="width: 300px" data-options="label:'扣分分数:',required:true">
+							<input class="easyui-textbox" id="scoring" name="scoring"  value="${pd.scoring }" style="width: 300px" data-options="label:'扣分分数:',required:true">
 						</div>
 					</div>
 					<div class="form-column1">

@@ -63,6 +63,17 @@
 					}
 				});
 			});
+			//新增数据
+			$('#newData').on('click', function(){
+				layer.open({
+					type : 2,
+					skin : 'layui-layer-rim', //加上边框
+					hade : [ 0.5, '#000', false ],
+					area : [ '980px', '600px' ], //宽高
+					title : [ '编辑信息', false ],
+					content : 'goAdd'
+				});
+			});
 		});
 		function initGrid() {
 			//datagrid初始化 

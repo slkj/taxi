@@ -121,7 +121,7 @@
 				align : 'center',
 				formatter : function(value, row) {
 					var s = '<div class ="updateBtn">';
-					s += '<a href="javascript:void(0);" title="查看"  onclick="delRow()" class="danger delMsg"><i class="fa fa-trash">查看</i></a>';
+					s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash">删除</i></a>';
 					s += ' <a href="javascript:void(0);" title="打印申请表" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o">打印申请表</i></a></div>';
 					return s;
 				}
@@ -142,13 +142,12 @@
 			}
 		}
 		//删除
-		function delRow() {
-			var row = $('#list_data').datagrid('getSelected');
-			if (row) {
+		function delRow(id) {
+			
 				$.messager.confirm('提示', '确定要删除该记录?', function(r) {
 					if (r) {
 						$.ajax({
-							url : "delete?id=" + row.id,
+							url : "delete?id=" + id,
 							success : function(data) {
 								if (data) {
 									$grid.datagrid('reload');
@@ -160,7 +159,7 @@
 						});
 					}
 				});
-			}
+			
 		}
 	</script>
 </body>

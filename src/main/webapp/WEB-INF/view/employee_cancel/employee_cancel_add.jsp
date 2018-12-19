@@ -52,7 +52,7 @@
 			<div class="tabs-wrapper">
 				
 			<div class="comp-search-box">
-			<form action="../employeeRegister/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
+			<form action="../employeeCancel/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
 				<div class="screen-top">
 					<div class="colRow">
 						<input class="easyui-textbox" name="idcard" style="width: 300px">
@@ -111,42 +111,13 @@
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${pd.carid }" >
+							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employee.carid }" editable="false" >
 						</div>
 						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'车型:'" value="${pd.cartype}">
+							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'注册时间:'" value="${employee.registerDate}" editable="false">
 						</div>
 					</div>
-					<div class="form-column2">
-						<div class="form-column-left">
-						<select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${pd.engage_conn }" >
-								<option value='0' <c:if test="${pd.engage_conn == 0 }">selected</c:if>>车主</option>
-								<option value='1' <c:if test="${pd.engage_conn == 1 }">selected</c:if>>雇佣</option>
-						</select>
-							
-						</div>
-						<div class="form-column-left fm-left">
-						<select  class="easyui-combobox" style="width: 80px;" name="engage_time"  data-options="label:'经营时间:'" value="${employeeRegister.engage_time }" >
-								<option value='0' <c:if test="${pd.engage_time == 0 }">selected</c:if>>白</option>
-								<option value='1' <c:if test="${pd.engage_time == 1 }">selected</c:if>>夜</option>
-								<option value='2' <c:if test="${pd.engage_time == 2 }">selected</c:if>>白夜</option>
-							</select>
-							
-						</div>
-					</div>
-					<div class="form-column2">
-						<div class="form-column-left">
-						<span>承包起始时间：</span>
-					<span style="margin-left:45px;"><input class="Wdate" name="contract_strcount"  value="${pd.contract_strcount }" style="width: 270px"
-					onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"></span>												
-						</div>
-						<div class="form-column-left fm-left">
-						<span>承包结束时间：</span>
-					<span style="margin-left:45px;"><input class="Wdate" name="contract_endcount"  value="${pd.contract_endcount }" style="width: 270px"
-					onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"></span>
-							
-						</div>
-					</div>					
+								
 						<div  class="form-btnBar pl75">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 

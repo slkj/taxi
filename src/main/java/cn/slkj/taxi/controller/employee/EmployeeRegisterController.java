@@ -27,7 +27,10 @@ import cn.slkj.taxi.entity.Examine;
 import cn.slkj.taxi.service.EmployeeRegisterService;
 import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.util.EPager;
+import cn.slkj.taxi.util.JsonResult;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.Tools;
+import cn.slkj.taxi.util.UuidUtil;
 
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -99,7 +102,7 @@ public class EmployeeRegisterController extends BaseController {
 		ModelAndView mv = new ModelAndView();
 		PageData pd = new PageData();
 		pd = getPageData();
-		try {System.out.println("进去了#####################");
+		try {
 			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", pd.getString("idcard"));
@@ -107,11 +110,51 @@ public class EmployeeRegisterController extends BaseController {
 				mv.addObject("employee", employee);
 				
 			}
-			mv.addObject("pd", pd);
+			mv.addObject("msg", "save");
 			mv.setViewName("employee_register/employee_register_add");
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
 		return mv;
+	}
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/save", method = { RequestMethod.POST })
+	public boolean save()  throws Exception{
+		
+		PageData pd = new PageData();
+		try {
+			pd = getPageData();
+			int rti = 0;
+			String id = pd.getString("id");
+			if (Tools.notEmpty(id)) {
+				rti = employeeRegisterService.update(pd);
+			} else {
+				pd.put("id", UuidUtil.get32UUID());
+				rti = employeeRegisterService.insert(pd);
+			}
+			return rti > 0 ? true : false;
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+			return false;
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value = "/delete")
+	public JsonResult deletes(String id) {
+		int i = employeeRegisterService.delete(id);
+		try {
+			if (i > 0) {
+				return new JsonResult(true, "");
+			} else {
+				return new JsonResult(false, "操作失败！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JsonResult(false, e.toString());
+		}
+
 	}
 }

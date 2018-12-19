@@ -42,7 +42,7 @@ public interface EnterpriseMapper {
 	 * @param map
 	 * @return
 	 */
-	int queryListCount(PageData pd);
+	//int queryListCount(PageData pd);
 
 	/**
 	 * 添加公司/车队

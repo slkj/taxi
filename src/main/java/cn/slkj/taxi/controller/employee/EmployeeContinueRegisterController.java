@@ -21,10 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
+import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeContinueRegister;
 import cn.slkj.taxi.service.EmployeeContinueRegisterService;
+import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.util.EPager;
+import cn.slkj.taxi.util.JsonResult;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.Tools;
+import cn.slkj.taxi.util.UuidUtil;
 
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -38,6 +43,8 @@ public class EmployeeContinueRegisterController extends BaseController {
 	
 	@Autowired
 	private EmployeeContinueRegisterService employeeContinueRegisterService;
+	@Autowired
+	private EmployeeService employeeService;
 
 	@RequestMapping({ "/listPage" })
 	public ModelAndView listPage() throws Exception {
@@ -82,5 +89,62 @@ public class EmployeeContinueRegisterController extends BaseController {
 		List<EmployeeContinueRegister> list = employeeContinueRegisterService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
 		return new EPager<EmployeeContinueRegister>(pageList.getPaginator().getTotalCount(), list);
+	}
+	@RequestMapping("/goAdd")
+	public ModelAndView examineAdd() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("idcard", pd.getString("idcard"));
+				Employee employee = this.employeeService.selectOne(hashMap);
+				mv.addObject("employee", employee);
+				
+			}
+			mv.addObject("msg", "save");
+			mv.setViewName("employee_continue_register/employee_continue_register_add");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/save", method = { RequestMethod.POST })
+	public boolean save()  throws Exception{
+		
+		PageData pd = new PageData();
+		try {
+			pd = getPageData();
+			int rti = 0;
+			String id = pd.getString("id");
+			if (Tools.notEmpty(id)) {
+				rti = employeeContinueRegisterService.update(pd);
+			} else {
+				pd.put("id", UuidUtil.get32UUID());
+				rti = employeeContinueRegisterService.insert(pd);
+			}
+			return rti > 0 ? true : false;
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+			return false;
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value = "/delete")
+	public JsonResult deletes(String id) {
+		int i = employeeContinueRegisterService.delete(id);
+		try {
+			if (i > 0) {
+				return new JsonResult(true, "");
+			} else {
+				return new JsonResult(false, "操作失败！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JsonResult(false, e.toString());
+		}
+
 	}
 }

@@ -150,9 +150,12 @@ public class ExamineStandardController extends BaseController {
 	private List<Tree> toTree(List<ExamineStandard> list) {
 		List<Tree> trees = new ArrayList<Tree>();
 		for (ExamineStandard e : list) {
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("score", e.getScoring());
 			Tree t = new Tree();
 			t.setId(e.getOrdinal());
 			t.setText(e.getStandard());
+			t.setAttributes(hashMap);
 			t.setChildren(toTree(e.getChildren()));
 			trees.add(t);
 		}
