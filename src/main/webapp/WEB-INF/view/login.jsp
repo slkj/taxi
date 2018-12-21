@@ -67,11 +67,6 @@
 </script>
 </head>
 <body>
-	<input type="hidden" name="lt">
-	<input type="hidden" name="execution" value="e1s1">
-	<input type="hidden" name="_eventId" value="submit">
-	<input type="hidden" name="userType" value="0">
-	<input id="rembername" name="rembername" type="hidden" class="fr" data-cacheval="false" value="false">
 	<!--登录start-->
 	<div class="ordinaryLogin">
 		<div class="login_ad">
@@ -103,7 +98,7 @@
 							</div>
 						</div>
 
-						<div class="user_code">
+						<div class="user_code" style="display: none;">
 							<div class="login_input user_bg ">
 								<input name="verification" id="verification" tabindex="3" value="验证码" type="text" class="usernameSty">
 								<div id="v_container" class="codeimg">
@@ -112,13 +107,13 @@
 							</div>
 						</div>
 						<div style="height: 10px"></div>
-						<div class="remeber_name">
-							<b id="checked" class="normal" onclick="changeCheckRembername();"></b>
-							<label id="login_save" style="float: left;">记住用户名</label>
-							<div class="login-wjpw">
+<!-- 						<div class="remeber_name"> -->
+<!-- 							<b id="checked" class="normal" onclick="changeCheckRembername();"></b> -->
+<!-- 							<label id="login_save" style="float: left;">记住用户名</label> -->
+<!-- 							<div class="login-wjpw"> -->
 								<!-- 									<a class="blue" href="javascript:;">忘记用户名？</a>&nbsp;|&nbsp;&nbsp; <a href="javascript:;"><span class="blue">忘记密码？</span></a> -->
-							</div>
-						</div>
+<!-- 							</div> -->
+<!-- 						</div> -->
 					</div>
 					<div class="login_ck">
 						<input name="submitBtn" id="submitBtn" type="submit" tabindex="5" class="login_btn" value="登录" onclick="severCheck();">

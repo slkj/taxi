@@ -34,6 +34,7 @@
 		UPDATE SYS_USER
 		<set>
 			<if test="username != null"> username = #{username},</if>
+			<if test="realname != null"> realname = #{realname},</if>
 			<if test="status != null"> STATUS = #{status},</if>
 			<if test="email != null"> email = #{email},</if>
 			<if test="sex != null"> sex = #{sex},</if>

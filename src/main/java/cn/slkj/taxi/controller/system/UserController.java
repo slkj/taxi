@@ -68,8 +68,10 @@ public class UserController extends BaseController {
 			int rti = 0;
 			String id = pd.getString("id");
 			if (Tools.notEmpty(id)) {
+			
 				rti = userService.editUser(pd);
 			} else {
+				pd.put("password", "000000");
 				rti = userService.saveUser(pd);
 			}
 			return rti > 0 ? true : false;

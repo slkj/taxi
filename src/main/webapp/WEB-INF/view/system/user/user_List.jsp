@@ -55,7 +55,6 @@
 							data-options="
 									label:'单位',
 									url: '../enterprise/queryEnterpriseList',
-									required:true,
 									valueField:'unitname',
 									textField:'unitname'"
 							style="width: 100%; height: 32px">
