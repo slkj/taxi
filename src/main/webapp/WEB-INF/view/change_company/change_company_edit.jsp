@@ -42,7 +42,9 @@
 		return false;
 	}
 	function clearForm() {//重置表单
-		$('#vui_sample').form('clear');
+		//$('#vui_sample').form('clear');
+		var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
 	}
 </script>
 </head>
@@ -52,7 +54,7 @@
 			<div class="tabs-wrapper">
 				
 			<div class="comp-search-box">
-			<form action="../employeeCancel/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
+			<form action="../changeCompany/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
 				<div class="screen-top">
 					<div class="colRow">
 						<input class="easyui-textbox" name="idcard" style="width: 300px">
@@ -62,12 +64,14 @@
 			</form>
 			<form method="post" id="vui_sample">
 			<input type="hidden" name="id" id="id" value="${pd.id }" />
+			
 			<c:if test="${msg == 'save'}">
 			<input type="hidden" name="status" id="status" value="0" />
 			</c:if>
 			<div class="screen-term" style="display: block;">
 			<c:choose>
 			<c:when test="${not empty employee}">
+			<input type="hidden" name="old_company" id="old_company" value="${employee.company }" />
 				<div class="form2-column" style="margin: 0px 0px 0px 10px;">
 					<div class="form-column2">
 						<div class="form-column-left">
@@ -87,41 +91,11 @@
 							<input class="easyui-textbox" style="width: 100%" name="idcard" data-options="label:'身份证号:'" value="${employee.idcard }" editable="false">
 						</div>
 						</div>
-						<div class="form-column2">
-						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="borndate" data-options="label:'出生年月:'" value="${employee.borndate }" editable="false">
-						</div>										
-						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" style="width: 100%" name="phone" data-options="label:'联系电话:'" value="${employee.phone }" editable="false">
-						</div>
-						</div>
-						<div class="form-column2">
-						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="address" data-options="label:'住址:'" value="${employee.address }" editable="false">
-						</div>
-						
-					</div>
-					<div class="form-column2">
-						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="drive_card" data-options="label:'驾驶证号:'" value="${employee.driveCard }" editable="false">
-						</div>
-						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" style="width: 100%" name="drive_start_date" data-options="label:'驾驶证初领日期:'" value="${employee.driveStartDate}" editable="false">
-						</div>
-					</div>
-					<div class="form-column2">
-						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employee.carid }" editable="false" >
-						</div>
-						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'注册时间:'" value="${employee.registerDate}" editable="false">
-						</div>
-					</div>
-								
+										
 						<div  class="form-btnBar pl75">
-							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
-							style="width: 80px" /> 
-							<input type="submit" value="重置" class="easyui-linkbutton btnDefault"
+							<input type="submit" value="申请变更为本公司人员" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
+							style="width: 150px" /> 
+							<input type="submit" value="取消" class="easyui-linkbutton btnDefault"
 							onclick="clearForm()" style="width: 80px" />
 						</div>
 					</div>

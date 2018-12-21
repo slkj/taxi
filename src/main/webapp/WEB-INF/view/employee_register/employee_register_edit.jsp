@@ -42,23 +42,26 @@
 		return false;
 	}
 	function clearForm() {//重置表单
-		$('#vui_sample').form('clear');
+		//$('#vui_sample').form('clear');
+		var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
 	}
 </script>
 </head>
 <body scroll="no" class="body-pd10">
 	<div class="dataView-container">
 		<div class="table-container">
-			<div class="tabs-wrapper">
-				
+			<div class="tabs-wrapper">				
 			<div class="comp-search-box">
 			<form action="../employeeRegister/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
+					<c:if test="${msg == 'save'}">
 				<div class="screen-top">
 					<div class="colRow">
 						<input class="easyui-textbox" name="idcard" style="width: 300px">
 			<input type="button" value="查询" class="easyui-linkbutton btnPrimary" style="width: 100px" onclick="search();" />
 				</div>
 			</div>
+			</c:if>
 			</form>
 			<form method="post" id="vui_sample">
 			<input type="hidden" name="id" id="id" value="${pd.id }" />
@@ -150,7 +153,7 @@
 						<div  class="form-btnBar pl75">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 
-							<input type="submit" value="重置" class="easyui-linkbutton btnDefault"
+							<input type="submit" value="取消" class="easyui-linkbutton btnDefault"
 							onclick="clearForm()" style="width: 80px" />
 						</div>
 					</div>

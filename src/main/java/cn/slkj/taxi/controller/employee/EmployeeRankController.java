@@ -10,6 +10,7 @@ package cn.slkj.taxi.controller.employee;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,13 +24,14 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeRank;
+import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.EmployeeRankService;
 import cn.slkj.taxi.service.EmployeeService;
+import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
-import cn.slkj.taxi.util.UuidUtil;
 
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -90,6 +92,12 @@ public class EmployeeRankController extends BaseController {
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
 		String sortString = "YEAR.DESC";// 如果你想排序的话逗号分隔可以排序多列		
+		User user = (User)session.getAttribute("sessionUser");
+		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
+		        pd.put("company", user.getDepartName());
+		      }else{
+	      pd.put("company", "总公司");
+		      }
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeRank> list = employeeRankService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
@@ -110,7 +118,7 @@ public class EmployeeRankController extends BaseController {
 				
 			}
 			mv.addObject("msg", "save");
-			mv.setViewName("employee_rank/employee_rank_add");
+			mv.setViewName("employee_rank/employee_rank_edit");
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
@@ -131,7 +139,9 @@ public class EmployeeRankController extends BaseController {
 			if (Tools.notEmpty(id)) {
 				rti = employeeRankService.update(pd);
 			} else {
-				pd.put("id", UuidUtil.get32UUID());
+				//pd.put("id", UuidUtil.get32UUID());
+				pd.put("id", (DateUtil.getDayss() + new Random().nextInt()).substring(0, 15).replace("-", ""));
+			    pd.put("year", DateUtil.getYear());
 				rti = employeeRankService.insert(pd);
 			}
 			return rti > 0 ? true : false;

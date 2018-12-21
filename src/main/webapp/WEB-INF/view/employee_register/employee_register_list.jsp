@@ -122,24 +122,24 @@
 				formatter : function(value, row) {
 					var s = '<div class ="updateBtn">';
 					s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash">删除</i></a>';
-					s += ' <a href="javascript:void(0);" title="打印申请表" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o">打印申请表</i></a></div>';
+					s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o">编辑</i></a></div>';
 					return s;
 				}
 			} ] ];
 		}
 		//修改
-		function editRow() {
-			var row = $('#list_data').datagrid('getSelected');
-			if (row) {
+		function editRow(id) {
+			//var row = $('#list_data').datagrid('getSelected');
+			//if (row) {
 				layer.open({
 					type : 2,
 					skin : 'layui-layer-rim', //加上边框
 					hade : [ 0.5, '#000', false ],
-					area : [ '810px', '420px' ], //宽高
-					title : [ '报考信息', false ],
-					content : 'goSignUpEdit?id=' + row.id
+					area : [ '980px', '600px' ], //宽高
+					title : [ '编辑信息', false ],
+					content : 'goEdit?id=' + id
 				});
-			}
+			//}
 		}
 		//删除
 		function delRow(id) {

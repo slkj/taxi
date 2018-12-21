@@ -10,6 +10,7 @@ package cn.slkj.taxi.controller.employee;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,10 +22,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
+import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeCancel;
+import cn.slkj.taxi.entity.Role;
+import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.EmployeeCancelService;
+import cn.slkj.taxi.service.EmployeeService;
+import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
+import cn.slkj.taxi.util.JsonResult;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.Tools;
+import cn.slkj.taxi.util.UuidUtil;
 
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -44,6 +53,8 @@ public class CancelRegfileController extends BaseController {
 	
 	@Autowired
 	private EmployeeCancelService employeeCancelService;
+	@Autowired
+	private EmployeeService employeeService;
 
 	@RequestMapping({ "/listPage" })
 	public ModelAndView listPage() throws Exception {
@@ -86,9 +97,77 @@ public class CancelRegfileController extends BaseController {
 		Integer page = pd.getIntegr("page");
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
 		pd.put("flag", Integer.valueOf(1));
+		User user = (User)session.getAttribute("sessionUser");
+		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
+		        pd.put("company", user.getDepartName());
+		      }else{
+		    	pd.put("company", "总公司");
+		      }
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeCancel> list = employeeCancelService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
 		return new EPager<EmployeeCancel>(pageList.getPaginator().getTotalCount(), list);
+	}
+	@RequestMapping("/goAdd")
+	public ModelAndView examineAdd() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("idcard", pd.getString("idcard"));
+				Employee employee = this.employeeService.selectOne(hashMap);
+				mv.addObject("employee", employee);
+				
+			}
+			mv.addObject("msg", "save");
+			mv.setViewName("cancel_reg/cancel_reg_edit");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/save", method = { RequestMethod.POST })
+	public boolean save(HttpSession session)  throws Exception{
+		
+		PageData pd = new PageData();
+		try {
+			pd = getPageData();
+			int rti = 0;
+			User user = (User)session.getAttribute("sessionUser");				 
+	        pd.put("company", user.getDepartName());
+	        pd.put("addtime", DateUtil.getTime());
+	        pd.put("flag", Integer.valueOf(1));
+			String id = pd.getString("id");
+			if (Tools.notEmpty(id)) {
+				rti = employeeCancelService.update(pd);
+			} else {
+				//pd.put("id", UuidUtil.get32UUID());
+				pd.put("id", (DateUtil.getDayss() + new Random().nextInt()).substring(0, 15).replace("-", ""));
+				rti = employeeCancelService.insert(pd);
+			}
+			return rti > 0 ? true : false;
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+			return false;
+		}
+	}
+	@ResponseBody
+	@RequestMapping(value = "/delete")
+	public JsonResult deletes(String id) {
+		int i = employeeCancelService.delete(id);
+		try {
+			if (i > 0) {
+				return new JsonResult(true, "");
+			} else {
+				return new JsonResult(false, "操作失败！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JsonResult(false, e.toString());
+		}
+
 	}
 }

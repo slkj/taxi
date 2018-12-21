@@ -52,7 +52,7 @@
 			<div class="tabs-wrapper">
 				
 			<div class="comp-search-box">
-			<form action="../employeeRegister/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
+			<form action="../employeeReplaceSign/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
 				<div class="screen-top">
 					<div class="colRow">
 						<input class="easyui-textbox" name="idcard" style="width: 300px">
@@ -103,7 +103,7 @@
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="drive_card" data-options="label:'准驾车型:'" value="${employee.driveType }" editable="false">
+							<input class="easyui-textbox" style="width: 100%" name="drive_type" data-options="label:'准驾车型:'" value="${employee.driveType }" editable="false">
 						</div>
 						<div class="form-column-left fm-left">
 							<input class="easyui-textbox" style="width: 100%" name="drive_start_date" data-options="label:'驾驶证初领日期:'" value="${employee.driveStartDate}" editable="false">
@@ -111,10 +111,10 @@
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'原从业证号:'" value="${employee.cyzgCard }" >
+							<input class="easyui-textbox" style="width: 100%" name="old_sign_id" data-options="label:'原从业证号:'" value="${employee.cyzgCard }" editable="false" >
 						</div>
 						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'初领从业证日期:'" value="${employee.decisionHours}">
+							<input class="easyui-textbox" style="width: 100%" name="first_sign_date" data-options="label:'初领从业证日期:'" value="${employee.decisionHours}" editable="false">
 						</div>
 					</div>
 								

@@ -10,6 +10,7 @@ package cn.slkj.taxi.controller.employee;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,8 +24,11 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeRepairSign;
+import cn.slkj.taxi.entity.Role;
+import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.EmployeeRepairSignService;
 import cn.slkj.taxi.service.EmployeeService;
+import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
 import cn.slkj.taxi.util.PageData;
@@ -84,6 +88,12 @@ public class EmployeeRepairSignController extends BaseController {
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
+		User user = (User)session.getAttribute("sessionUser");
+		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
+		        pd.put("company", user.getDepartName());
+		      }else{
+	      pd.put("company", "总公司");
+		      }
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeRepairSign> list = employeeRepairSignService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
@@ -131,7 +141,7 @@ public class EmployeeRepairSignController extends BaseController {
 				
 			}
 			mv.addObject("msg", "save");
-			mv.setViewName("employee_repair_sign/employee_repair_sign_add");
+			mv.setViewName("employee_repair_sign/employee_repair_sign_edit");
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
@@ -139,7 +149,7 @@ public class EmployeeRepairSignController extends BaseController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
-	public boolean save()  throws Exception{
+	public boolean save(HttpSession session)  throws Exception{
 		
 		PageData pd = new PageData();
 		try {
@@ -149,7 +159,11 @@ public class EmployeeRepairSignController extends BaseController {
 			if (Tools.notEmpty(id)) {
 				rti = employeeRepairSignService.update(pd);
 			} else {
-				pd.put("id", UuidUtil.get32UUID());
+				//pd.put("id", UuidUtil.get32UUID());
+				pd.put("id", (DateUtil.getDayss() + new Random().nextInt()).substring(0, 15).replace("-", ""));
+				User user = (User)session.getAttribute("sessionUser");				 
+		        pd.put("company", user.getDepartName());
+		        pd.put("addtime", DateUtil.getTime());
 				rti = employeeRepairSignService.insert(pd);
 			}
 			return rti > 0 ? true : false;

@@ -12,16 +12,16 @@
 			<if test="id != null">
 				ID,
 			</if>
-			<if test="cyzgCard != null">
+			<if test="cyzg_card != null">
 				CYZG_CARD,
 			</if>
 			<if test="name != null">
 				NAME,
 			</if>
-			<if test="oldCompany != null">
+			<if test="old_company != null">
 				OLD_COMPANY,
 			</if>
-			<if test="newCompany != null">
+			<if test="new_company != null">
 				NEW_COMPANY,
 			</if>
 			<if test="status != null">
@@ -35,17 +35,17 @@
 			<if test="id != null">
 				#{id,jdbcType=VARCHAR},
 			</if>
-			<if test="cyzgCard != null">
-				#{cyzgCard,jdbcType=VARCHAR},
+			<if test="cyzg_card != null">
+				#{cyzg_card,jdbcType=VARCHAR},
 			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
-			<if test="oldCompany != null">
-				#{oldCompany,jdbcType=VARCHAR},
+			<if test="old_company != null">
+				#{old_company,jdbcType=VARCHAR},
 			</if>
-			<if test="newCompany != null">
-				#{newCompany,jdbcType=VARCHAR},
+			<if test="new_company != null">
+				#{new_company,jdbcType=VARCHAR},
 			</if>
 			<if test="status != null">
 				#{status,jdbcType=VARCHAR},
@@ -79,6 +79,9 @@
 			</if>
 			<if test="status!=null and status!=''">
 			AND STATUS = #{status}
+			</if>
+			<if test="company!=null and company!=''">
+			AND NEW_COMPANY = #{company}
 			</if>
 		</where>
 	</select>

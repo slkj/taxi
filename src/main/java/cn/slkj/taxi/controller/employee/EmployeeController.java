@@ -36,6 +36,7 @@ import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.FileUtil;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
 
 /**
@@ -238,7 +239,8 @@ public class EmployeeController extends BaseController {
 
 	@ResponseBody
 	@RequestMapping({ "/save" })
-	public boolean save(HttpServletRequest request, @RequestParam(value = "photo", required = false) MultipartFile photo,
+	public boolean save(HttpSession session,HttpServletRequest request, @RequestParam(value = "photo", required = false) MultipartFile photo,
+			@RequestParam(value = "id", required = false) String id,
 			@RequestParam(value = "personalId", required = false) String personalId, @RequestParam(value = "permitFilesId", required = false) String permitFilesId,
 			@RequestParam(value = "name", required = false) String name, @RequestParam(value = "sex", required = false) String sex,
 			@RequestParam(value = "borndate", required = false) String borndate, @RequestParam(value = "nationality", required = false) String nationality,
@@ -262,7 +264,6 @@ public class EmployeeController extends BaseController {
 		PageData pd = new PageData();
 		pd = getPageData();
 		int rti = 0;
-		String id = UuidUtil.get32UUID();
 		pd.put("id", id);
 		pd.put("personalId", personalId);
 		pd.put("permitFilesId", permitFilesId);
@@ -299,16 +300,22 @@ public class EmployeeController extends BaseController {
 		pd.put("shzt", shzt);
 		pd.put("decisionHours", decisionHours);
 		pd.put("approvalHours", approvalHours);
-
 		pd.put("status", status);
-
 		pd.put("addtime", DateUtil.getTime());
-
+		User user = (User)session.getAttribute("sessionUser");				 
+        pd.put("company", user.getDepartName());
 		if ((photo != null) && (!photo.isEmpty())) {
 			byte[] byteArryPhoto = FileUtil.toByteArray(photo.getInputStream());
 			pd.put("photo", byteArryPhoto);
 		}
-		rti = employeeService.insertSelective(pd);
+		if (Tools.notEmpty(id)) {
+			rti = employeeService.update(pd);
+		}else{
+			pd.put("id", UuidUtil.get32UUID());
+			rti = employeeService.insertSelective(pd);
+		}
+		
+		
 		mv.addObject("msg", "success");
 		mv.setViewName("save_result");
 		return rti > 0 ? true : false;

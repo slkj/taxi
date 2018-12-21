@@ -42,7 +42,9 @@
 		return false;
 	}
 	function clearForm() {//重置表单
-		$('#vui_sample').form('clear');
+		//$('#vui_sample').form('clear');
+		var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
 	}
 </script>
 </head>
@@ -52,7 +54,7 @@
 			<div class="tabs-wrapper">
 				
 			<div class="comp-search-box">
-			<form action="../employeeRegister/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
+			<form action="../employeeCancel/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
 				<div class="screen-top">
 					<div class="colRow">
 						<input class="easyui-textbox" name="idcard" style="width: 300px">
@@ -111,17 +113,17 @@
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employeeRegister.carid }" >
+							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employee.carid }" editable="false" >
 						</div>
 						<div class="form-column-left fm-left">
 							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'注册时间:'" value="${employee.registerDate}" editable="false">
 						</div>
 					</div>
-									
+								
 						<div  class="form-btnBar pl75">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 
-							<input type="submit" value="重置" class="easyui-linkbutton btnDefault"
+							<input type="submit" value="取消" class="easyui-linkbutton btnDefault"
 							onclick="clearForm()" style="width: 80px" />
 						</div>
 					</div>

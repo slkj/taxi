@@ -29,6 +29,9 @@
 			<if test="status!=null and status!=''">
 			AND a.STATUS = #{status}
 			</if>
+			<if test="company!=null and company!=''">
+			AND a.COMPANY = #{company}
+			</if>
 	</select>
 
 	

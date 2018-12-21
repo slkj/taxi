@@ -13,18 +13,18 @@ public class EmployeeReplaceSign
 	  private String id;
 	  private String name;
 	  private String sex;
-	  private String borndate;
+	  private String borndate;//生日
 	  private String idcard;
 	  private String address;
 	  private String phone;
-	  private String drive_type;
-	  private String drive_start_date;
-	  private String company;
-	  private String carid;
-	  private String old_sign_id;
-	  private String first_sign_date;
-	  private String passtime;
-	  private String status;
+	  private String drive_type;//准驾车型
+	  private String drive_start_date;//驾驶证初领日期
+	  private String company;//公司
+	  private String carid;//车牌号
+	  private String old_sign_id;//原从业证号
+	  private String first_sign_date;//初领从业证日期
+	  private String passtime;//通过时间
+	  private String status;//状态
 	  private String addtime;
 	public String getId() {
 		return id;

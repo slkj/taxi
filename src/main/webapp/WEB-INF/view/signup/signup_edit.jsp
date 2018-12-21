@@ -71,7 +71,16 @@
 	oFReader.onload = function(oFREvent) {
 		document.getElementById("uploadPreview").src = oFREvent.target.result;
 	};
-
+	$(function() {
+		$('#oldCompany').combobox({
+			url : '../enterprise/queryEnterpriseList',
+			valueField : 'unitname',
+			textField : 'unitname',
+			onSelect : function(data) {
+				$("#oldCompany").textbox('setValue', data.unitname);
+			}
+		});
+	})
 	function loadImageFile() {
 		if (document.getElementById("photo").files.length === 0) {
 			return;
@@ -118,9 +127,9 @@
 	<form class="form-horizontal" name="Form" id="vui_sample" method="post" enctype="multipart/form-data" onsubmit="return submitForm();">
 		<input type="hidden" name="id" id="id" value="${pd.id }" />
 		<input type="hidden" name="company" id="company" value="${pd.company }" />
-		<c:if test="${msg == 'save'}">
+		<%-- <c:if test="${msg == 'save'}"> --%>
 			<input type="hidden" name="status" id="status" value="0" />
-		</c:if>
+		<%-- </c:if> --%>
 		<table class="table table-striped table-bordered table-hover">
 			<tr>
 				<td>
@@ -131,8 +140,8 @@
 					<span style="margin-left: 20px;">性别：</span>
 					<span style="margin-left: 10px;">
 						<select  class="easyui-combobox" style="width: 80px;" id="sex" name="sex" title="性别">
-							<option value='0'>男</option>
-							<option value='1'>女</option>
+							<option value='0' <c:if test="${pd.sex == '0' }">selected</c:if>>男</option>
+							<option value='1' <c:if test="${pd.sex == '1' }">selected</c:if>>女</option>
 						</select>
 					</span>
 					<span style="margin-left: 30px;">出生年月：</span>
@@ -217,8 +226,8 @@
 					</span>
 					<span style="margin-left: 20px;">原属公司：</span>
 					<span style="margin-left: 10px;">
-						<select class="chzn-select" name="oldCompany" id="oldCompany" style="vertical-align: top; width: 170px;">
-						</select>
+					<input class="easyui-textbox" id="oldCompany" name="oldCompany" style="width: 170px" value="${pd.oldCompany }" >
+					
 					</span>
 				</td>
 			</tr>

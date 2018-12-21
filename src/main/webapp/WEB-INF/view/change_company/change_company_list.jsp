@@ -113,8 +113,12 @@
 				title : '状态',
 				field : 'status',
 				formatter : function(value, row, index) {
-					if (value == 2) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">提交成功</div>';
+					if (value == 0) {
+						return '<div style="background-color:#7b6f6f;text-align:center;color:#FFFFFF;">待审核</div>';
+					} else if (value == 1) {
+						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">审核失败</div>';
+					} else if (value == 2) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核成功</div>';
 					}
 				}
 			}, {
@@ -123,34 +127,21 @@
 				align : 'center',
 				formatter : function(value, row) {
 					var s = '<div class ="updateBtn">';
-					s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-					s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+					s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a></div>';
+					//s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
 					return s;
 				}
 			} ] ];
 		}
-		//修改
-		function editRow() {
-			var row = $('#list_data').datagrid('getSelected');
-			if (row) {
-				layer.open({
-					type : 2,
-					skin : 'layui-layer-rim', //加上边框
-					hade : [ 0.5, '#000', false ],
-					area : [ '810px', '420px' ], //宽高
-					title : [ '报考信息', false ],
-					content : 'goSignUpEdit?id=' + row.id
-				});
-			}
-		}
+		
 		//删除
-		function delRow() {
-			var row = $('#list_data').datagrid('getSelected');
-			if (row) {
+		function delRow(id) {
+			//var row = $('#list_data').datagrid('getSelected');
+			//if (row) {
 				$.messager.confirm('提示', '确定要删除该记录?', function(r) {
 					if (r) {
 						$.ajax({
-							url : "delete?id=" + row.id,
+							url : "delete?id=" + id,
 							success : function(data) {
 								if (data) {
 									$grid.datagrid('reload');
@@ -162,7 +153,7 @@
 						});
 					}
 				});
-			}
+			//}
 		}
 	</script>
 </body>

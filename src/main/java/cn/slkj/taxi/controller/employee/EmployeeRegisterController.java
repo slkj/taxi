@@ -10,6 +10,7 @@ package cn.slkj.taxi.controller.employee;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,9 +24,11 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeRegister;
-import cn.slkj.taxi.entity.Examine;
+import cn.slkj.taxi.entity.Role;
+import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.EmployeeRegisterService;
 import cn.slkj.taxi.service.EmployeeService;
+import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
 import cn.slkj.taxi.util.PageData;
@@ -90,7 +93,13 @@ public class EmployeeRegisterController extends BaseController {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
-		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列		
+		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列	
+		  User user = (User)session.getAttribute("sessionUser");
+		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
+		        pd.put("company", user.getDepartName());
+		      }else{
+		    	pd.put("company", "总公司");
+		      }
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeRegister> list = employeeRegisterService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
@@ -111,32 +120,59 @@ public class EmployeeRegisterController extends BaseController {
 				
 			}
 			mv.addObject("msg", "save");
-			mv.setViewName("employee_register/employee_register_add");
+			mv.setViewName("employee_register/employee_register_edit");
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
 		return mv;
 	}
 	
+	@RequestMapping("/goEdit")
+	public ModelAndView regEdit() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			if ((pd.getString("id") != null) && (!"".equalsIgnoreCase(pd.getString("id").trim()))) {
+				EmployeeRegister employeeRegister=employeeRegisterService.selectById(pd);
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("idcard", employeeRegister.getIdcard());
+				Employee employee = this.employeeService.selectOne(hashMap);
+				mv.addObject("employee", employee);
+				mv.addObject("pd", employeeRegister);
+			}			
+			mv.addObject("msg", "edit");
+			mv.setViewName("employee_register/employee_register_edit");
+			
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);		
+		}
+		
+		return mv;
+	}
 	
 	
 	@ResponseBody
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
-	public boolean save()  throws Exception{
+	public boolean save(HttpSession session)  throws Exception{
 		
 		PageData pd = new PageData();
 		try {
 			pd = getPageData();
 			int rti = 0;
+			User user = (User)session.getAttribute("sessionUser");				 
+	        pd.put("company", user.getDepartName());
+	        pd.put("addtime", DateUtil.getTime());
 			String id = pd.getString("id");
 			if (Tools.notEmpty(id)) {
 				rti = employeeRegisterService.update(pd);
 			} else {
-				pd.put("id", UuidUtil.get32UUID());
+				//pd.put("id", UuidUtil.get32UUID());
+				pd.put("id", (DateUtil.getDayss() + new Random().nextInt()).substring(0, 15).replace("-", ""));
 				rti = employeeRegisterService.insert(pd);
 			}
 			return rti > 0 ? true : false;
-		} catch (Exception e) {
+		} catch (Exception e) {System.out.println(e.toString());
 			this.logger.error(e.toString(), e);
 			return false;
 		}

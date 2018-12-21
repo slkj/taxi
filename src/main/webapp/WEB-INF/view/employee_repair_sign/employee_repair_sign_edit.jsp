@@ -42,7 +42,9 @@
 		return false;
 	}
 	function clearForm() {//重置表单
-		$('#vui_sample').form('clear');
+		//$('#vui_sample').form('clear');
+		var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
 	}
 </script>
 </head>
@@ -52,7 +54,7 @@
 			<div class="tabs-wrapper">
 				
 			<div class="comp-search-box">
-			<form action="../employeeRegister/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
+			<form action="../employeeRepairSign/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
 				<div class="screen-top">
 					<div class="colRow">
 						<input class="easyui-textbox" name="idcard" style="width: 300px">
@@ -62,6 +64,7 @@
 			</form>
 			<form method="post" id="vui_sample">
 			<input type="hidden" name="id" id="id" value="${pd.id }" />
+			<input type="hidden" name="carid" id="carid" value="${employee.carid }" />
 			<c:if test="${msg == 'save'}">
 			<input type="hidden" name="status" id="status" value="0" />
 			</c:if>
@@ -80,11 +83,14 @@
 							</select>
 						</div>
 						<div class="form-column2">
-						<div class="form-column-left">
+						<%-- <div class="form-column-left">
 							<input class="easyui-textbox" style="width: 100%" name="cyzg_card" data-options="label:'从业资格证号:'" value="${employee.cyzgCard }" editable="false">
-						</div>										
-						<div class="form-column-left fm-left">
+						</div>	 --%>									
+						<div class="form-column-left">
 							<input class="easyui-textbox" style="width: 100%" name="idcard" data-options="label:'身份证号:'" value="${employee.idcard }" editable="false">
+						</div>
+						<div class="form-column-left fm-left">
+							<input class="easyui-textbox" style="width: 100%" name="address" data-options="label:'住址:'" value="${employee.address }" editable="false">
 						</div>
 						</div>
 						<div class="form-column2">
@@ -95,15 +101,14 @@
 							<input class="easyui-textbox" style="width: 100%" name="phone" data-options="label:'联系电话:'" value="${employee.phone }" editable="false">
 						</div>
 						</div>
-						<div class="form-column2">
+						<%-- <div class="form-column2">
 						<div class="form-column-left">
 							<input class="easyui-textbox" style="width: 100%" name="address" data-options="label:'住址:'" value="${employee.address }" editable="false">
-						</div>
-						
-					</div>
+						</div>						
+					</div> --%>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="drive_card" data-options="label:'驾驶证号:'" value="${employee.driveCard }" editable="false">
+							<input class="easyui-textbox" style="width: 100%" name="drive_card" data-options="label:'准驾车型:'" value="${employee.driveType }" editable="false">
 						</div>
 						<div class="form-column-left fm-left">
 							<input class="easyui-textbox" style="width: 100%" name="drive_start_date" data-options="label:'驾驶证初领日期:'" value="${employee.driveStartDate}" editable="false">
@@ -111,46 +116,17 @@
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employeeRegister.carid }" >
+							<input class="easyui-textbox" style="width: 100%" name="old_sign_id" data-options="label:'原从业证号:'" value="${employee.cyzgCard }" editable="false" >
 						</div>
 						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'车型:'" value="${employeeRegister.cartype}">
+							<input class="easyui-textbox" style="width: 100%" name="first_sign_date" data-options="label:'初领从业证日期:'" value="${employee.decisionHours}" editable="false">
 						</div>
 					</div>
-					<div class="form-column2">
-						<div class="form-column-left">
-						<select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${employeeRegister.engage_conn }" >
-								<option value='0' <c:if test="${employeeRegister.engage_conn == 0 }">selected</c:if>>车主</option>
-								<option value='1' <c:if test="${employeeRegister.engage_conn == 1 }">selected</c:if>>雇佣</option>
-						</select>
-							
-						</div>
-						<div class="form-column-left fm-left">
-						<select  class="easyui-combobox" style="width: 80px;" name="engage_time"  data-options="label:'经营时间:'" value="${employeeRegister.engage_time }" >
-								<option value='0' <c:if test="${employeeRegister.engage_time == 0 }">selected</c:if>>白</option>
-								<option value='1' <c:if test="${employeeRegister.engage_time == 1 }">selected</c:if>>夜</option>
-								<option value='2' <c:if test="${employeeRegister.engage_time == 2 }">selected</c:if>>白夜</option>
-							</select>
-							
-						</div>
-					</div>
-					<div class="form-column2">
-						<div class="form-column-left">
-						<span>承包起始时间：</span>
-					<span style="margin-left:45px;"><input class="Wdate" name="contract_strcount"  value="${pd.contract_strcount }" style="width: 270px"
-					onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"></span>												
-						</div>
-						<div class="form-column-left fm-left">
-						<span>承包结束时间：</span>
-					<span style="margin-left:45px;"><input class="Wdate" name="contract_endcount"  value="${pd.contract_endcount }" style="width: 270px"
-					onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"></span>
-							
-						</div>
-					</div>					
+									
 						<div  class="form-btnBar pl75">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 
-							<input type="submit" value="重置" class="easyui-linkbutton btnDefault"
+							<input type="submit" value="取消" class="easyui-linkbutton btnDefault"
 							onclick="clearForm()" style="width: 80px" />
 						</div>
 					</div>

@@ -29,11 +29,14 @@
 			<if test="status!=null and status!=''">
 			AND a.STATUS = #{status}
 			</if>
+			<if test="company!=null and company!=''">
+			AND a.COMPANY = #{company}
+			</if>
 	</select>
 
 
 	
-	<select id="selectOne" parameterType="String" resultType="EmployeeRegister">
+	<select id="selectById" parameterType="String" resultType="EmployeeRegister">
 		select
 		<include refid="Base_Column_List" />
 		from tb_employee_register
@@ -87,16 +90,16 @@
 			<if test="company != null">
 				COMPANY,
 			</if>
-			<if test="engageConn != null">
+			<if test="engage_conn != null">
 				ENGAGE_CONN,
 			</if>
-			<if test="engageTime != null">
+			<if test="engage_time != null">
 				ENGAGE_TIME,
 			</if>
-			<if test="contractStrcount != null">
+			<if test="contract_strcount != null">
 				CONTRACT_STRCOUNT,
 			</if>
-			<if test="contractEndcount != null">
+			<if test="contract_endcount != null">
 				CONTRACT_ENDCOUNT,
 			</if>
 			<if test="passtime != null">
@@ -149,17 +152,17 @@
 			<if test="company != null">
 				#{company,jdbcType=VARCHAR},
 			</if>
-			<if test="engageConn != null">
-				#{engageConn,jdbcType=VARCHAR},
+			<if test="engage_conn != null">
+				#{engage_conn,jdbcType=VARCHAR},
 			</if>
-			<if test="engageTime != null">
-				#{engageTime,jdbcType=VARCHAR},
+			<if test="engage_time != null">
+				#{engage_time,jdbcType=VARCHAR},
 			</if>
-			<if test="contractStrcount != null">
-				#{contractStrcount,jdbcType=VARCHAR},
+			<if test="contract_strcount != null">
+				#{contract_strcount,jdbcType=VARCHAR},
 			</if>
-			<if test="contractEndcount != null">
-				#{contractEndcount,jdbcType=VARCHAR},
+			<if test="contract_endcount != null">
+				#{contract_endcount,jdbcType=VARCHAR},
 			</if>
 			<if test="passtime != null">
 				#{passtime,jdbcType=VARCHAR},
@@ -176,8 +179,8 @@
 	<update id="update" parameterType="pd">
 		update tb_employee_register
 		<set>
-			<if test="cyzgCard != null">
-				CYZG_CARD = #{cyzgCard,jdbcType=VARCHAR},
+			<if test="cyzg_card != null">
+				CYZG_CARD = #{cyzg_card,jdbcType=VARCHAR},
 			</if>
 			<if test="name != null">
 				NAME = #{name,jdbcType=VARCHAR},
@@ -197,32 +200,32 @@
 			<if test="phone != null">
 				PHONE = #{phone,jdbcType=VARCHAR},
 			</if>
-			<if test="driveCard != null">
-				DRIVE_CARD = #{driveCard,jdbcType=VARCHAR},
+			<if test="drive_card != null">
+				DRIVE_CARD = #{drive_card,jdbcType=VARCHAR},
 			</if>
-			<if test="driveStartDate != null">
-				DRIVE_START_DATE = #{driveStartDate,jdbcType=VARCHAR},
+			<if test="drive_start_date != null">
+				DRIVE_START_DATE = #{drive_start_date,jdbcType=VARCHAR},
 			</if>
 			<if test="carid != null">
 				CARID = #{carid,jdbcType=VARCHAR},
 			</if>
-			<if test="idcard != null">
+			<if test="cartype != null">
 				CARTYPE = #{cartype,jdbcType=VARCHAR},
 			</if>
 			<if test="company != null">
 				COMPANY = #{company,jdbcType=VARCHAR},
 			</if>
-			<if test="engageConn != null">
-				ENGAGE_CONN = #{engageConn,jdbcType=VARCHAR},
+			<if test="engage_conn != null">
+				ENGAGE_CONN = #{engage_conn,jdbcType=VARCHAR},
 			</if>
-			<if test="engageTime != null">
-				ENGAGE_TIME = #{engageTime,jdbcType=VARCHAR},
+			<if test="engage_time != null">
+				ENGAGE_TIME = #{engage_time,jdbcType=VARCHAR},
 			</if>
-			<if test="contractStrcount != null">
-				CONTRACT_STRCOUNT = #{contractStrcount,jdbcType=VARCHAR},
+			<if test="contract_strcount != null">
+				CONTRACT_STRCOUNT = #{contract_strcount,jdbcType=VARCHAR},
 			</if>
-			<if test="contractEndcount != null">
-				CONTRACT_ENDCOUNT = #{contractEndcount,jdbcType=VARCHAR},
+			<if test="contract_endcount != null">
+				CONTRACT_ENDCOUNT = #{contract_endcount,jdbcType=VARCHAR},
 			</if>
 			<if test="passtime != null">
 				PASSTIME = #{passtime,jdbcType=VARCHAR},

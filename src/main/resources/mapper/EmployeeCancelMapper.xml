@@ -23,8 +23,14 @@
 			<if test="status!=null and status!=''">
 			AND a.STATUS = #{status}
 			</if>
-			<if test="flag!=null and flag!=''">
-			and a.FLAG = #{flag}
+			<if test="flag == 0">
+			and a.FLAG = 0
+			</if>
+			<if test="flag == 1">
+			and a.FLAG = 1
+			</if>			
+			<if test="company!=null and company!=''">
+			AND a.COMPANY = #{company}
 			</if>
 	</select>
 

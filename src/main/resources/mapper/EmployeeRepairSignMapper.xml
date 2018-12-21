@@ -23,6 +23,9 @@
 			<if test="status!=null and status!=''">
 			AND STATUS = #{status}
 			</if>
+			<if test="company!=null and company!=''">
+			AND COMPANY = #{company}
+			</if>
 		</where>		
 	</select>
 
