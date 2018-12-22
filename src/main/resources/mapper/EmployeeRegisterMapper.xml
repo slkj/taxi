@@ -54,7 +54,7 @@
 			<if test="id != null">
 				ID,
 			</if>
-			<if test="cyzgCard != null">
+			<if test="cyzg_card != null">
 				CYZG_CARD,
 			</if>
 			<if test="name != null">
@@ -78,7 +78,7 @@
 			<if test="driveCard != null">
 				DRIVE_CARD,
 			</if>
-			<if test="driveStartDate != null">
+			<if test="drive_start_date != null">
 				DRIVE_START_DATE,
 			</if>
 			<if test="carid != null">
@@ -116,8 +116,8 @@
 			<if test="id != null">
 				#{id,jdbcType=VARCHAR},
 			</if>
-			<if test="cyzgCard != null">
-				#{cyzgCard,jdbcType=VARCHAR},
+			<if test="cyzg_card != null">
+				#{cyzg_card,jdbcType=VARCHAR},
 			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
@@ -137,11 +137,11 @@
 			<if test="phone != null">
 				#{phone,jdbcType=VARCHAR},
 			</if>
-			<if test="driveCard != null">
-				#{driveCard,jdbcType=VARCHAR},
+			<if test="drive_card != null">
+				#{drive_card,jdbcType=VARCHAR},
 			</if>
-			<if test="driveStartDate != null">
-				#{driveStartDate,jdbcType=VARCHAR},
+			<if test="drive_start_date != null">
+				#{drive_start_date,jdbcType=VARCHAR},
 			</if>
 			<if test="carid != null">
 				#{carid,jdbcType=VARCHAR},

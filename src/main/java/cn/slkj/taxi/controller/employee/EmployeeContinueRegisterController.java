@@ -109,12 +109,13 @@ public class EmployeeContinueRegisterController extends BaseController {
 			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", pd.getString("idcard"));
+				hashMap.put("status", "3");
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
 				
 			}
 			mv.addObject("msg", "save");
-			mv.setViewName("employee_continue_register/employee_continue_register_add");
+			mv.setViewName("employee_continue_register/employee_continue_register_edit");
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
@@ -128,19 +129,20 @@ public class EmployeeContinueRegisterController extends BaseController {
 		try {
 			pd = getPageData();
 			int rti = 0;
+			User user = (User)session.getAttribute("sessionUser");				 
+	        pd.put("company", user.getDepartName());
+	        pd.put("addtime", DateUtil.getTime());
 			String id = pd.getString("id");
 			if (Tools.notEmpty(id)) {
 				rti = employeeContinueRegisterService.update(pd);
 			} else {
 				//pd.put("id", UuidUtil.get32UUID());
 				pd.put("id", (DateUtil.getDayss() + new Random().nextInt()).substring(0, 15).replace("-", ""));
-				User user = (User)session.getAttribute("sessionUser");				 
-		        pd.put("company", user.getDepartName());
-		        pd.put("addtime", DateUtil.getTime());
+				
 				rti = employeeContinueRegisterService.insert(pd);
 			}
 			return rti > 0 ? true : false;
-		} catch (Exception e) {
+		} catch (Exception e) {System.out.println(e.toString());
 			this.logger.error(e.toString(), e);
 			return false;
 		}

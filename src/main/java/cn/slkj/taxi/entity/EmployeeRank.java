@@ -2,6 +2,7 @@ package cn.slkj.taxi.entity;
 
 public class EmployeeRank
 {
+  private String id;
   private String pid;//人员id
   private String year;//年份
   private String rank;//评级
@@ -17,7 +18,16 @@ public class EmployeeRank
   private String company;// 公司
   private String status;// 状态
   
-  public String getYear()
+  
+  public String getId() {
+	return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getYear()
   {
     return this.year;
   }

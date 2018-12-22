@@ -54,6 +54,17 @@
 					}
 				});
 			});
+			//新增数据
+			$('#newData').on('click', function(){
+				layer.open({
+					type : 2,
+					skin : 'layui-layer-rim', //加上边框
+					hade : [ 0.5, '#000', false ],
+					area : [ '980px', '600px' ], //宽高
+					title : [ '编辑信息', false ],
+					content : 'goAdd'
+				});
+			});
 		});
 		function initGrid() {
 			//datagrid初始化 
@@ -81,7 +92,7 @@
 				title : '性别',
 				field : 'sex',
 				formatter : function(value) {
-					if (value == "1") {
+					if (value == "0") {
 						return "男";
 					} else {
 						return "女";
@@ -108,34 +119,21 @@
 				align : 'center',
 				formatter : function(value, row) {
 					var s = '<div class ="updateBtn">';
-					s += '<a href="javascript:void(0);" title="查看"  onclick="delRow()" class="danger delMsg"><i class="fa fa-trash">查看</i></a>';
-					s += ' <a href="javascript:void(0);" title="打印申请表" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o">打印申请表</i></a></div>';
+					s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a></div>';
+					//s += ' <a href="javascript:void(0);" title="打印申请表" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o">打印申请表</i></a></div>';
 					return s;
 				}
 			} ] ];
 		}
-		//修改
-		function editRow() {
-			var row = $('#list_data').datagrid('getSelected');
-			if (row) {
-				layer.open({
-					type : 2,
-					skin : 'layui-layer-rim', //加上边框
-					hade : [ 0.5, '#000', false ],
-					area : [ '810px', '420px' ], //宽高
-					title : [ '报考信息', false ],
-					content : 'goSignUpEdit?id=' + row.id
-				});
-			}
-		}
+		
 		//删除
-		function delRow() {
-			var row = $('#list_data').datagrid('getSelected');
-			if (row) {
+		function delRow(id) {
+			//var row = $('#list_data').datagrid('getSelected');
+			//if (row) {
 				$.messager.confirm('提示', '确定要删除该记录?', function(r) {
 					if (r) {
 						$.ajax({
-							url : "delete?id=" + row.id,
+							url : "delete?id=" + id,
 							success : function(data) {
 								if (data) {
 									$grid.datagrid('reload');
@@ -147,7 +145,7 @@
 						});
 					}
 				});
-			}
+			//}
 		}
 	</script>
 </body>

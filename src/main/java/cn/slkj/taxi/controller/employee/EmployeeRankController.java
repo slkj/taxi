@@ -96,7 +96,7 @@ public class EmployeeRankController extends BaseController {
 		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
 		        pd.put("company", user.getDepartName());
 		      }else{
-	      pd.put("company", "总公司");
+		    	pd.put("company", "总公司");
 		      }
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeRank> list = employeeRankService.list(pd, pageBounds);
@@ -113,6 +113,7 @@ public class EmployeeRankController extends BaseController {
 			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", pd.getString("idcard"));
+				hashMap.put("status", "3");
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
 				
@@ -129,8 +130,7 @@ public class EmployeeRankController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
-	public boolean save()  throws Exception{
-		
+	public boolean save()  throws Exception{		
 		PageData pd = new PageData();
 		try {
 			pd = getPageData();
@@ -145,7 +145,7 @@ public class EmployeeRankController extends BaseController {
 				rti = employeeRankService.insert(pd);
 			}
 			return rti > 0 ? true : false;
-		} catch (Exception e) {
+		} catch (Exception e) {System.out.println(e.toString());
 			this.logger.error(e.toString(), e);
 			return false;
 		}

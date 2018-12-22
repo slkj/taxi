@@ -5,7 +5,7 @@
 	<sql id="Base_Column_List">
 		ID, PID, YEAR, RANK, CREATE_TIME
 	</sql>
-	<insert id="insertRank" parameterType="pd">
+	<insert id="insert" parameterType="pd">
 		insert into tb_employee_rank
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">

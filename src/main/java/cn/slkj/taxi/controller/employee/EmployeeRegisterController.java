@@ -115,6 +115,7 @@ public class EmployeeRegisterController extends BaseController {
 			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", pd.getString("idcard"));
+				hashMap.put("status", "2");
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
 				
@@ -137,6 +138,7 @@ public class EmployeeRegisterController extends BaseController {
 				EmployeeRegister employeeRegister=employeeRegisterService.selectById(pd);
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", employeeRegister.getIdcard());
+				hashMap.put("status", "2");
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
 				mv.addObject("pd", employeeRegister);

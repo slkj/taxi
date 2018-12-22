@@ -139,12 +139,14 @@
 		from tb_employee
 		<where>
 			<if test="id != nll and id !=''">
-				ID = #{id,jdbcType=VARCHAR} 
+				AND ID = #{id,jdbcType=VARCHAR} 
 			</if>
 			<if test="idcard != nll and idcard !=''">
-				IDCARD = #{idcard,jdbcType=VARCHAR}
+				AND IDCARD = #{idcard,jdbcType=VARCHAR}
 			</if>
-			
+			<if test="status != nll and status !=''">
+				AND STATUS = #{status}
+			</if>
 		</where>
 		ORDER BY ADDTIME DESC
 	</select>

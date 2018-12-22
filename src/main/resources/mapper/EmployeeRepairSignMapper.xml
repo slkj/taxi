@@ -68,10 +68,10 @@
       <if test="phone != null">
         PHONE,
       </if>
-      <if test="driveType != null">
+      <if test="drive_type != null">
         DRIVE_TYPE,
       </if>
-      <if test="driveStartDate != null">
+      <if test="drive_start_date != null">
         DRIVE_START_DATE,
       </if>
       <if test="company != null">
@@ -80,10 +80,10 @@
       <if test="carid != null">
         CARID,
       </if>
-      <if test="oldSignId != null">
+      <if test="old_sign_id != null">
         OLD_SIGN_ID,
       </if>
-      <if test="firstSignDate != null">
+      <if test="first_sign_date != null">
         FIRST_SIGN_DATE,
       </if>
       <if test="passtime != null">
@@ -118,11 +118,11 @@
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="driveType != null">
-        #{driveType,jdbcType=VARCHAR},
+      <if test="drive_type != null">
+        #{drive_type,jdbcType=VARCHAR},
       </if>
-      <if test="driveStartDate != null">
-        #{driveStartDate,jdbcType=VARCHAR},
+      <if test="drive_start_date != null">
+        #{drive_start_date,jdbcType=VARCHAR},
       </if>
       <if test="company != null">
         #{company,jdbcType=VARCHAR},
@@ -130,11 +130,11 @@
       <if test="carid != null">
         #{carid,jdbcType=VARCHAR},
       </if>
-      <if test="oldSignId != null">
-        #{oldSignId,jdbcType=VARCHAR},
+      <if test="old_sign_id != null">
+        #{old_sign_id,jdbcType=VARCHAR},
       </if>
-      <if test="firstSignDate != null">
-        #{firstSignDate,jdbcType=VARCHAR},
+      <if test="first_sign_date != null">
+        #{first_sign_date,jdbcType=VARCHAR},
       </if>
       <if test="passtime != null">
         #{passtime,jdbcType=VARCHAR},
@@ -169,11 +169,11 @@
       <if test="phone != null">
         PHONE = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="driveType != null">
-        DRIVE_TYPE = #{driveType,jdbcType=VARCHAR},
+      <if test="drive_type != null">
+        DRIVE_TYPE = #{drive_type,jdbcType=VARCHAR},
       </if>
-      <if test="driveStartDate != null">
-        DRIVE_START_DATE = #{driveStartDate,jdbcType=VARCHAR},
+      <if test="drive_start_date != null">
+        DRIVE_START_DATE = #{drive_start_date,jdbcType=VARCHAR},
       </if>
       <if test="company != null">
         COMPANY = #{company,jdbcType=VARCHAR},
@@ -181,11 +181,11 @@
       <if test="carid != null">
         CARID = #{carid,jdbcType=VARCHAR},
       </if>
-      <if test="oldSignId != null">
-        OLD_SIGN_ID = #{oldSignId,jdbcType=VARCHAR},
+      <if test="old_sign_id != null">
+        OLD_SIGN_ID = #{old_sign_id,jdbcType=VARCHAR},
       </if>
-      <if test="firstSignDate != null">
-        FIRST_SIGN_DATE = #{firstSignDate,jdbcType=VARCHAR},
+      <if test="first_sign_date != null">
+        FIRST_SIGN_DATE = #{first_sign_date,jdbcType=VARCHAR},
       </if>
       <if test="passtime != null">
         PASSTIME = #{passtime,jdbcType=VARCHAR},

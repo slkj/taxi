@@ -42,7 +42,9 @@
 		return false;
 	}
 	function clearForm() {//重置表单
-		$('#vui_sample').form('clear');
+		//$('#vui_sample').form('clear');
+		var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
 	}
 </script>
 </head>
@@ -52,7 +54,7 @@
 			<div class="tabs-wrapper">
 				
 			<div class="comp-search-box">
-			<form action="../employeeRegister/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
+			<form action="../employeeContinueRegister/goAdd" method="post" name="employeeRegisterForm" id="employeeRegisterForm">
 				<div class="screen-top">
 					<div class="colRow">
 						<input class="easyui-textbox" name="idcard" style="width: 300px">
@@ -111,26 +113,28 @@
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employee.carid }" >
+							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employee.carid }" editable="false" >
 						</div>
 						<div class="form-column-left fm-left">
-							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'车型:'" value="${employee.cartype}">
+							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'车型:'" value="${employee.cartype}" editable="false">
 						</div>
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-						<select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${employee.engageConn }" >
-								<option value='0' <c:if test="${employeeRegister.engage_conn == 0 }">selected</c:if>>车主</option>
-								<option value='1' <c:if test="${employeeRegister.engage_conn == 1 }">selected</c:if>>雇佣</option>
-						</select>
+						<%-- <input class="easyui-textbox" style="width: 100%" name="engage_conn" data-options="label:'与经营者关系:'" value="${employee.engageConn}" editable="false"> --%>
+						 <select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${employee.engageConn }" disabled="disabled" >
+								<option value='0' <c:if test="${employee.engageConn == 0 }">selected</c:if>>车主</option>
+								<option value='1' <c:if test="${employee.engageConn == 1 }">selected</c:if>>雇佣</option>
+						</select> 
 							
 						</div>
 						<div class="form-column-left fm-left">
-						<select  class="easyui-combobox" style="width: 80px;" name="engage_time"  data-options="label:'经营时间:'" value="${employeeRegister.engageTime }" >
-								<option value='0' <c:if test="${employeeRegister.engage_time == 0 }">selected</c:if>>白</option>
-								<option value='1' <c:if test="${employeeRegister.engage_time == 1 }">selected</c:if>>夜</option>
-								<option value='2' <c:if test="${employeeRegister.engage_time == 2 }">selected</c:if>>白夜</option>
-							</select>
+						<%-- <input class="easyui-textbox" style="width: 100%" name="engage_time" data-options="label:'经营时间:'" value="${employee.engageTime}" editable="false"> --%>
+						<select  class="easyui-combobox" style="width: 80px;" name="engage_time"  data-options="label:'经营时间:'" value="${employee.engageTime }" disabled="disabled" >
+								<option value='0' <c:if test="${employee.engageTime == 0 }">selected</c:if>>白</option>
+								<option value='1' <c:if test="${employee.engageTime == 1 }">selected</c:if>>夜</option>
+								<option value='2' <c:if test="${employee.engageTime == 2 }">selected</c:if>>白夜</option>
+							</select> 
 							
 						</div>
 					</div>
@@ -150,7 +154,7 @@
 						<div  class="form-btnBar pl75">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 
-							<input type="submit" value="重置" class="easyui-linkbutton btnDefault"
+							<input type="submit" value="取消" class="easyui-linkbutton btnDefault"
 							onclick="clearForm()" style="width: 80px" />
 						</div>
 					</div>

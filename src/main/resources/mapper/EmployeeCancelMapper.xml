@@ -56,7 +56,7 @@
 			<if test="id != null">
 				ID,
 			</if>
-			<if test="cyzgCard != null">
+			<if test="cyzg_card != null">
 				CYZG_CARD,
 			</if>
 			<if test="name != null">
@@ -77,10 +77,10 @@
 			<if test="phone != null">
 				PHONE,
 			</if>
-			<if test="driveCard != null">
+			<if test="drive_card != null">
 				DRIVE_CARD,
 			</if>
-			<if test="driveStartDate != null">
+			<if test="drive_start_date != null">
 				DRIVE_START_DATE,
 			</if>
 			<if test="company != null">
@@ -106,8 +106,8 @@
 			<if test="id != null">
 				#{id,jdbcType=VARCHAR},
 			</if>
-			<if test="cyzgCard != null">
-				#{cyzgCard,jdbcType=VARCHAR},
+			<if test="cyzg_card != null">
+				#{cyzg_card,jdbcType=VARCHAR},
 			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
@@ -157,8 +157,8 @@
 	<update id="update" parameterType="pd">
 		update tb_employee_cancel
 		<set>
-			<if test="cyzgCard != null">
-				CYZG_CARD = #{cyzgCard,jdbcType=VARCHAR},
+			<if test="cyzg_card != null">
+				CYZG_CARD = #{cyzg_card,jdbcType=VARCHAR},
 			</if>
 			<if test="name != null">
 				NAME = #{name,jdbcType=VARCHAR},
@@ -178,11 +178,11 @@
 			<if test="phone != null">
 				PHONE = #{phone,jdbcType=VARCHAR},
 			</if>
-			<if test="driveCard != null">
-				DRIVE_CARD = #{driveCard,jdbcType=VARCHAR},
+			<if test="drive_card != null">
+				DRIVE_CARD = #{drive_card,jdbcType=VARCHAR},
 			</if>
-			<if test="driveStartDate != null">
-				DRIVE_START_DATE = #{driveStartDate,jdbcType=VARCHAR},
+			<if test="drive_start_date != null">
+				DRIVE_START_DATE = #{drive_start_date,jdbcType=VARCHAR},
 			</if>
 			<if test="company != null">
 				COMPANY = #{company,jdbcType=VARCHAR},

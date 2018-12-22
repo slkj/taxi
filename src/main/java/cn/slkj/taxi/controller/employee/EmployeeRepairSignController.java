@@ -136,6 +136,7 @@ public class EmployeeRepairSignController extends BaseController {
 			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", pd.getString("idcard"));
+				hashMap.put("status", "3");
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
 				

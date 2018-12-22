@@ -99,8 +99,8 @@
 			<if test="company != null">
 				COMPANY = #{company,jdbcType=VARCHAR},
 			</if>
-			<if test="oldCompany != null">
-				OLD_COMPANY = #{oldCompany,jdbcType=VARCHAR},
+			<if test="old_company != null">
+				OLD_COMPANY = #{old_company,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where CYZG_CARD = #{cyzgCard,jdbcType=VARCHAR}

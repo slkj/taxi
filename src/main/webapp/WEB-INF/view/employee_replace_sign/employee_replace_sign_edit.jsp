@@ -42,7 +42,9 @@
 		return false;
 	}
 	function clearForm() {//重置表单
-		$('#vui_sample').form('clear');
+		//$('#vui_sample').form('clear');
+		var index = parent.layer.getFrameIndex(window.name);
+		parent.layer.close(index);
 	}
 </script>
 </head>
@@ -62,6 +64,7 @@
 			</form>
 			<form method="post" id="vui_sample">
 			<input type="hidden" name="id" id="id" value="${pd.id }" />
+			<input type="hidden" name="carid" id="carid" value="${employee.carid }" />
 			<c:if test="${msg == 'save'}">
 			<input type="hidden" name="status" id="status" value="0" />
 			</c:if>
@@ -121,7 +124,7 @@
 						<div  class="form-btnBar pl75">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 
-							<input type="submit" value="重置" class="easyui-linkbutton btnDefault"
+							<input type="submit" value="取消" class="easyui-linkbutton btnDefault"
 							onclick="clearForm()" style="width: 80px" />
 						</div>
 					</div>

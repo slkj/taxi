@@ -142,13 +142,13 @@
 		}
 		
 		//删除
-		function delRow() {
-			var row = $('#list_data').datagrid('getSelected');
-			if (row) {
+		function delRow(id) {
+			//var row = $('#list_data').datagrid('getSelected');
+			//if (row) {
 				$.messager.confirm('提示', '确定要删除该记录?', function(r) {
 					if (r) {
 						$.ajax({
-							url : "delete?id=" + row.id,
+							url : "delete?id=" + id,
 							success : function(data) {
 								if (data) {
 									$grid.datagrid('reload');
@@ -160,7 +160,7 @@
 						});
 					}
 				});
-			}
+			//}
 		}
 	</script>
 </body>
