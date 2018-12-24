@@ -29,5 +29,6 @@ public interface EmployeeCancelMapper {
 
 	int update(PageData pd);
 	
+	int updateStatus(PageData pd);
 	
 }

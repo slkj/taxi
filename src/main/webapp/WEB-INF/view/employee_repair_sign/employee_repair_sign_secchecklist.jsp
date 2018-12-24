@@ -36,7 +36,16 @@
 						</div>
 					</div>
 				</div>
-				
+				<div class="btnbar-tools">
+					<a href="javascript:;" class="add" onclick="changeStatus(3)">
+						<i class="fa fa-check"></i>
+						通过
+					</a>
+					<a href="javascript:;" class="add" onclick="changeStatus(2)">
+						<i class="fa fa-times"></i>
+						未通过
+					</a>
+				</div>
 				<table id="list_data"></table>
 			</div>
 		</div>
@@ -68,23 +77,30 @@
 				loadMsg : '正在加载中，请稍等... ',
 				emptyMsg : '<span>无记录</span>',
 				pagination : true,
-				singleSelect : true,
+				//singleSelect : true,
 				fitColumns : true,
 				idField : 'pkey',
 				pageSize : 10,
 				pageList : [ 10, 20, 30, 40, 50, 100 ],
-				columns : getColumns()
+				columns : getColumns(),
+				onLoadSuccess : function() {
+					$grid.datagrid('clearSelections'); // 一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+					
+				}
 			});
 		}
 		function getColumns() {
 			return [ [ {
+                field : 'id',
+                checkbox : true
+            },{
 				title : '姓名',
 				field : 'name'
 			}, {
 				title : '性别',
 				field : 'sex',
 				formatter : function(value) {
-					if (value == "1") {
+					if (value == "0") {
 						return "男";
 					} else {
 						return "女";
@@ -155,6 +171,33 @@
 					}
 				});
 			}
+		}
+		function changeStatus(status) {
+			var rows = $("#list_data").datagrid('getSelections');
+		    if (rows.length <= 0) {
+		        warning('请选中您要操作的数据！');
+		    }
+		    else {
+		    	var ids = [];
+	            for (var i = 0, j = rows.length; i < j; i++) {
+	                   ids.push(rows[i].id);
+	            }
+	            $.ajax({
+					url : "changeStatus",
+					data : {
+			                ids:ids,
+			                status:status
+			            },
+					success : function(data) {
+						if (data) {
+							$grid.datagrid('reload');
+						} else {
+							showError("操作失败");
+							msgShow('系统提示', '出现异常');
+						}
+					}
+				});
+		    }
 		}
 	</script>
 </body>

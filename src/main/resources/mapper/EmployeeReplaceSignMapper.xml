@@ -197,4 +197,12 @@
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+  
+   <update id="updateStatus" parameterType="pd">
+		update tb_employee_replace_sign set STATUS = #{status,jdbcType=VARCHAR}
+		where ID in
+  			 <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</update>
 </mapper>

@@ -28,4 +28,6 @@ public interface EmployeeContinueRegisterMapper {
 	int update(PageData pd);
 	
 	int delete(String id);
+	
+	int updateStatus(PageData pd);
 }

@@ -70,5 +70,8 @@ public class EmployeeCancelService {
 		return mapper.delete(id);
 	}
 
-	
+
+	public int updateStatus(PageData pd) {
+		return mapper.updateStatus(pd);
+	}
 }

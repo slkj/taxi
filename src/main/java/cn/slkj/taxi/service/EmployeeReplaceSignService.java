@@ -70,5 +70,8 @@ public class EmployeeReplaceSignService {
 		return mapper.delete(id);
 	}
 
-	
+
+	public int updateStatus(PageData pd) {
+		return mapper.updateStatus(pd);
+	}
 }

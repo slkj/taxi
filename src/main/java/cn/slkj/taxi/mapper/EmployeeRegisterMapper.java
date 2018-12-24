@@ -28,4 +28,6 @@ public interface EmployeeRegisterMapper {
 	int update(PageData pd);
 	
 	int delete(String id);
+	
+	int updateStatus(PageData pd);
 }

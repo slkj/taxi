@@ -29,5 +29,7 @@ public interface EmployeeRepairSignMapper {
 
 	int update(PageData pd);
 	
+	int updateStatus(PageData pd);
+	
 	
 }

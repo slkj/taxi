@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -166,6 +167,26 @@ public class CancelRegfileController extends BaseController {
 				return new JsonResult(false, "操作失败！");
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			return new JsonResult(false, e.toString());
+		}
+
+	}
+	@ResponseBody
+	@RequestMapping(value = "/changeStatus")
+	public JsonResult changeStatus(@RequestParam(value = "ids[]")String[] ids,String status)  throws Exception {
+		PageData pd = new PageData();
+		pd = getPageData();
+		pd.put("ids", ids);
+		pd.put("status", status);
+		int i = employeeCancelService.updateStatus(pd);
+		try {
+			if (i > 0) {
+				return new JsonResult(true, "");
+			} else {
+				return new JsonResult(false, "操作失败！");
+			}
+		} catch (Exception e) {System.out.println(e.toString());
 			e.printStackTrace();
 			return new JsonResult(false, e.toString());
 		}

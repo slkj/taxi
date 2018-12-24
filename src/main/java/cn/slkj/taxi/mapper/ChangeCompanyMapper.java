@@ -29,5 +29,6 @@ public interface ChangeCompanyMapper {
 
 	int update(PageData pd);
 	
+	int updateStatus(PageData pd);
 	
 }
