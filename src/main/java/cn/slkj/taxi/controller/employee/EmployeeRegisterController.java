@@ -96,11 +96,7 @@ public class EmployeeRegisterController extends BaseController {
 		Integer page = pd.getIntegr("page");
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列	
 		  User user = (User)session.getAttribute("sessionUser");
-		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
-		        pd.put("company", user.getDepartName());
-		      }else{
-		    	pd.put("company", "总公司");
-		      }
+		  pd.put("company", user.getDepartName());		 
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeRegister> list = employeeRegisterService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;

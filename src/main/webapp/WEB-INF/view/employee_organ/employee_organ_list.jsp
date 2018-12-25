@@ -7,10 +7,20 @@
 <%@ include file="/common/taglibs.jsp"%>
 <script>
 	var $grid;
-	var curUserComCode;
 	$(function() {
 		$grid = $("#list_data");
 		initGrid();
+		//新增数据
+		$('#newData').on('click', function(){
+			layer.open({
+				type : 2,
+				skin : 'layui-layer-rim', //加上边框
+				hade : [ 0.5, '#000', false ],
+				area : [ '450px', '550px' ], //宽高
+				title : [ '编辑信息', false ],
+				content : 'goAdd'
+			});
+		});
 	});
 	function initGrid() {
 		//datagrid初始化 
@@ -23,7 +33,7 @@
 			emptyMsg : '<span>无记录</span>',
 			pagination : true,
 			singleSelect : true,
-			// 			fitColumns : true,
+			//fitColumns : true,
 			idField : 'pkey',
 			pageSize : 10,
 			pageList : [ 10, 20, 30, 40, 50, 100 ],
@@ -51,44 +61,29 @@
 				field : 'opt',
 				title : '操作',
 				align : 'center',
-				formatter : function(value, rec) {
+				formatter : function(value, row) {
 					var s = '<div class ="updateBtn">';
-					s += '<a href="javascript:void(0);" title="删除" onclick="delRow()" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-					s += '<a href="javascript:void(0);" title="编辑" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+					s += '<a href="javascript:void(0);" title="删除" onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
+					s += '<a href="javascript:void(0);" title="编辑" onclick="editRow(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
 					return s;
 				}
-			} ] ],
-			onLoadSuccess : function(data) {
-				if (data && data.rows && data.rows.length > 0) {
-					$grid.datagrid("clearSelections");
-				} else {
-					$grid.datagrid("clearSelections");
-				}
-			}
+			} ] ]
 		});
 	}
 	//修改
-	function edit(id) {
+	function editRow(id) {
 		layer.open({
 			type : 2,
 			skin : 'layui-layer-rim', //加上边框
 			hade : [ 0.5, '#000', false ],
-			area : [ '860px', '540px' ],
-			title : [ '添加或修改用信息', false ],
+			area : [ '450px', '550px' ],
+			title : [ '编辑信息', false ],
 			content : 'goEdit?id=' + id
 		});
 	}
-	//详情
-	function show(id) {
-		layer.open({
-			type : 2,
-			skin : 'layui-layer-rim', //加上边框
-			area : [ '860px', '500px' ], //宽高
-			content : 'goShow?id=' + id
-		});
-	}
+	
 	//删除
-	function del(id) {
+	function delRow(id) {
 		$.messager.confirm('提示', '确定要删除该记录?', function(r) {
 			if (r) {
 				$.ajax({

@@ -17,6 +17,8 @@ public class Taxicar {
 	private String plateNum; //车牌号
 	private String corpName; //公司名称
 	private String ownerName; //车主姓名
+	private String ownerSex; //车主性别
+	private String area; //所属地区
 	private String origOwnerName;// 原车主
 	private String origPlateNum; //原车牌号
 	private String employPerson; //操作人员
@@ -75,6 +77,19 @@ public class Taxicar {
 	}
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
+	}
+	
+	public String getOwnerSex() {
+		return ownerSex;
+	}
+	public void setOwnerSex(String ownerSex) {
+		this.ownerSex = ownerSex;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
 	}
 	public String getOrigOwnerName() {
 		return origOwnerName;

@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
+import cn.slkj.taxi.entity.ExamineStandard;
 import cn.slkj.taxi.entity.Taxicar;
+import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.TaxicarService;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
@@ -46,30 +49,53 @@ public class TaxicarController extends BaseController{
 		return "taxi_car/taxi_car_list";
 	}
 
-	@RequestMapping("/taxicarEditPage")
-	public String totaxicarEditPage() {
-		return "taxi_car/taxi_car_edit";
-	}
-	
 	/**
 	 * 查询列表，返回easyUI数据格式
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/list", method = { RequestMethod.POST })
-	public EPager<Taxicar> getAllTaxicar() throws IOException {
+	public EPager<Taxicar> getAllTaxicar(HttpSession session) throws IOException {
 		String sortString = "ADDTIME.DESC";
 		PageData pd = new PageData();
 		pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
+		 User user = (User)session.getAttribute("sessionUser");
+			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+				pd.put("company", user.getDepartName());
+		      }else{
+		    	  pd.put("company", pd.getString("company"));
+		      }	
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<Taxicar> list = taxicarService.getAllList(pd, pageBounds);
 		PageList pageList = (PageList) list;
 		return new EPager<Taxicar>(pageList.getPaginator().getTotalCount(), list);
 	}
 	
-	
-
+	@RequestMapping({ "/goAdd" })
+	public ModelAndView goAdd() {
+		ModelAndView mv = new ModelAndView();
+		try {
+			mv.setViewName("taxi_car/taxi_car_edit");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	@RequestMapping({ "/goEdit" })
+	public ModelAndView goEdit() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			Taxicar taxicar = taxicarService.queryOne(pd);
+			mv.setViewName("taxi_car/taxi_car_edit");
+			mv.addObject("pd", taxicar);
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
 	/**
 	 * 查询单条信息
 	 */

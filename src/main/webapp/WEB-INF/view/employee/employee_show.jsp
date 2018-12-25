@@ -12,77 +12,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>承德市出租汽车管理系统</title>
 <%@ include file="/common/taglibs.jsp"%>
-<style type="text/css">
-body {
-	overflow-x: hidden;
-}
-/*a  upload */
-.a-upload {
-	padding: 4px 10px;
-	height: 6px;
-	width: 98px;
-	line-height: 6px;
-	position: relative;
-	cursor: pointer;
-	color: #888;
-	background: #fafafa;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	overflow: hidden;
-	display: inline-block;
-	*display: inline;
-	*zoom: 1
-}
 
-.a-upload  input {
-	position: absolute;
-	font-size: 100px;
-	right: 0;
-	top: 0;
-	opacity: 0;
-	filter: alpha(opacity = 0);
-	cursor: pointer
-}
-
-.a-upload:hover {
-	color: #444;
-	background: #eee;
-	border-color: #ccc;
-	text-decoration: none
-}
-
-.grid {
-	width: 100%;
-	border-collapse: collapse;
-	font: 12px arial, helvetica, sans-serif;
-	border: 1px solid #8DB2E3
-}
-
-.grid td {
-	height: 20px;
-	padding: 2px;
-	border: 1px solid #8DB2E3;
-	padding-left: 10px
-}
-
-.grid th {;
-	height: 20px;
-	padding: 2px;
-	border: 1px solid #8DB2E3;
-	background: #E7F3FE;
-	text-align: center;
-}
-</style>
 </head>
 <body>
-	<table style="table-layout: fixed;" id="table_report"  class="grid">
+	<table style="table-layout: fixed;"  class="table table-striped table-bordered table-hover">
 			<tr>
 				<td colspan="8"><span style="margin-left: 20px;">从业资格证号：</span> <span style="margin-left: 2px;">${pd.cyzgCard }</span></td>
 				<td colspan="2" style="width: 102px;" rowspan="4">
 					<div style="width: 98px; height: 130px; margin: 2px;">
 						<c:if test="${pd != null && pd.photo != '' && pd.photo != null }">
-							<a href="employee/getPhoto.do?id=${pd.id}" target="_blank"> <img id="uploadPreview"
-								style="width: 98px; height: 130px;" src="employee/getPhoto.do?id=${pd.id}" /></a>
+							<a href="../employee/getPhoto?id=${pd.id}" target="_blank"> <img id="uploadPreview"
+								style="width: 98px; height: 130px;" src="../employee/getPhoto?id=${pd.id}" /></a>
 						</c:if>
 						<c:if test="${pd == null || pd.photo == '' || pd.photo == null }">
 							<img id="uploadPreview" style="width: 98px; height: 130px;" />

@@ -49,9 +49,6 @@
 	function clearForm() {//重置表单
 		$('#vui_sample').form('clear');
 	}
-	function getScore(){
-		alert("dd");
-	}
 </script>
 </head>
 <body>

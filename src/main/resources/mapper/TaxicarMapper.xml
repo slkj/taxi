@@ -3,15 +3,13 @@
 <mapper namespace="cn.slkj.taxi.mapper.TaxicarMapper">
 	<sql id="sql_base">
 		ID, FileNum, OpretaCertNum, PlateNum, CorpName, 
-		OwnerName, OrigOwnerName, OrigPlateNum, EmployPerson,
+		OwnerName,OwnerSex,Area, OrigOwnerName, OrigPlateNum, EmployPerson,
 		 Color, Sign, SealRecord, Address, PhoneNum, IDNumber,
 		  OwnerChange, DrvLicenseDate, VehicleInspRec, OwnerNamePic,
 		   VehiclePic, TonsSeat, CarLen, CarWidth, CarHigh, FrameNumber,
 		    EngineNumber, ADDTIME, CheckDate, TransferDate
 	</sql>
-	<sql id="sql_base1">
-		id, operatingnum, annualdate, nextannualdate, vehicle, addtime, status
-	</sql>
+	
 
 	<select id="getAllList"  parameterType="pd" resultType="Taxicar">
 		SELECT
@@ -26,6 +24,9 @@
 			</if>
 			<if test="OwnerName != null and OwnerName != ''">
 				AND OwnerName LIKE '%'+#{OwnerName}+'%'
+			</if>
+			<if test="Area != null and Area != ''">
+				AND Area LIKE '%'+#{Area}+'%'
 			</if>
 		</where>		
 	</select>
@@ -62,6 +63,12 @@
 			</if>
 			<if test="ownerName != null">
 				OwnerName,
+			</if>
+			<if test="ownerSex != null">
+				OwnerSex,
+			</if>
+			<if test="area != null">
+				Area,
 			</if>
 			<if test="origOwnerName != null">
 				OrigOwnerName,
@@ -152,6 +159,12 @@
 			<if test="ownerName != null">
 				#{ownerName,jdbcType=VARCHAR},
 			</if>
+			<if test="ownerSex != null">
+				#{ownerSex,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				#{area,jdbcType=VARCHAR},
+			</if>
 			<if test="origOwnerName != null">
 				#{origOwnerName,jdbcType=VARCHAR},
 			</if>
@@ -241,6 +254,12 @@
 			</if>
 			<if test="ownerName != null">
 				OwnerName =#{ownerName,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerSex != null">
+				OwnerSex =#{ownerSex,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				Area =#{area,jdbcType=VARCHAR},
 			</if>
 			<if test="origOwnerName != null">
 				OrigOwnerName =#{origOwnerName,jdbcType=VARCHAR},

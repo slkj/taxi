@@ -147,7 +147,7 @@ public class EmployeeOrganController extends BaseController {
 				rti = employeeOrganService.insert(pd);
 			}
 			return rti > 0 ? true : false;
-		} catch (Exception e) {
+		} catch (Exception e) {System.out.println(e.toString());
 			this.logger.error(e.toString(), e);
 			return false;
 		}

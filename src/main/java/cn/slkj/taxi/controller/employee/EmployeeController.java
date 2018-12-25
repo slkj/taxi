@@ -132,23 +132,11 @@ public class EmployeeController extends BaseController {
 	public ModelAndView goShow(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		try {
-			// String flag = pd.getString("flag");
-
 			HashMap<String, Object> hashMap = new HashMap<String, Object>();
 			hashMap.put("id", request.getParameter("id"));
 			Employee ep = this.employeeService.selectOne(hashMap);
-
-			// List<PageData> varList = this.employeeOrganService.listForShow(pd);
-			// List<PageData> rank =
-			// this.employeeService.getEmployeeRank(pd.getString("ID"));
-			// List<PageData> continueRegister =
-			// this.employeeService.getEmployeeContinueRegister(pd.getString("ID"));
-			// mv.addObject("varList", varList);
-			// mv.addObject("flag", flag);
 			mv.addObject("msg", "show");
 			mv.addObject("pd", ep);
-			// mv.addObject("rank", rank);
-			// mv.addObject("continueRegister", continueRegister);
 			mv.setViewName("employee/employee_show");
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
@@ -169,7 +157,12 @@ public class EmployeeController extends BaseController {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		hashMap.put("name", pd.getString("name"));
 		hashMap.put("status", pd.getString("status"));
-		hashMap.put("company", pd.getString("company"));
+		 User user = (User)session.getAttribute("sessionUser");
+		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+			hashMap.put("company", user.getDepartName());
+	      }else{
+	    	  hashMap.put("company", pd.getString("company"));
+	      }		
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<Employee> list = employeeService.listPage(hashMap, pageBounds);
 		PageList pageList = (PageList) list;
