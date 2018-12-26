@@ -3359,3 +3359,22 @@ scale
 	color: #0061a5;
 	text-decoration: underline;
 }
+
+.weilan_wrap .form-inline .form-control{width:auto;width: 210px;}
+.weilan_wrap .form-inline{overflow:hidden}
+.weilan_wrap .form-inline .form-group{margin-left:30px;}
+.weilan_wrap .form-inline .form-group label{width:50px;}
+.weilan_wrap .form-inline .form-group label.type_radio{width:auto;padding-left:15px;position:relative;margin-right:5px;}
+.weilan_wrap .form-inline .form-group label.type_radio input[type=radio]{position:absolute;left:0px;top:9px}
+.weilan_wrap .form-inline textarea.form-control{resize:none;height:60px;}
+.weilan_wrap .form-inline .form-group{margin-top:10px;}
+.weilan_wrap .wrongWarn{text-align:center;margin-top:5px}
+.weilan_wrap .buttonWrap{margin-top:20px;}
+.weilanbdTable .form-control{text-align:center}
+.bdTableBody{height:340px;overflow:auto}
+/*车辆信息*/
+.car_detail dl{float:left;width:33%;padding:8px 0px;position:relative; line-height: 22px}
+.car_detail dl dt{float:left;width:140px;font-weight: bold;text-align: left;}
+.car_detail dl dd{padding-right: 20px;margin-left:80px;margin-right:0px;text-align: left;overflow: hidden;white-space: nowrap;text-overflow:ellipsis}
+.car_detail dl::after{content:"";position:absolute;left:0px;right:20px;bottom:0px;height:1px;background: #d0d0d0}
+.car_detail{padding:20px;padding-right:0px;overflow:hidden}
