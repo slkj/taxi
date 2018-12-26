@@ -20,7 +20,7 @@ public interface TaxicarMapper {
 
 	public int save(Taxicar taxicar);
 
-	public Taxicar queryOne(PageData pd);
+	public Taxicar queryOne(HashMap<String, Object> hashMap);
 
 	public int edit(Taxicar taxicar);
 	

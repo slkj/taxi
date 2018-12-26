@@ -78,9 +78,10 @@
 				align : 'center',
 				formatter : function(value, row) {
 					var s = '<div class ="updateBtn">';
-					s += '<a href="javascript:void(0);" title="查看" onclick="show(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-eye"></i></a>';
-					s += '<a href="javascript:void(0);" title="删除" onclick="del(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-					s += '<a href="javascript:void(0);" title="编辑" onclick="edit(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+					s += '<a href="javascript:void(0);" title="查看" onclick="show(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-eye"></i>查看</a></div>';
+					//s += '<a href="javascript:void(0);" title="查看" onclick="show(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-eye"></i></a>';
+					//s += '<a href="javascript:void(0);" title="删除" onclick="del(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
+					//s += '<a href="javascript:void(0);" title="编辑" onclick="edit(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
 					return s;
 				}
 			} ] ],
@@ -109,8 +110,9 @@
 		layer.open({
 			type : 2,
 			skin : 'layui-layer-rim', //加上边框
-			area : [ '860px', '500px' ], //宽高
-			content : 'goShow?id=' + id
+			hade : [ 0.5, '#000', false ],
+			area : [ '860px', '600px' ], //宽高
+			content : '../goShow?id=' + id
 		});
 	}
 	//删除

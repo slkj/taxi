@@ -111,7 +111,7 @@ public class EmployeeController extends BaseController {
 			HashMap<String, Object> hashMap = new HashMap<String, Object>();
 			hashMap.put("id", request.getParameter("id"));
 			Employee ep = this.employeeService.selectOne(hashMap);
-			HashMap<String, Object> hashMapCom = new HashMap<String, Object>();
+			//HashMap<String, Object> hashMapCom = new HashMap<String, Object>();
 			// List<Company> enterpriseInfo = companyService.queryComList(hashMapCom);
 			mv.setViewName("employee/employee_edit");
 			// mv.addObject("enterpriseInfo", enterpriseInfo);

@@ -30,7 +30,7 @@
 			</if>
 		</where>		
 	</select>
-	<select id="queryOne" parameterType="pd" resultType="Taxicar">
+	<select id="queryOne" parameterType="hashMap" resultType="Taxicar">
 		SELECT
 		<include refid="sql_base"></include>
 		FROM TB_TAXICAR

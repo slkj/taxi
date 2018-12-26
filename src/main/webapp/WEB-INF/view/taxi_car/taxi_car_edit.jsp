@@ -145,11 +145,11 @@
 				style="margin-left: 2px;"><input class="easyui-textbox" name="iDNumber" value="${pd.iDNumber }" type="text" style="width: 250px;" /></span></td>
 			<td colspan="3"> <span style="margin-left: 20px;">车辆所属地区：</span>
 					<span style="margin-left: 2px;">
-						<select  class="easyui-combobox" style="width: 120px;" id="area" name="area" value="${pd.area }">
+						<select  class="easyui-combobox" style="width: 120px;" id="area" name="area">
 							<option value=''></option>
-							<option value='市区'>市区</option>
-							<option value='双滦'>双滦</option>
-							<option value='双滦代管'>双滦代管</option>
+							<option value='市区' <c:if test="${pd.area == '0' }">selected</c:if>>市区</option>
+							<option value='双滦' <c:if test="${pd.area == '0' }">selected</c:if>>双滦</option>
+							<option value='双滦代管' <c:if test="${pd.area == '0' }">selected</c:if>>双滦代管</option>
 						</select>
 					</span></td>
 			<td colspan="4" style="width: 202px;" rowspan="4">

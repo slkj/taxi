@@ -58,8 +58,8 @@ public class TaxicarService {
 	 * @return: Taxicar      
 	 * @throws
 	 */
-	public Taxicar queryOne(PageData pd) {
-		return mapper.queryOne(pd);
+	public Taxicar queryOne(HashMap<String, Object> hashMap) {
+		return mapper.queryOne(hashMap);
 	}
 
 	/**

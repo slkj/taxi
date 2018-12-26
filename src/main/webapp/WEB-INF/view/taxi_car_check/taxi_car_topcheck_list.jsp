@@ -224,14 +224,7 @@
 		$(function() {
 			$grid = $("#list_data");
 			initGrid();
-			$('#corpName').combobox({
-				url : '../enterprise/queryEnterpriseList',
-				valueField : 'unitname',
-				textField : 'unitname',
-				onSelect : function(data) {
-					$("#corpName").textbox('setValue', data.unitname);
-				}
-			});
+			
 			
 			$('#queryData').on('click', function() {
 				$grid.datagrid({
@@ -291,103 +284,29 @@
 				align : 'center',
 				formatter : function(value, row) {
 					var s = "";
-					s += "<a href=\"javascript:void(0)\" onclick=\"topCheck('" + row.id + "','" + row.operatingnum + "');\"><i class=\"fa fa-pencil \"></i>审核</a>";
+					s += "<a href=\"javascript:void(0)\" onclick=\"topCheck('" + row.id + "');\"><i class=\"fa fa-pencil \"></i>审核</a>";
 					return s;
 				}
 			} ] ];
 				}
-		function pass(status){//修改状态
-			$.ajax({
-				type : "post",
-				dataType : "json",
-				url : '../taxicarCheck/editCheckStatus',
-				data:{id:pkey,status:status},
-				async : true,
-				success : function(result) {
-					if (result) {
-						$grid.datagrid('reload');// 刷新datagrid
-						layer.close(layer.index); 
-					} else {
-						showError("审核失败！");
-					}
-				}
-			})
-		}
+	
 		//修改
-		function topCheck(id,operatingnum) {
+		function topCheck(id) {
 			pkey=id;
 			if (id) {
 				layer.open({
-					type : 1,
-					title : "上级审核",
+					type : 2,
 					skin : 'layui-layer-rim', //加上边框
-					area : [ '1000px', '560px' ], //宽高
-					content : $('#newData-wrapper'),
-					zIndex : 1000
+					hade : [ 0.5, '#000', false ],
+					area : [ '1000px', '460px'], //宽高
+					title : [ '编辑信息', false ],
+					content : 'goCheck?id=' + id
 				});
-				loadEditCheckForm(id,operatingnum);
+			
 			}
 		}
-		
-		
-		
-		function loadEditCheckForm(id,operatingnum){
-			$.ajax({
-				type : "post",
-				dataType : "json",
-				url : '../taxicar/queryOne?opretaCertNum='+operatingnum,
-				async : true,
-				success : function(result) {
-					if (result) {
-						$("#vui_sample").form("load", result);	
-						$("#uploadPreviewOwnerNamePic").attr("src","../taxicar/getOwnernamepic?opretaCertNum=" + operatingnum);
-						$("#uploadPreviewVehiclePic").attr("src","../taxicar/getVehiclepic?opretaCertNum=" + operatingnum);
-					} else {
-						showError("系统异常");
-					}
-				}
-			})
-			$.ajax({
-				type : "post",
-				dataType : "json",
-				url : '../taxicarCheck/queryOneCheck?id='+id,
-				async : true,
-				success : function(result) {
-					if (result) {
-						$("#vui_sample1").form("load", result);							
-					} else {
-						showError("系统异常");
-					}
-				}
-			})
-		}
+	
 	</script>
-	<script type="text/javascript">
-			 oFReaderOwnerNamePic = new FileReader(), rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
-			oFReaderVehiclepic = new FileReader(), rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
-			
-			oFReaderOwnerNamePic.onload = function (oFREvent) {
-			  document.getElementById("uploadPreviewOwnerNamePic").src = oFREvent.target.result;
-			};
-			oFReaderVehiclepic.onload = function (oFREvent) {
-			  document.getElementById("uploadPreviewVehiclePic").src = oFREvent.target.result;
-			}; 
-			
-			function loadImageFileOwnerNamePic() {
-			  if (document.getElementById("ownernamepic1").files.length == 0 ){return; }
-			  var oFile = document.getElementById("ownernamepic1").files[0];
-			  if (!rFilter.test(oFile.type)) { alert("上传图片类型不符!"); return; }
-			  oFReaderOwnerNamePic.readAsDataURL(oFile);
-			}
-			function loadImageFileVehiclepic() {
-			  if (document.getElementById("vehiclepic1").files.length == 0 ){return; }
-			  var oFile1 = document.getElementById("vehiclepic1").files[0];
-			  if (!rFilter.test(oFile1.type)) { alert("上传图片类型不符!"); return; }
-			  oFReaderVehiclepic.readAsDataURL(oFile1);
-			}
-			function closeImageFileVehiclepic(){
-				oFReaderVehiclepic.close();
-			}
-		</script>
+
 </body>
 </html>

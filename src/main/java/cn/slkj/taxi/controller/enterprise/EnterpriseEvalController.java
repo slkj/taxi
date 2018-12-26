@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
+import cn.slkj.taxi.entity.Enterprise;
 import cn.slkj.taxi.entity.EnterpriseEval;
 import cn.slkj.taxi.service.EnterpriseEvalService;
 import cn.slkj.taxi.util.EPager;
@@ -61,7 +63,30 @@ public class EnterpriseEvalController  extends BaseController{
 		return new EPager<EnterpriseEval>(pageList.getPaginator().getTotalCount(), list);
 	}
 	
-
+	@RequestMapping({ "/goAdd" })
+	public ModelAndView goAdd() {
+		ModelAndView mv = new ModelAndView();
+		try {
+			mv.setViewName("enterprise_eval/enterprise_eval_edit");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	@RequestMapping({ "/goEdit" })
+	public ModelAndView goEdit() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			EnterpriseEval enterpriseEval = enterpriseEvalService.queryOne(pd.getString("id"));
+			mv.setViewName("enterprise_eval/enterprise_eval_edit");
+			mv.addObject("pd", enterpriseEval);
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
 	/**
 	 * 获取公司/车队实体
 	 * 

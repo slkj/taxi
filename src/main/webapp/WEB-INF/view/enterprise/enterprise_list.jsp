@@ -31,92 +31,15 @@
 				<div class="btnbar-tools">
 					<a href="javascript:;" class="add" id="newData"><i class="fa fa-plus-square success"></i>添加</a>
 				</div>
-				<table id="enterpriseList_dg"></table>
+				<table id="list_data"></table>
 			</div>
 		</div>
 	</div>
-	<!-- 新增和编辑数据 -->
-	<div class="dig-wrapper" id="newData-wrapper">
-		<div class="form1-column" title="表单示例">
-			<form id="vui_sample" class="easyui-form" >
-				<input type="hidden" name="id">
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="unitname" style="width: 100%" data-options="label:'单位名称:',required:true">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="phone" style="width: 100%" data-options="label:'联系电话:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="unitaddr" style="width: 100%" data-options="label:'单位地址:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="businessscope" style="width: 100%" data-options="label:'经营范围:'">
-					</div>
-				</div>			
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="businessno" style="width: 100%" data-options="label:'经营许可证号:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="enterprisecode" style="width: 100%" data-options="label:'企业代码:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="regcapital" style="width: 100%" data-options="label:'注册资本:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="economytype" style="width: 100%" data-options="label:'经济类型:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="legalrepresentative" style="width: 100%" data-options="label:'法人代表:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="vehiclesnum" style="width: 100%" data-options="label:'车辆总数:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="employeescount" style="width: 100%" data-options="label:'从业人员总数:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="manageersonnel" style="width: 100%" data-options="label:'安全管理人员总数:'">
-					</div>
-				</div>
-				<div class="form-column1">
-					<div class="form-column-left">
-						<input class="easyui-textbox" name="carnum" style="width: 100%" data-options="label:'企业自有车数:'">
-					</div>
-				</div>
-				<div class="form-btnBar pl75">
-					<input type="submit" name="" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
-						style="width: 80px" /> <input type="submit" name="" value="重置" class="easyui-linkbutton btnDefault"
-						onclick="clearForm()" style="width: 80px" />
-				</div>
-			</form>
-		</div>
-	</div>
+	
 	<script type="text/javascript">
 	var $grid;
 		$(function() {
-			$grid = $("#enterpriseList_dg");
+			$grid = $("#list_data");
 			$grid.datagrid({
 				url : '../enterprise/list',//url调用Action方法  
 				loadMsg : '数据装载中......',
@@ -134,15 +57,12 @@
 			//新增数据
 			$('#newData').on('click', function(){
 				layer.open({
-					type: 1,
-					title:"企业信息",
-					skin: 'layui-layer-rim', //加上边框
-					area: ['490px', '500px'], //宽高
-					content:$('#newData-wrapper'),
-					zIndex:1000,
-					end:function() {
-						$('#vui_sample').form('clear');
-					}
+					type : 2,
+					skin : 'layui-layer-rim', //加上边框
+					hade : [ 0.5, '#000', false ],
+					area : [ '490px', '500px' ], //宽高
+					title : [ '编辑信息', false ],
+					content : 'goAdd'
 				});
 			});
 			//查询
@@ -171,33 +91,7 @@
 						}
 					} ] ];
 		}
-		function submitForm(){//保存提交
-			//校验
-			var validate = $("#vui_sample").form('validate');
-			if (!validate) {
-				return validate;
-			}
-			var data =$("#vui_sample").serializeArray();
-			$.ajax({
-				cache : false,
-				type : "POST",
-				url : "../enterprise/save",
-				data : data,
-				async : false,
-				success : function(data) {
-					if (data) {
-						$grid.datagrid('reload');// 刷新datagrid
-						layer.close(layer.index); 
-						clearForm();
-					} else {
-						msgShow('系统提示', '出现异常');
-					}
-				}
-			});
-		}
-		function clearForm(){//重置表单
-			$('#vui_sample').form('clear');
-		}
+		
 		function delRow(id) {
 			if (confirm("确定要删除吗？")) {
 			$.ajax({
@@ -220,33 +114,17 @@
 		}
 		function editRow(id) {
 			//var row = $('#enterpriseList_dg').datagrid('getSelected');
-			 if (id) {
+			if (id) {
 				layer.open({
-					type : 1,
-					title : "用户信息",
+					type : 2,
 					skin : 'layui-layer-rim', //加上边框
-					area : [ '490px', '500px' ], //宽高
-					content : $('#newData-wrapper'),
-					zIndex : 1000,
-					end:function() {
-						$('#vui_sample').form('clear');
-					}
+					hade : [ 0.5, '#000', false ],
+					area : [ '490px', '500px'], //宽高
+					title : [ '编辑信息', false ],
+					content : 'goEdit?id=' + id
 				});
-				//$("#vui_sample").form("load", row);
-				$.ajax({
-					type : "post",
-					dataType : "json",
-					url : '../enterprise/queryOne?id='+id,
-					async : true,
-					success : function(result) {
-						if (result) {
-							$("#vui_sample").form("load", result);	
-						} else {
-							showError("系统异常");
-						}
-					}
-				})
-			} 
+				
+			}
 		}
 	</script>
 </body>

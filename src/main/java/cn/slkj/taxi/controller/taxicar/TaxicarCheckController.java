@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
+import cn.slkj.taxi.entity.Taxicar;
 import cn.slkj.taxi.entity.TaxicarCheck;
 import cn.slkj.taxi.service.TaxicarCheckService;
+import cn.slkj.taxi.service.TaxicarService;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
@@ -41,6 +44,8 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 public class TaxicarCheckController  extends BaseController{
 	@Autowired
 	private TaxicarCheckService taxicarCheckService;
+	@Autowired
+	private TaxicarService taxicarService;
 
 	
 	/* 跳转页面 */
@@ -54,11 +59,7 @@ public class TaxicarCheckController  extends BaseController{
 		return "taxi_car_check/taxi_car_topcheck_list";
 	}
 
-	
-	@RequestMapping("/taxicarCheckEditPage")
-	public String toTaxicarCheckEditPage() {
-		return "taxi_car_check/taxi_car_check_edit";
-	}
+
 	@RequestMapping("/taxicarTopCheckCheckPage")
 	public String toTaxicarTopCheckCheckPage() {
 		return "taxi_car_check/taxi_car_topcheck_check";
@@ -97,8 +98,67 @@ public class TaxicarCheckController  extends BaseController{
 		PageList pageList = (PageList) list;
 		return new EPager<TaxicarCheck>(pageList.getPaginator().getTotalCount(), list);
 	}
-
-	
+	@RequestMapping({ "/goAdd" })
+	public ModelAndView goAdd() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			if ((pd.getString("opretaCertNum") != null) && (!"".equalsIgnoreCase(pd.getString("opretaCertNum").trim()))) {
+			Taxicar taxicar = taxicarService.queryOne(pd);
+			mv.addObject("taxicar", taxicar);
+			}
+			mv.addObject("msg", "save");
+			mv.setViewName("taxi_car_check/taxi_car_check_edit");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	@RequestMapping({ "/goEdit" })
+	public ModelAndView goEdit() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			if ((pd.getString("id") != null) && (!"".equalsIgnoreCase(pd.getString("id").trim()))) {
+				TaxicarCheck TaxicarCheck = taxicarCheckService.queryOneCheck(pd);
+				mv.addObject("pd", TaxicarCheck);
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("opretaCertNum", TaxicarCheck.getOperatingnum());
+				Taxicar taxicar = taxicarService.queryOne(hashMap);
+				mv.addObject("taxicar", taxicar);
+			
+			}
+			mv.setViewName("taxi_car_check/taxi_car_check_edit");
+			mv.addObject("msg", "edit");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	@RequestMapping({ "/goCheck" })
+	public ModelAndView goCheck() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			if ((pd.getString("id") != null) && (!"".equalsIgnoreCase(pd.getString("id").trim()))) {
+				TaxicarCheck TaxicarCheck = taxicarCheckService.queryOneCheck(pd);
+				mv.addObject("pd", TaxicarCheck);
+				HashMap<String, Object> hashMap = new HashMap<String, Object>();
+				hashMap.put("opretaCertNum", TaxicarCheck.getOperatingnum());
+				Taxicar taxicar = taxicarService.queryOne(hashMap);
+				mv.addObject("taxicar", taxicar);
+			
+			}
+			mv.setViewName("taxi_car_check/taxi_car_topcheck_check");
+			mv.addObject("msg", "edit");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
 	  
 	  /**
 		 * 查询单条信息
