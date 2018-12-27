@@ -122,7 +122,7 @@
 					<div class="form-column2">
 						<div class="form-column-left">
 						<%-- <input class="easyui-textbox" style="width: 100%" name="engage_conn" data-options="label:'与经营者关系:'" value="${employee.engageConn}" editable="false"> --%>
-						 <select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${employee.engageConn }" disabled="disabled" >
+						 <select  class="easyui-combobox" style="width: 80px;" name="engage_conn"  data-options="label:'与经营者关系:'" value="${employee.engageConn }" editable="false" >
 								<option value='0' <c:if test="${employee.engageConn == 0 }">selected</c:if>>车主</option>
 								<option value='1' <c:if test="${employee.engageConn == 1 }">selected</c:if>>雇佣</option>
 						</select> 
@@ -130,7 +130,7 @@
 						</div>
 						<div class="form-column-left fm-left">
 						<%-- <input class="easyui-textbox" style="width: 100%" name="engage_time" data-options="label:'经营时间:'" value="${employee.engageTime}" editable="false"> --%>
-						<select  class="easyui-combobox" style="width: 80px;" name="engage_time"  data-options="label:'经营时间:'" value="${employee.engageTime }" disabled="disabled" >
+						<select  class="easyui-combobox" style="width: 80px;" name="engage_time"  data-options="label:'经营时间:'" value="${employee.engageTime }" editable="false" >
 								<option value='0' <c:if test="${employee.engageTime == 0 }">selected</c:if>>白</option>
 								<option value='1' <c:if test="${employee.engageTime == 1 }">selected</c:if>>夜</option>
 								<option value='2' <c:if test="${employee.engageTime == 2 }">selected</c:if>>白夜</option>

@@ -55,7 +55,7 @@ public class Employee extends EmployeeRank {
 	private String sfhz;// 是否换证
 	private String expReg;// 注册有效期
 	private String reCyzgDate;// 补发从业证日期
-	private String shzt;// 生活状态
+	private String shzt;// 生活状态,是否死亡
 	private String addtime;// 添加时间
 	private byte[] photo;// 照片
 	private InputStream inPhoto;

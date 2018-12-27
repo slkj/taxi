@@ -75,7 +75,7 @@
 			<if test="phone != null">
 				PHONE,
 			</if>
-			<if test="driveCard != null">
+			<if test="drive_card != null">
 				DRIVE_CARD,
 			</if>
 			<if test="drive_start_date != null">

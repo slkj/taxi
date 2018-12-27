@@ -202,7 +202,7 @@ public class CancelRegfileController extends BaseController {
 		int i = employeeCancelService.updateStatus(pd);
 		try {
 			if (i > 0) {
-				if(status=="2"){
+				if(status=="2"||"2".equals(status)){
 					for(int j=0;j<ids.length;j++){
 						PageData erpd = new PageData();
 						erpd.put("id", ids[j]);
@@ -212,7 +212,7 @@ public class CancelRegfileController extends BaseController {
 				          mypd.put("carid", "");
 				          mypd.put("cartype", "");
 				          mypd.put("idcard", employeeCancel.getIdcard());
-				          mypd.put("company", employeeCancel.getCompany());
+				          //mypd.put("company", employeeCancel.getCompany());
 				          mypd.put("engageConn", "");
 				          mypd.put("engageTime", "");
 				          mypd.put("contractSrtCount", "");

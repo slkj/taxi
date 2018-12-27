@@ -113,7 +113,7 @@ public class EmployeeRegisterController extends BaseController {
 			if ((pd.getString("idcard") != null) && (!"".equalsIgnoreCase(pd.getString("idcard").trim()))) {
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", pd.getString("idcard"));
-				hashMap.put("status", "2");
+				hashMap.put("status", "1");
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
 				
@@ -136,7 +136,7 @@ public class EmployeeRegisterController extends BaseController {
 				EmployeeRegister employeeRegister=employeeRegisterService.selectById(pd);
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", employeeRegister.getIdcard());
-				hashMap.put("status", "2");
+				hashMap.put("status", "1");
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
 				mv.addObject("pd", employeeRegister);
@@ -222,15 +222,14 @@ public class EmployeeRegisterController extends BaseController {
 		int i = employeeRegisterService.updateStatus(pd);
 		try {
 			if (i > 0) {
-				if(status=="2"){
+				if(status=="2"||"2".equals(status)){
 				for(int j=0;j<ids.length;j++){
 					PageData erpd = new PageData();
 					erpd.put("id", ids[j]);
 					EmployeeRegister employeeRegister=employeeRegisterService.selectById(erpd);
 					//System.out.println(employeeRegister.getCarid()+"&&&&&&&&&&&&&&&");
 						PageData mypd = new PageData();
-			          mypd.put("carid", employeeRegister.getCarid());
-			          mypd.put("cyzgCard", employeeRegister.getIdcard());
+			          mypd.put("carid", employeeRegister.getCarid());			         
 			          mypd.put("cartype", employeeRegister.getCartype());
 			          mypd.put("idcard", employeeRegister.getIdcard());
 			          mypd.put("company", employeeRegister.getCompany());
@@ -239,6 +238,9 @@ public class EmployeeRegisterController extends BaseController {
 			          mypd.put("contractSrtCount", employeeRegister.getContract_strcount());
 			          mypd.put("contractEndCount", employeeRegister.getContract_endcount());
 			          mypd.put("registerDate", employeeRegister.getPasstime());
+			          //mypd.put("cyzgCard", employeeRegister.getIdcard());
+			          //mypd.put("decisionHours", employeeRegister.getPasstime());
+			          //mypd.put("status", "3");
 			          //mypd.put("cancelDate", "");
 			          this.employeeService.updateByIDCard(mypd);
 				}

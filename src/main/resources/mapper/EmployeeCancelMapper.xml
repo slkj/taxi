@@ -41,7 +41,7 @@
 			a.COMPANY, a.CARID, a.PASSTIME, a.STATUS, a.ADDTIME, b.PERSONAL_ID as personalId, b.CARTYPE,
 		b.REGISTER_DATE as registerDate from tb_employee_cancel a, tb_employee b
 		<!-- <include refid="Base_Column_List" /> -->
-		where a.ID = #{id,jdbcType=VARCHAR}
+		where 1 = 1 and a.IDCARD = b.IDCARD and a.ID = #{id,jdbcType=VARCHAR}
 	</select>
 
 	<!--  and b.PERSONAL_ID is not null and b.PERSONAL_ID != '' -->
@@ -129,11 +129,11 @@
 			<if test="phone != null">
 				#{phone,jdbcType=VARCHAR},
 			</if>
-			<if test="driveCard != null">
-				#{driveCard,jdbcType=VARCHAR},
+			<if test="drive_card != null">
+				#{drive_card,jdbcType=VARCHAR},
 			</if>
-			<if test="driveStartDate != null">
-				#{driveStartDate,jdbcType=VARCHAR},
+			<if test="drive_start_date != null">
+				#{drive_start_date,jdbcType=VARCHAR},
 			</if>
 			<if test="company != null">
 				#{company,jdbcType=VARCHAR},

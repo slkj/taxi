@@ -221,7 +221,7 @@ public class EmployeeRepairSignController extends BaseController {
 		int i = employeeRepairSignService.updateStatus(pd);
 		try {
 			if (i > 0) {
-				if(status=="3"){
+				if(status=="3"||"3".equals(status)){
 					for(int j=0;j<ids.length;j++){
 						PageData erpd = new PageData();
 						erpd.put("id", ids[j]);

@@ -195,7 +195,7 @@ public class EmployeeContinueRegisterController extends BaseController {
 		int i = employeeContinueRegisterService.updateStatus(pd);
 		try {
 			if (i > 0) {
-				if(status=="2"){
+				if(status=="2"||"2".equals(status)){
 				for(int j=0;j<ids.length;j++){
 					PageData erpd = new PageData();
 					erpd.put("id", ids[j]);

@@ -108,7 +108,7 @@
 					</div> --%>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="drive_card" data-options="label:'准驾车型:'" value="${employee.driveType }" editable="false">
+							<input class="easyui-textbox" style="width: 100%" name="drive_type" data-options="label:'准驾车型:'" value="${employee.driveType }" editable="false">
 						</div>
 						<div class="form-column-left fm-left">
 							<input class="easyui-textbox" style="width: 100%" name="drive_start_date" data-options="label:'驾驶证初领日期:'" value="${employee.driveStartDate}" editable="false">

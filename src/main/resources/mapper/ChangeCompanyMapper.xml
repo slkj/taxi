@@ -80,7 +80,7 @@
 	
 	<select id="selectOne" parameterType="String" resultType="ChangeCompany">
 		select
-			CYZG_CARD, OLD_COMPANY, NEW_COMPANY
+			<include refid="Base_Column_List"/>
 		from tb_change_company
 		where ID = #{id,jdbcType=VARCHAR}
 	</select>

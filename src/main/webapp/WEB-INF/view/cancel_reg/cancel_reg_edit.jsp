@@ -113,7 +113,7 @@
 					</div>
 					<div class="form-column2">
 						<div class="form-column-left">
-							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employee.registerDate}" editable="false" >
+							<input class="easyui-textbox" style="width: 100%" name="carid" data-options="label:'车号:'" value="${employee.carid}" editable="false" >
 						</div>
 						<div class="form-column-left fm-left">
 							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'注册时间:'" value="${employee.registerDate}" editable="false">
