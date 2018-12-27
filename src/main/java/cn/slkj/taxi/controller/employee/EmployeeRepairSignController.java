@@ -24,7 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
+import cn.slkj.taxi.entity.EmployeeCancel;
 import cn.slkj.taxi.entity.EmployeeRepairSign;
+import cn.slkj.taxi.entity.EmployeeReplaceSign;
 import cn.slkj.taxi.entity.Role;
 import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.EmployeeRepairSignService;
@@ -149,6 +151,24 @@ public class EmployeeRepairSignController extends BaseController {
 		}
 		return mv;
 	}
+	 @RequestMapping({"/goShow"})
+	  public ModelAndView goShow()
+	  {
+	    ModelAndView mv = new ModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	    try
+	    {
+	    	EmployeeRepairSign varList = this.employeeRepairSignService.selectOne(pd);
+	      mv.setViewName("employee_repair_sign/employee_repair_sign_show");
+	      mv.addObject("varList", varList);
+	      mv.addObject("msg", "show");
+	      mv.addObject("pd", pd);
+	    } catch (Exception e) {
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 	@ResponseBody
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
 	public boolean save(HttpSession session)  throws Exception{
@@ -197,9 +217,22 @@ public class EmployeeRepairSignController extends BaseController {
 		pd = getPageData();
 		pd.put("ids", ids);
 		pd.put("status", status);
+		pd.put("passtime", DateUtil.getTime());
 		int i = employeeRepairSignService.updateStatus(pd);
 		try {
 			if (i > 0) {
+				if(status=="3"){
+					for(int j=0;j<ids.length;j++){
+						PageData erpd = new PageData();
+						erpd.put("id", ids[j]);
+						EmployeeRepairSign employeeRepairSign=employeeRepairSignService.selectOne(erpd);
+						//System.out.println(employeeRegister.getCarid()+"&&&&&&&&&&&&&&&");
+						 PageData mypd = new PageData();
+				          mypd.put("idcard", employeeRepairSign.getIdcard());
+				          mypd.put("reCyzgDate", employeeRepairSign.getPasstime());
+				          this.employeeService.updateByIDCard(mypd);
+					}
+					}
 				return new JsonResult(true, "");
 			} else {
 				return new JsonResult(false, "操作失败！");

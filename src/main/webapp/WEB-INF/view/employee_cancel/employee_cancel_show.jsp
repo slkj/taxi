@@ -46,34 +46,11 @@
 						<td colspan="4"><span style="margin-left: 20px;">车号：</span>
 							<span style="margin-left: 2px;">${varList.carid }</span>
 						</td>
-						<td colspan="4"><span style="margin-left: 10px;">车型：</span>
-							<span style="margin-left: 2px;">${varList.cartype }</span>
+						<td colspan="4"><span style="margin-left: 10px;">注册时间：</span>
+							<span style="margin-left: 2px;">${varList.registerDate }</span>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">与经营者关系：</span>
-							<span style="margin-left: 2px;"> 
-								<c:if test="${varList.engage_conn == 0 }">车主</c:if> 
-								<c:if test="${varList.engage_conn == 1 }">雇佣</c:if>
-							</span>
-						</td>
-						<td colspan="4"><span style="margin-left: 10px;">经营时间：</span>
-							<span style="margin-left: 2px;"> 
-								<c:if test="${varList.engage_time == 0 }">白</c:if> 
-								<c:if test="${varList.engage_time == 1 }">夜</c:if>
-								<c:if test="${varList.engage_time == 2 }">白夜</c:if>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">承包起始时间：</span>
-							<span style="margin-left: 2px;">${varList.contract_strcount }</span>
-						</td>
-						<td colspan="4"><span style="margin-left: 10px;">承包结束时间：</span>
-							<span style="margin-left: 2px;">${varList.contract_endcount }</span>
-						</td>
-					</tr>
-					<!-- <tr>
+				<!-- 	<tr>
 						<td class="center" colspan="8">
 							<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">关闭</a>
 						</td>

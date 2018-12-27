@@ -87,6 +87,10 @@ public class EmployeeService {
 	public int update(PageData pd) {
 		return mapper.update(pd);
 	}
+	
+	public int updateByIDCard(PageData pd) {
+		return mapper.updateByIDCard(pd);
+	}
 	/**
 	 * 
 	 * @Title: listDie   

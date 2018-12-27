@@ -36,7 +36,7 @@
 
 	
 
-	<select id="selectOne" parameterType="pd" resultType="EmployeeContinueRegister">
+	<select id="selectById" parameterType="pd" resultType="EmployeeContinueRegister">
 		select
 		<include refid="Base_Column_List" />
 		from tb_employee_continue_register
@@ -242,7 +242,8 @@
 	</update>
 	
 	<update id="updateStatus" parameterType="pd">
-		update tb_employee_continue_register set STATUS = #{status,jdbcType=VARCHAR}
+		update tb_employee_continue_register set STATUS = #{status,jdbcType=VARCHAR},
+		PASSTIME = #{passtime,jdbcType=VARCHAR}
 		where ID in
   			 <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
                   #{item}

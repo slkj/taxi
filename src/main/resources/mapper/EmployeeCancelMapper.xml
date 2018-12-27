@@ -36,10 +36,12 @@
 
 	<select id="selectOne" parameterType="pd"
 		resultType="EmployeeCancel">
-		select
-		<include refid="Base_Column_List" />
-		from tb_employee_cancel
-		where ID = #{id,jdbcType=VARCHAR}
+		select a.ID, a.CYZG_CARD, a.NAME, a.SEX, a.BORNDATE, a.IDCARD, a.ADDRESS, a.PHONE,
+			a.DRIVE_CARD, a.DRIVE_START_DATE,
+			a.COMPANY, a.CARID, a.PASSTIME, a.STATUS, a.ADDTIME, b.PERSONAL_ID as personalId, b.CARTYPE,
+		b.REGISTER_DATE as registerDate from tb_employee_cancel a, tb_employee b
+		<!-- <include refid="Base_Column_List" /> -->
+		where a.ID = #{id,jdbcType=VARCHAR}
 	</select>
 
 	<!--  and b.PERSONAL_ID is not null and b.PERSONAL_ID != '' -->
@@ -207,7 +209,8 @@
 	</update>
 		
 	<update id="updateStatus" parameterType="pd">
-		update tb_employee_cancel set STATUS = #{status,jdbcType=VARCHAR}
+		update tb_employee_cancel set STATUS = #{status,jdbcType=VARCHAR},
+		PASSTIME = #{passtime,jdbcType=VARCHAR}
 		where ID in
   			 <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
                   #{item}

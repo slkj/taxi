@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeRegister;
+import cn.slkj.taxi.entity.EmployeeReplaceSign;
 import cn.slkj.taxi.entity.Role;
 import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.EmployeeRegisterService;
@@ -150,6 +151,24 @@ public class EmployeeRegisterController extends BaseController {
 		return mv;
 	}
 	
+	 @RequestMapping({"/goShow"})
+	  public ModelAndView goShow()
+	  {
+	    ModelAndView mv = new ModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	    try
+	    {
+	    	EmployeeRegister varList = this.employeeRegisterService.selectById(pd);
+	      mv.setViewName("employee_register/employee_register_show");
+	      mv.addObject("varList", varList);
+	      mv.addObject("msg", "show");
+	      mv.addObject("pd", pd);
+	    } catch (Exception e) {
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 	
 	@ResponseBody
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
@@ -199,9 +218,31 @@ public class EmployeeRegisterController extends BaseController {
 		pd = getPageData();
 		pd.put("ids", ids);
 		pd.put("status", status);
+		pd.put("passtime", DateUtil.getTime());
 		int i = employeeRegisterService.updateStatus(pd);
 		try {
 			if (i > 0) {
+				if(status=="2"){
+				for(int j=0;j<ids.length;j++){
+					PageData erpd = new PageData();
+					erpd.put("id", ids[j]);
+					EmployeeRegister employeeRegister=employeeRegisterService.selectById(erpd);
+					//System.out.println(employeeRegister.getCarid()+"&&&&&&&&&&&&&&&");
+						PageData mypd = new PageData();
+			          mypd.put("carid", employeeRegister.getCarid());
+			          mypd.put("cyzgCard", employeeRegister.getIdcard());
+			          mypd.put("cartype", employeeRegister.getCartype());
+			          mypd.put("idcard", employeeRegister.getIdcard());
+			          mypd.put("company", employeeRegister.getCompany());
+			          mypd.put("engageConn", employeeRegister.getEngage_conn());
+			          mypd.put("engageTime", employeeRegister.getEngage_time());
+			          mypd.put("contractSrtCount", employeeRegister.getContract_strcount());
+			          mypd.put("contractEndCount", employeeRegister.getContract_endcount());
+			          mypd.put("registerDate", employeeRegister.getPasstime());
+			          //mypd.put("cancelDate", "");
+			          this.employeeService.updateByIDCard(mypd);
+				}
+				}
 				return new JsonResult(true, "");
 			} else {
 				return new JsonResult(false, "操作失败！");

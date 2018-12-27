@@ -31,6 +31,8 @@ public interface EmployeeMapper {
 
 	int update(PageData pd);
 	
+	int updateByIDCard(PageData pd);
+	
 	/**
 	 * 死亡库
 	 */

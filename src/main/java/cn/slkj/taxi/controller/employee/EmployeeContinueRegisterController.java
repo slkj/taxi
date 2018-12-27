@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeContinueRegister;
+import cn.slkj.taxi.entity.EmployeeRegister;
+import cn.slkj.taxi.entity.EmployeeReplaceSign;
 import cn.slkj.taxi.entity.Role;
 import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.EmployeeContinueRegisterService;
@@ -122,6 +124,24 @@ public class EmployeeContinueRegisterController extends BaseController {
 		}
 		return mv;
 	}
+	 @RequestMapping({"/goShow"})
+	  public ModelAndView goShow()
+	  {
+	    ModelAndView mv = new ModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	    try
+	    {
+	      EmployeeContinueRegister varList = this.employeeContinueRegisterService.selectById(pd);
+	      mv.setViewName("employee_continue_register/employee_continue_register_show");
+	      mv.addObject("varList", varList);
+	      mv.addObject("msg", "show");
+	      mv.addObject("pd", pd);
+	    } catch (Exception e) {System.out.println(e.toString());
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 	@ResponseBody
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
 	public boolean save(HttpSession session)  throws Exception{
@@ -171,9 +191,24 @@ public class EmployeeContinueRegisterController extends BaseController {
 		pd = getPageData();
 		pd.put("ids", ids);
 		pd.put("status", status);
+		pd.put("passtime", DateUtil.getTime());
 		int i = employeeContinueRegisterService.updateStatus(pd);
 		try {
 			if (i > 0) {
+				if(status=="2"){
+				for(int j=0;j<ids.length;j++){
+					PageData erpd = new PageData();
+					erpd.put("id", ids[j]);
+					EmployeeContinueRegister employeeContinueRegister=employeeContinueRegisterService.selectById(erpd);
+					//System.out.println(employeeRegister.getCarid()+"&&&&&&&&&&&&&&&");
+						PageData mypd = new PageData();
+			          mypd.put("idcard", employeeContinueRegister.getIdcard());
+			          mypd.put("contractSrtCount", employeeContinueRegister.getContract_strcount());
+			          mypd.put("contractEndCount", employeeContinueRegister.getContract_endcount());
+			          //mypd.put("cancelDate", "");
+			          this.employeeService.updateByIDCard(mypd);
+				}
+				}
 				return new JsonResult(true, "");
 			} else {
 				return new JsonResult(false, "操作失败！");

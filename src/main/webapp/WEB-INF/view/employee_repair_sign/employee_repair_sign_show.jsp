@@ -12,9 +12,7 @@
 		<table style="table-layout: fixed;" id="table_report" border="1"
 			class="table table-striped table-bordered table-hover">
 					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">从业资格证号：</span>
-							<span style="margin-left: 2px;">${varList.cyzg_card }</span></td>
-						<td colspan="4"><span style="margin-left: 10px;">身份证号码：</span>
+						<td colspan="8"><span style="margin-left: 20px;">身份证号码：</span>
 							<span style="margin-left: 2px;">${varList.idcard }</span></td>
 					</tr>
 					<tr>
@@ -35,45 +33,20 @@
 							style="margin-left: 2px;">${varList.address }</span></td>
 					</tr>
 					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">驾驶证号：</span>
-							<span style="margin-left: 2px;">${varList.drive_card }</span>
+						<td colspan="4"><span style="margin-left: 20px;">准驾车型：</span>
+							<span style="margin-left: 2px;">${varList.drive_type }</span>
 						</td>
 						<td colspan="4"><span style="margin-left: 10px;">驾驶证初领日期：</span>
 							<span style="margin-left: 2px;">${varList.drive_start_date }</span>
 						</td>
 					</tr>
 					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">车号：</span>
-							<span style="margin-left: 2px;">${varList.carid }</span>
-						</td>
-						<td colspan="4"><span style="margin-left: 10px;">车型：</span>
-							<span style="margin-left: 2px;">${varList.cartype }</span>
-						</td>
+						<td colspan="4"><span style="margin-left: 20px;">原从业资格证号：</span>
+							<span style="margin-left: 2px;">${varList.old_sign_id }</span></td>
+						<td colspan="4"><span style="margin-left: 20px;">初领从业证日期：</span>
+							<span style="margin-left: 2px;">${varList.first_sign_date }</span></td>	
 					</tr>
-					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">与经营者关系：</span>
-							<span style="margin-left: 2px;"> 
-								<c:if test="${varList.engage_conn == 0 }">车主</c:if> 
-								<c:if test="${varList.engage_conn == 1 }">雇佣</c:if>
-							</span>
-						</td>
-						<td colspan="4"><span style="margin-left: 10px;">经营时间：</span>
-							<span style="margin-left: 2px;"> 
-								<c:if test="${varList.engage_time == 0 }">白</c:if> 
-								<c:if test="${varList.engage_time == 1 }">夜</c:if>
-								<c:if test="${varList.engage_time == 2 }">白夜</c:if>
-							</span>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4"><span style="margin-left: 20px;">承包起始时间：</span>
-							<span style="margin-left: 2px;">${varList.contract_strcount }</span>
-						</td>
-						<td colspan="4"><span style="margin-left: 10px;">承包结束时间：</span>
-							<span style="margin-left: 2px;">${varList.contract_endcount }</span>
-						</td>
-					</tr>
-					<!-- <tr>
+				<!-- 	<tr>
 						<td class="center" colspan="8">
 							<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">关闭</a>
 						</td>

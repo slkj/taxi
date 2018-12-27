@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.ChangeCompany;
 import cn.slkj.taxi.entity.Employee;
+import cn.slkj.taxi.entity.EmployeeContinueRegister;
+import cn.slkj.taxi.entity.EmployeeReplaceSign;
 import cn.slkj.taxi.entity.Role;
 import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.ChangeCompanyService;
@@ -121,6 +123,23 @@ public class ChangeCompanyController extends BaseController {
 		}
 		return mv;
 	}
+	 @RequestMapping({"/goShow"})
+	  public ModelAndView goShow()
+	  {
+	    ModelAndView mv = new ModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	    try
+	    {
+	    	ChangeCompany varList = this.changeCompanyService.selectOne(pd);
+	      mv.setViewName("change_company/change_company_show");
+	      mv.addObject("varList", varList);
+	      mv.addObject("msg", "show");
+	    } catch (Exception e) {
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 	@ResponseBody
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
 	public boolean save(HttpSession session)  throws Exception{
@@ -171,6 +190,20 @@ public class ChangeCompanyController extends BaseController {
 		int i = changeCompanyService.updateStatus(pd);
 		try {
 			if (i > 0) {
+				if(status=="2"){
+					for(int j=0;j<ids.length;j++){
+						PageData erpd = new PageData();
+						erpd.put("id", ids[j]);
+						ChangeCompany changeCompany=changeCompanyService.selectOne(erpd);
+						//System.out.println(employeeRegister.getCarid()+"&&&&&&&&&&&&&&&");
+							PageData mypd = new PageData();
+				          mypd.put("idcard", changeCompany.getCyzg_card());
+				          mypd.put("company", changeCompany.getNew_company());
+				          mypd.put("oldCompany", changeCompany.getOld_company());
+				          //mypd.put("cancelDate", "");
+				          this.employeeService.updateByIDCard(mypd);
+					}
+					}
 				return new JsonResult(true, "");
 			} else {
 				return new JsonResult(false, "操作失败！");

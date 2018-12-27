@@ -241,7 +241,8 @@
 	</update>
 	
 	<update id="updateStatus" parameterType="pd">
-		update tb_employee_register set STATUS = #{status,jdbcType=VARCHAR}
+		update tb_employee_register set STATUS = #{status,jdbcType=VARCHAR},
+		PASSTIME= #{passtime,jdbcType=VARCHAR}
 		where ID in
   			 <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
                   #{item}
