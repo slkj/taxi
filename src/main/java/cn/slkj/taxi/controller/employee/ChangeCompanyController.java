@@ -8,8 +8,11 @@
  */
 package cn.slkj.taxi.controller.employee;
 
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +36,7 @@ import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
@@ -214,4 +218,92 @@ public class ChangeCompanyController extends BaseController {
 		}
 
 	}
+
+	@RequestMapping({"/goExcel"})
+	  public ModelAndView goExcel(HttpSession session)
+	  {
+	    ModelAndView mv = getModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	   
+	    try {
+	    	if ((pd.getString("name") != null) && (!"".equalsIgnoreCase(pd.getString("name").trim()))) {
+	    	 String name= URLDecoder.decode(pd.getString("name"), "utf-8");
+	    	 pd.put("name", name);
+	    	}
+	    	if ((pd.getString("status") != null) && (!"".equalsIgnoreCase(pd.getString("status").trim()))) {
+	    	 String status= URLDecoder.decode(pd.getString("status"), "utf-8");
+	    	 pd.put("status", status);
+	    	}
+	    	if ((pd.getString("cyzgCard") != null) && (!"".equalsIgnoreCase(pd.getString("cyzgCard").trim()))) {
+	    	 String cyzgCard= URLDecoder.decode(pd.getString("cyzgCard"), "utf-8");
+	    	 pd.put("cyzgCard", cyzgCard);
+	    	}
+	    	/*if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+		    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+		    	 pd.put("company", company);
+		    	}*/
+	    	
+	    	//权限，是否按公司查询
+	    	if ((pd.getString("right") != null) && (!"".equalsIgnoreCase(pd.getString("right").trim()))) {
+		    	 String right= URLDecoder.decode(pd.getString("right"), "utf-8");
+		    	 if(right.equals("1")){
+		    		 User user = (User)session.getAttribute("sessionUser");
+		   		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
+		   		        pd.put("company", user.getDepartName());
+		   		      }else{
+		   		    	pd.put("company", "总公司");
+		   		      } 
+		    	 }
+		    	 
+		    	}
+	    	 
+	      Map dataMap = new HashMap();
+	      List titles = new ArrayList();
+
+	      titles.add("编号");
+	      titles.add("从业资格证号");
+	      titles.add("姓名");
+	      titles.add("原公司名称");
+	      titles.add("现公司名称");
+	      titles.add("状态");
+	      titles.add("添加时间");
+	      dataMap.put("titles", titles);
+
+	      List emList = this.changeCompanyService.excelList(pd);
+	      List varList = new ArrayList();
+	      for (int i = 0; i < emList.size(); i++) {
+	        PageData vpd = new PageData();
+	        vpd.put("var1", ((PageData)emList.get(i)).getString("ID"));
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("CYZG_CARD"));
+	        vpd.put("var3", ((PageData)emList.get(i)).getString("NAME"));
+	        vpd.put("var4", ((PageData)emList.get(i)).getString("OLD_COMPANY"));
+	        vpd.put("var5", ((PageData)emList.get(i)).getString("NEW_COMPANY"));
+	        if (((PageData)emList.get(i)).getString("STATUS") != null) {
+	          if (((PageData)emList.get(i)).getString("STATUS").equals("0"))
+	            vpd.put("var6", "待审核");
+	          else if (((PageData)emList.get(i)).getString("STATUS").equals("1"))
+	            vpd.put("var6", "审核失败");
+	          else if (((PageData)emList.get(i)).getString("STATUS").equals("2"))
+	            vpd.put("var6", "审核通过");	        
+	          else
+	            vpd.put("var6", "未填写");
+	        }
+	        else {
+	          vpd.put("var6", "未填写");
+	        }	       
+	        vpd.put("var7", ((PageData)emList.get(i)).getString("ADDTIME"));
+	        varList.add(vpd);
+	      }
+
+	      dataMap.put("varList", varList);
+
+	      ObjectExcelView erv = new ObjectExcelView();
+
+	      mv = new ModelAndView(erv, dataMap);
+	    } catch (Exception e) {System.out.println(e.toString());
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 }

@@ -87,4 +87,17 @@ public class EnterpriseEvalService {
 		return mapper.queryOne(id);
 	}
 	 
+	
+	/**
+	 * 
+	 * @Title: excelList   
+	 * @Description: 导出Excel 
+	 * @param: @param pd
+	 * @param: @return      
+	 * @return: List      
+	 * @throws
+	 */
+	public List excelList(PageData pd) {
+		return mapper.excelList(pd);
+	}
 }

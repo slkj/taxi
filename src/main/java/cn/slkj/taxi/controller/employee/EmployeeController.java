@@ -6,8 +6,11 @@ package cn.slkj.taxi.controller.employee;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,10 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.miemiedev.mybatis.paginator.domain.Order;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
-
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.User;
@@ -35,9 +34,14 @@ import cn.slkj.taxi.util.Const;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.FileUtil;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
+
+import com.github.miemiedev.mybatis.paginator.domain.Order;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 /**
  * 
@@ -460,4 +464,185 @@ public class EmployeeController extends BaseController {
 		PageList pageList = (PageList) list;
 		return new EPager<Employee>(pageList.getPaginator().getTotalCount(), list);
 	}
+	
+	  @RequestMapping({"/goExcel"})
+	  public ModelAndView goExcel(HttpSession session)
+	  {
+	    ModelAndView mv = getModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	   
+	    try {
+	    	if ((pd.getString("name") != null) && (!"".equalsIgnoreCase(pd.getString("name").trim()))) {
+	    	 String name= URLDecoder.decode(pd.getString("name"), "utf-8");
+	    	 pd.put("name", name);
+	    	}
+	    	if ((pd.getString("status") != null) && (!"".equalsIgnoreCase(pd.getString("status").trim()))) {
+	    	 String status= URLDecoder.decode(pd.getString("status"), "utf-8");
+	    	 pd.put("status", status);
+	    	}
+	    	if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+	    	 pd.put("company", company);
+	    	}
+	    	if ((pd.getString("shzt") != null) && (!"".equalsIgnoreCase(pd.getString("shzt").trim()))) {
+		    	 String shzt= URLDecoder.decode(pd.getString("shzt"), "utf-8");
+		    	 pd.put("shzt", shzt);
+		    	}
+	    	if ((pd.getString("age") != null) && (!"".equalsIgnoreCase(pd.getString("age").trim()))) {
+		    	 String age= URLDecoder.decode(pd.getString("age"), "utf-8");
+		    	 pd.put("age", age);
+		    	}
+	    	 
+	      Map dataMap = new HashMap();
+	      List titles = new ArrayList();
+
+	      titles.add("编号");
+	      titles.add("档案号");
+	      titles.add("许可案卷编号");
+	      titles.add("姓名");
+	      titles.add("性别");
+	      titles.add("出生年月");
+	      titles.add("国籍");
+	      titles.add("身份证号");
+	      titles.add("文化程度");
+	      titles.add("联系电话");
+	      titles.add("住址");
+	      titles.add("驾驶证号");
+	      titles.add("驾驶证初领日期");
+	      titles.add("准驾车型");
+	      titles.add("从业资格证号");
+	      titles.add("注册时间");
+	      titles.add("注销时间");
+	      titles.add("服务质量监督卡号");
+	      titles.add("服务质量监督卡补办日期");
+	      titles.add("车牌号");
+	      titles.add("车辆类型");
+	      titles.add("公司");
+	      titles.add("原公司");
+	      titles.add("与车主关系");
+	      titles.add("经营时间");
+	      titles.add("承包期限开始");
+	      titles.add("承包期限结束");
+	      titles.add("初领从业证日期");
+	      titles.add("决定时间");
+	      titles.add("状态");
+	      titles.add("内容页数");
+	      titles.add("试卷页数");
+	      titles.add("是否换证");
+	      titles.add("注册有效期");
+	      titles.add("补发从业证日期");
+	      titles.add("生活状态");
+	      titles.add("添加时间");
+	      dataMap.put("titles", titles);
+
+	      List emList = this.employeeService.excelList(pd);
+	      List varList = new ArrayList();
+	      for (int i = 0; i < emList.size(); i++) {
+	        PageData vpd = new PageData();
+	        vpd.put("var1", ((PageData)emList.get(i)).getString("ID"));
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("PERSONAL_ID"));
+	        vpd.put("var3", ((PageData)emList.get(i)).getString("PERMIT_FILES_ID"));
+	        vpd.put("var4", ((PageData)emList.get(i)).getString("NAME"));
+	        if (((PageData)emList.get(i)).getString("SEX") != null) {
+	          if (((PageData)emList.get(i)).getString("SEX").equals("0"))
+	            vpd.put("var5", "男");
+	          else if (((PageData)emList.get(i)).getString("SEX").equals("1"))
+	            vpd.put("var5", "女");
+	          else
+	            vpd.put("var5", "不详");
+	        }
+	        else {
+	          vpd.put("var5", "不详");
+	        }
+
+	        vpd.put("var6", ((PageData)emList.get(i)).getString("BORNDATE"));
+	        vpd.put("var7", ((PageData)emList.get(i)).getString("NATIONALITY"));
+	        vpd.put("var8", ((PageData)emList.get(i)).getString("IDCARD"));
+	        vpd.put("var9", ((PageData)emList.get(i)).getString("EDUCATED"));
+	        vpd.put("var10", ((PageData)emList.get(i)).getString("PHONE"));
+	        vpd.put("var11", ((PageData)emList.get(i)).getString("ADDRESS"));
+	        vpd.put("var12", ((PageData)emList.get(i)).getString("DRIVE_CARD"));
+	        vpd.put("var13", ((PageData)emList.get(i)).getString("DRIVE_START_DATE"));
+	        vpd.put("var14", ((PageData)emList.get(i)).getString("DRIVE_TYPE"));
+	        vpd.put("var15", ((PageData)emList.get(i)).getString("CYZG_CARD"));
+	        vpd.put("var16", ((PageData)emList.get(i)).getString("REGISTER_DATE"));
+	        vpd.put("var17", ((PageData)emList.get(i)).getString("CANCEL_DATE"));
+	        vpd.put("var18", ((PageData)emList.get(i)).getString("FWZLJD_CARD"));
+	        vpd.put("var19", ((PageData)emList.get(i)).getString("FWZLJD_REPAIR_DATE"));
+	        vpd.put("var20", ((PageData)emList.get(i)).getString("CARID"));
+	        vpd.put("var21", ((PageData)emList.get(i)).getString("CARTYPE"));
+	        vpd.put("var22", ((PageData)emList.get(i)).getString("COMPANY"));
+	        vpd.put("var23", ((PageData)emList.get(i)).getString("OLD_COMPANY"));
+
+	        if (((PageData)emList.get(i)).getString("ENGAGE_CONN") != null) {
+	          if (((PageData)emList.get(i)).getString("ENGAGE_CONN").equals("0"))
+	            vpd.put("var24", "车主");
+	          else if (((PageData)emList.get(i)).getString("ENGAGE_CONN").equals("1"))
+	            vpd.put("var24", "雇佣");
+	          else
+	            vpd.put("var24", "未填写");
+	        }
+	        else {
+	          vpd.put("var24", "未填写");
+	        }
+
+	        if (((PageData)emList.get(i)).getString("ENGAGE_TIME") != null) {
+	          if (((PageData)emList.get(i)).getString("ENGAGE_TIME").equals("0"))
+	            vpd.put("var25", "白");
+	          else if (((PageData)emList.get(i)).getString("ENGAGE_TIME").equals("1"))
+	            vpd.put("var25", "夜");
+	          else if (((PageData)emList.get(i)).getString("ENGAGE_TIME").equals("2"))
+	            vpd.put("var25", "白夜");
+	          else if (((PageData)emList.get(i)).getString("ENGAGE_TIME").equals("3"))
+	            vpd.put("var25", "大包");
+	          else
+	            vpd.put("var25", "未填写");
+	        }
+	        else {
+	          vpd.put("var25", "未填写");
+	        }
+
+	        vpd.put("var26", ((PageData)emList.get(i)).getString("CONTRACT_STRCOUNT"));
+	        vpd.put("var27", ((PageData)emList.get(i)).getString("CONTRACT_ENDCOUNT"));
+	        vpd.put("var28", ((PageData)emList.get(i)).getString("APPROVAL_HOURS"));
+	        vpd.put("var29", ((PageData)emList.get(i)).getString("DECISION_HOURS"));
+
+	        if (((PageData)emList.get(i)).getString("STATUS") != null) {
+	          if (((PageData)emList.get(i)).getString("STATUS").equals("0"))
+	            vpd.put("var30", "报名成功");
+	          else if (((PageData)emList.get(i)).getString("STATUS").equals("1"))
+	            vpd.put("var30", "考试通过");
+	          else if (((PageData)emList.get(i)).getString("STATUS").equals("2"))
+	            vpd.put("var30", "考试未通过");
+	          else if (((PageData)emList.get(i)).getString("STATUS").equals("3"))
+	            vpd.put("var30", "出证完成");
+	          else
+	            vpd.put("var30", "未填写");
+	        }
+	        else {
+	          vpd.put("var30", "未填写");
+	        }
+
+	        vpd.put("var31", ((PageData)emList.get(i)).getString("INFO_PAGES"));
+	        vpd.put("var32", ((PageData)emList.get(i)).getString("EXAM_PAGES"));
+	        vpd.put("var33", ((PageData)emList.get(i)).getString("SFHZ"));
+	        vpd.put("var34", ((PageData)emList.get(i)).getString("EXP_REG"));
+	        vpd.put("var35", ((PageData)emList.get(i)).getString("RE_CYZG_DATE"));
+	        vpd.put("var36", ((PageData)emList.get(i)).getString("SHZT"));
+	        vpd.put("var37", ((PageData)emList.get(i)).getString("ADDTIME"));
+	        varList.add(vpd);
+	      }
+
+	      dataMap.put("varList", varList);
+
+	      ObjectExcelView erv = new ObjectExcelView();
+
+	      mv = new ModelAndView(erv, dataMap);
+	    } catch (Exception e) {
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
+
 }

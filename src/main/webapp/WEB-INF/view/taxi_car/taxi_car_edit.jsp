@@ -9,6 +9,41 @@
 <%@ include file="/common/taglibs.jsp"%>
 <script src="${pageContext.request.contextPath}/assets/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/My97DatePicker/skin/WdatePicker.css">
+<style type="text/css">
+.a-upload {
+	padding: 4px 10px;
+	height: 20px;
+	width: 128px;
+	line-height: 6px;
+	position: relative;
+	cursor: pointer;
+	color: #888;
+	background: #fafafa;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	overflow: hidden;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1
+}
+
+.a-upload  input {
+	position: absolute;
+	font-size: 100px;
+	right: 0;
+	top: 0;
+	opacity: 0;
+	filter: alpha(opacity = 0);
+	cursor: pointer
+}
+
+.a-upload:hover {
+	color: #444;
+	background: #eee;
+	border-color: #ccc;
+	text-decoration: none
+}
+</style>
 <script type="text/javascript">
 	$(function() {
 	$('#corpName').combobox({
@@ -57,13 +92,13 @@
 <body>
 	
 	
-			<form id="vui_sample" class="easyui-form" method="post" data-options="novalidate:true">
+			<form id="vui_sample" class="easyui-form" method="post"> <!-- data-options="novalidate:true"> -->
 			<input type="hidden" name="id" value="${pd.id }">
 				<table style="table-layout: fixed;" id="table_report" border="1"  class="table table-striped table-bordered table-hover">
 		<tr>
 			  <td colspan="3"><span
 				style="margin-left: 20px;">档案号：</span> <span
-				style="margin-left: 2px;"><input class="easyui-textbox" name="fileNum" value="${pd.fileNum }" type="text" style="width: 130px;" /></span></td>
+				style="margin-left: 2px;"><input class="easyui-textbox" name="fileNum" value="${pd.fileNum }" type="text" style="width: 130px;" data-options="required:true"/></span></td>
 			<td colspan="3"><span
 				style="margin-left: 20px;">车主姓名：</span> <span
 				style="margin-left: 2px;"><input class="easyui-textbox" name="ownerName" value="${pd.ownerName }" type="text" style="width: 120px;" /></span></td>
@@ -79,7 +114,12 @@
 					</span></td>
 			<td colspan="3" style="width: 150px;" rowspan="5">
 				<div style="width: 125px; height: 155px; margin: 2px;">
+				<c:if test="${pd != null && pd.ownerNamePic != '' && pd.ownerNamePic != null}">
 					<img id="uploadPreviewOwnerNamePic" style="width: 125px; height: 155px;" src="../taxicar/getOwnernamepic?id=${pd.id}"/>
+					</c:if>
+						<c:if test="${pd == null || pd.ownerNamePic == '' || pd.ownerNamePic == null}">
+							<img id="uploadPreviewOwnerNamePic" style="width: 125px; height: 155px;" />
+						</c:if>
 					<div style="text-align: center;">
 	         			<a href="javascript:;" class="a-upload" style="margin-top: 5px;">
 					    	<input id="ownernamepic1" name="ownernamepic1"  type="file"  onchange="loadImageFileOwnerNamePic();"/>上传车主照片
@@ -91,7 +131,7 @@
           <tr>
 			 <td colspan="3">
               <span style="margin-left:20px;">营运证号：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="opretaCertNum" value="${pd.opretaCertNum }" type="text" style="width: 115px;" /></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="opretaCertNum" value="${pd.opretaCertNum }" type="text" style="width: 115px;"  data-options="required:true"/></span>
             </td>
             <td colspan="3">
               <span style="margin-left:20px;">原车主：</span>
@@ -110,7 +150,7 @@
             </td>
             <td colspan="3">
               <span style="margin-left:20px;">联系电话：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="phoneNum" value="${pd.phoneNum }" type="text" style="width: 120px;" /></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="phoneNum" value="${pd.phoneNum }" type="text" style="width: 120px;"  validtype="mobile"/></span>
             </td>
             <td colspan="2">
               <span
@@ -132,7 +172,7 @@
           <tr>
             <td colspan="8">
               <span style="margin-left:20px;">车牌号：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="plateNum" value="${pd.plateNum }" type="text" style="width: 100px;" /></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="plateNum" value="${pd.plateNum }" type="text" style="width: 100px;"  data-options="required:true"/></span>
               <span style="margin-left:20px;">原车号：</span>
                     <span style="margin-left:2px;"><input class="easyui-textbox" name="origPlateNum" value="${pd.origPlateNum }" type="text" style="width: 100px;" /></span>
               <span style="margin-left:20px;">行驶证初次登记：</span>
@@ -142,20 +182,24 @@
           <tr>
 			<td colspan="4"><span
 				style="margin-left: 20px;">身份证号：</span> <span
-				style="margin-left: 2px;"><input class="easyui-textbox" name="iDNumber" value="${pd.iDNumber }" type="text" style="width: 250px;" /></span></td>
+				style="margin-left: 2px;"><input class="easyui-textbox" name="iDNumber" value="${pd.iDNumber }" type="text" style="width: 250px;"  validtype="idcard"/></span></td>
 			<td colspan="3"> <span style="margin-left: 20px;">车辆所属地区：</span>
 					<span style="margin-left: 2px;">
 						<select  class="easyui-combobox" style="width: 120px;" id="area" name="area">
 							<option value=''></option>
 							<option value='市区' <c:if test="${pd.area == '0' }">selected</c:if>>市区</option>
-							<option value='双滦' <c:if test="${pd.area == '0' }">selected</c:if>>双滦</option>
-							<option value='双滦代管' <c:if test="${pd.area == '0' }">selected</c:if>>双滦代管</option>
+							<option value='双滦' <c:if test="${pd.area == '1' }">selected</c:if>>双滦</option>
+							<option value='双滦代管' <c:if test="${pd.area == '2' }">selected</c:if>>双滦代管</option>
 						</select>
 					</span></td>
 			<td colspan="4" style="width: 202px;" rowspan="4">
 				<div style="width: 185px; height: 110px; margin: 2px;margin-left: 15px;">
+				<c:if test="${pd != null && pd.vehiclePic != '' && pd.vehiclePic != null}">
 						<img id="uploadPreviewVehiclePic" style="width: 185px; height: 110px;"  src="../taxicar/getVehiclepic?id=${pd.id}"/>
-					
+				</c:if>
+						<c:if test="${pd == null || pd.vehiclePic == '' || pd.vehiclePic == null}">
+							<img id="uploadPreviewVehiclePic" style="width: 185px; height: 110px;" />
+						</c:if>	
 					<div style="text-align: center;">
 	         			<a href="javascript:;" class="a-upload" style="margin-top: 3px;width: 150px;" >
 					    	<input id="vehiclepic1" name="vehiclepic1"  type="file"  onchange="loadImageFileVehiclepic();"/>上传车身照片
@@ -173,13 +217,13 @@
           <tr>
           	<td colspan="7">
               <span style="margin-left:20px;">吨（座）位：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="tonsSeat" value="${pd.tonsSeat }" type="text" style="width: 60px;" /></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="tonsSeat" value="${pd.tonsSeat }" type="text" style="width: 60px;" validtype="integer"/></span>
               <span style="margin-left:20px;">长：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="carLen" value="${pd.carLen }" style="width:60px;" type="text"></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="carLen" value="${pd.carLen }" style="width:60px;" type="text" validtype="integer"></span>
               <span style="margin-left:20px;">宽：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="carWidth" value="${pd.carWidth }" style="width:60px;" type="text"></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="carWidth" value="${pd.carWidth }" style="width:60px;" type="text" validtype="integer"></span>
               <span style="margin-left:20px;">高：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="carHigh" value="${pd.carHigh }" style="width:60px;" type="text"></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="carHigh" value="${pd.carHigh }" style="width:60px;" type="text" validtype="integer"></span>
             </td>
           </tr>
           <tr>

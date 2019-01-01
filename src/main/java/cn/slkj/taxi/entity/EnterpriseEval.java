@@ -13,14 +13,15 @@ package cn.slkj.taxi.entity;
  */
  
 public class EnterpriseEval {
-	private String id;
-	private String parent_id; 
-	private String date; 
-	private String project; 
-	private String reduction; 
-	private String plus; 
-	private String note; 
-	private String addtime;
+	private String id;//id
+	private String parent_id; //企业id
+	private String unitname; //企业名称
+	private String date; //考核日期
+	private String project; //考核项目
+	private String reduction; //减分
+	private String plus; //加分
+	private String note; //备注
+	private String addtime;//添加日期
 	public String getId() {
 		return id;
 	}
@@ -32,6 +33,13 @@ public class EnterpriseEval {
 	}
 	public void setParent_id(String parent_id) {
 		this.parent_id = parent_id;
+	}
+	
+	public String getUnitname() {
+		return unitname;
+	}
+	public void setUnitname(String unitname) {
+		this.unitname = unitname;
 	}
 	public String getDate() {
 		return date;

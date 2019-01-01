@@ -46,16 +46,16 @@
 <body>
 	
 	<div class="form1-column">
-			<form id="vui_sample" class="easyui-form" method="post" data-options="novalidate:true">
+			<form id="vui_sample" class="easyui-form" method="post"> <!-- data-options="novalidate:true"> -->
 			<input type="hidden" name="id" id="id" value="${pd.id }" />							
 				<div class="form-column1">
 						<div class="form-column-left">
-							<input class="easyui-textbox" name="parent_id" value="${pd.parent_id }" style="width: 300px" data-options="label:'从业资格证编号:'">
+							<input class="easyui-textbox" name="parent_id" value="${pd.parent_id }" style="width: 300px" data-options="label:'从业资格证编号:',required:true">
 						</div>
 					</div>
 					<div class="form-column1">
 						<div class="form-column-left">
-							<input class="easyui-textbox" name="type" value="${pd.type }" style="width: 300px" data-options="label:'从业资格证类型:'">
+							<input class="easyui-textbox" name="type" value="${pd.type }" style="width: 300px" data-options="label:'从业资格证类型:',required:true">
 						</div>
 					</div>
 					<div class="form-column1">

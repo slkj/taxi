@@ -26,6 +26,15 @@ public interface TaxicarMapper {
 	
 	int delete(String id);
 	
-	
+	/**
+	 * 
+	 * @Title: excelList   
+	 * @Description: 导出Excel  
+	 * @param: @param pd
+	 * @param: @return      
+	 * @return: List      
+	 * @throws
+	 */
+	List excelList(PageData pd);
 	
 }

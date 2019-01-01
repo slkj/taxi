@@ -36,6 +36,12 @@
 								查询
 							</button>
 						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
+						</div>
 					</div>
 				</div>
 				<div class="btnbar-tools">
@@ -172,6 +178,19 @@
 					}
 				});
 				}
+		}
+		//导出excel
+		function toExcel(){
+			 var PlateNum = $('#PlateNum').val();
+			 var OpretaCertNum = $('#OpretaCertNum').val();
+			 var OwnerName = $('#OwnerName').val();
+			 var Area = $('#Area').val();
+			    window.location.href='goExcel?PlateNum='
+						+encodeURI(encodeURI(PlateNum))
+						+'&OpretaCertNum='+encodeURI(encodeURI(OpretaCertNum))
+						+'&OwnerName='+encodeURI(encodeURI(OwnerName))
+						+'&Area='+encodeURI(encodeURI(Area));  
+			
 		}
 	</script>
 	

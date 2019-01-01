@@ -18,7 +18,14 @@
 			</if>
 		</where>
 	</select>
-
+	<select id="excelList" parameterType="pd" resultType="User">
+		SELECT * FROM SYS_USER
+		<where>
+			<if test="username != null and password != null">
+				AND USERNAME = #{username} AND PASSWORD = #{password}
+			</if>
+		</where>
+	</select>
 	<insert id="saveUser" parameterType="pd">
 		INSERT INTO SYS_USER( username ,password,status ,realname,sex ,email ,phone
 		,create_time ,lastTime ,remark ,address ,departName )

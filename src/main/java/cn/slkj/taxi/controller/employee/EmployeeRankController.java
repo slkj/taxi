@@ -8,8 +8,11 @@
  */
 package cn.slkj.taxi.controller.employee;
 
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -30,6 +33,7 @@ import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 
@@ -166,4 +170,100 @@ public class EmployeeRankController extends BaseController {
 		}
 
 	}
+	
+	@RequestMapping({"/goExcel"})
+	  public ModelAndView goExcel(HttpSession session)
+	  {
+	    ModelAndView mv = getModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	   
+	    try {
+	    	if ((pd.getString("name") != null) && (!"".equalsIgnoreCase(pd.getString("name").trim()))) {
+	    	 String name= URLDecoder.decode(pd.getString("name"), "utf-8");
+	    	 pd.put("name", name);
+	    	}
+	    	
+	    	if ((pd.getString("cyzgCard") != null) && (!"".equalsIgnoreCase(pd.getString("cyzgCard").trim()))) {
+	    	 String cyzgCard= URLDecoder.decode(pd.getString("cyzgCard"), "utf-8");
+	    	 pd.put("cyzgCard", cyzgCard);
+	    	}
+	    	/*if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+		    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+		    	 pd.put("company", company);
+		    	}*/
+	    	
+	    	//权限，是否按公司查询
+	    	if ((pd.getString("right") != null) && (!"".equalsIgnoreCase(pd.getString("right").trim()))) {
+		    	 String right= URLDecoder.decode(pd.getString("right"), "utf-8");
+		    	 if(right.equals("1")){
+		    		 User user = (User)session.getAttribute("sessionUser");
+		   		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
+		   		        pd.put("company", user.getDepartName());
+		   		      }else{
+		   		    	pd.put("company", "总公司");
+		   		      } 
+		    	 }
+		    	 
+		    	}
+	    	 
+	      Map dataMap = new HashMap();
+	      List titles = new ArrayList();
+
+	      titles.add("编号");
+	      titles.add("姓名");
+	      titles.add("性别");
+	      titles.add("出生年月");
+	      titles.add("身份证号");
+	      titles.add("受教育程度");
+	      titles.add("从业资格证号");
+	      titles.add("车牌号");
+	      titles.add("联系方式");
+	      titles.add("公司");
+	      titles.add("年份");
+	      titles.add("评级");
+	      titles.add("添加时间");
+	      dataMap.put("titles", titles);
+
+	      List emList = this.employeeRankService.excelList(pd);
+	      List varList = new ArrayList();
+	      for (int i = 0; i < emList.size(); i++) {
+	        PageData vpd = new PageData();
+	        vpd.put("var1", ((PageData)emList.get(i)).getString("ID"));
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("NAME"));
+	        if (((PageData)emList.get(i)).getString("SEX") != null) {
+	          if (((PageData)emList.get(i)).getString("SEX").equals("0"))
+	            vpd.put("var3", "男");
+	          else if (((PageData)emList.get(i)).getString("SEX").equals("1"))
+	            vpd.put("var3", "女");
+	          else
+	            vpd.put("var3", "不详");
+	        }
+	        else {
+	          vpd.put("var3", "不详");
+	        }
+
+	        vpd.put("var4", ((PageData)emList.get(i)).getString("BORNDATE"));
+	        vpd.put("var5", ((PageData)emList.get(i)).getString("IDCARD"));
+	        vpd.put("var6", ((PageData)emList.get(i)).getString("EDUCATED"));
+	        vpd.put("var7", ((PageData)emList.get(i)).getString("CYZG_CARD"));
+	        vpd.put("var8", ((PageData)emList.get(i)).getString("CARID"));
+	        vpd.put("var9", ((PageData)emList.get(i)).getString("PHONE"));
+	        vpd.put("var10", ((PageData)emList.get(i)).getString("COMPANY"));
+	        vpd.put("var11", ((PageData)emList.get(i)).getString("YEAR"));
+	        vpd.put("var12", ((PageData)emList.get(i)).getString("RANK"));
+	        vpd.put("var13", ((PageData)emList.get(i)).getString("CREATE_TIME"));
+	        varList.add(vpd);
+	      }
+
+	      dataMap.put("varList", varList);
+
+	      ObjectExcelView erv = new ObjectExcelView();
+
+	      mv = new ModelAndView(erv, dataMap);
+	    } catch (Exception e) {System.out.println(e.toString());
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 }

@@ -23,6 +23,12 @@
 								查询
 							</button>
 						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
+						</div>
 					</div>
 				</div>
 				<div class="btnbar-tools">
@@ -159,7 +165,13 @@
 				});
 				}
 		}
-		
+		//导出excel
+		function toExcel(){
+			 var operatingnum=$('#operatingnum').val();
+			    window.location.href='goExcel?operatingnum='
+						+encodeURI(encodeURI(operatingnum));  
+			
+		}
 	</script>
 
 </body>

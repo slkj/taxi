@@ -144,6 +144,16 @@
 			}
 		});
 	}
+	//导出excel
+	function toExcel(){
+		
+		 var name=$('#name').val();
+		var status=$('#status').val();
+		var company=$('#company').val();
+		window.location.href='../goExcel?name='
+				+encodeURI(encodeURI(name))+'&status='+encodeURI(encodeURI(status))
+				+'&company='+encodeURI(encodeURI(company)); 
+	}
 </script>
 </head>
 <body scroll="no" class="body-pd10">
@@ -173,6 +183,12 @@
 								<i class="fa fa-search"></i>
 								查询
 							</button>
+						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault"  onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
 						</div>
 					</div>
 				</div>

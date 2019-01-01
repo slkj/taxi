@@ -54,12 +54,12 @@
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="phone" value="${pd.phone }" style="width: 100%" data-options="label:'联系电话:'">
+						<input class="easyui-textbox" name="phone" value="${pd.phone }" style="width: 100%" data-options="label:'联系电话:',required:true"  validtype="phone">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="unitaddr" value="${pd.unitaddr }" style="width: 100%" data-options="label:'单位地址:'">
+						<input class="easyui-textbox" name="unitaddr" value="${pd.unitaddr }" style="width: 100%" data-options="label:'单位地址:',required:true">
 					</div>
 				</div>
 				<div class="form-column1">
@@ -69,7 +69,7 @@
 				</div>			
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="businessno" value="${pd.businessno }" style="width: 100%" data-options="label:'经营许可证号:'">
+						<input class="easyui-textbox" name="businessno" value="${pd.businessno }" style="width: 100%" data-options="label:'经营许可证号:',required:true">
 					</div>
 				</div>
 				<div class="form-column1">
@@ -94,22 +94,22 @@
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="vehiclesnum" value="${pd.vehiclesnum }" style="width: 100%" data-options="label:'车辆总数:'">
+						<input class="easyui-textbox" name="vehiclesnum" value="${pd.vehiclesnum }" style="width: 100%" data-options="label:'车辆总数:'"  validtype="integer">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="employeescount" value="${pd.employeescount }" style="width: 100%" data-options="label:'从业人员总数:'">
+						<input class="easyui-textbox" name="employeescount" value="${pd.employeescount }" style="width: 100%" data-options="label:'从业人员总数:'"  validtype="integer">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="manageersonnel" value="${pd.manageersonnel }" style="width: 100%" data-options="label:'安全管理人员总数:'">
+						<input class="easyui-textbox" name="manageersonnel" value="${pd.manageersonnel }" style="width: 100%" data-options="label:'安全管理人员总数:'"  validtype="integer">
 					</div>
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="carnum" value="${pd.carnum }" style="width: 100%" data-options="label:'企业自有车数:'">
+						<input class="easyui-textbox" name="carnum" value="${pd.carnum }" style="width: 100%" data-options="label:'企业自有车数:'"  validtype="integer">
 					</div>
 				</div>
 				<div class="form-btnBar pl75">

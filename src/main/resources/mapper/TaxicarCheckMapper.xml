@@ -15,6 +15,19 @@
 			</if>
 		</where>
 	</select>
+	<select id="excelList"  parameterType="pd" resultType="TaxicarCheck">
+		SELECT
+		<include refid="sql_base"></include>
+		FROM TB_TAXICAR_CHECK
+		<where>
+			<if test="operatingnum != null and operatingnum != ''">
+				AND operatingnum LIKE '%'+#{operatingnum}+'%'
+			</if>
+			<if test="status != null and status != ''">
+				AND status != 0
+			</if>
+		</where>
+	</select>
 	<select id="getOutCheckList"  parameterType="pd" resultType="TaxicarCheck">
 		SELECT
 		<include refid="sql_base"></include>

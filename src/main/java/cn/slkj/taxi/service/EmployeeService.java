@@ -117,4 +117,18 @@ public class EmployeeService {
 	public List<Employee> listOldAge(HashMap<String, Object> map, PageBounds pageBounds) {
 		return mapper.listOldAge(map, pageBounds);
 	}
+	
+	
+	/**
+	 * 
+	 * @Title: excelList   
+	 * @Description: 导出Excel 
+	 * @param: @param pd
+	 * @param: @return      
+	 * @return: List      
+	 * @throws
+	 */
+	public List excelList(PageData pd) {
+		return mapper.excelList(pd);
+	}
 }

@@ -61,6 +61,29 @@
 				AND a.COMPANY =  #{company}
 			</if>
 	</select>
+	<select id="excelList" parameterType="pd" resultType="pd">
+		SELECT
+			a.NAME, a.SEX, a.BORNDATE,a.CYZG_CARD,
+			a.IDCARD, a.EDUCATED,
+			a.PHONE, a.CARID, a.COMPANY,
+			a.STATUS, b.YEAR,
+			b.RANK, b.ID,b.CREATE_TIME
+		FROM
+			tb_employee a,
+			tb_employee_rank b
+		where 
+			a.ID = b.PID 
+		
+		<if test="name != null and name != ''"> <!-- 检索条件 -->
+				AND a.NAME like '%'+ #{name}+'%'
+			</if>
+			<if test="cyzgCard != null and cyzgCard != ''"> <!-- 检索条件 -->
+				AND a.CYZG_CARD like '%'+ #{cyzgCard}+'%'
+			</if>
+			<if test="company != null and company != ''"> <!-- 检索条件 -->
+				AND a.COMPANY =  #{company}
+			</if>
+	</select>
 	
 	<update id="update" parameterType="pd">
 		update 

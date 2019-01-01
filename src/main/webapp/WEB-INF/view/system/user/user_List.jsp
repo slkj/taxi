@@ -20,6 +20,12 @@
 								<i class="fa fa-search"></i>查询
 							</button>
 						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
+						</div>
 					</div>
 				</div>
 				<div class="btnbar-tools">
@@ -181,6 +187,13 @@
 				});
 				$("#vui_sample").form("load", row);
 			}
+		}
+		//导出excel
+		function toExcel(){
+			 var name = $('#name').val();
+			    window.location.href='goExcel?name='
+						+encodeURI(encodeURI(name));  
+			
 		}
 	</script>
 </body>

@@ -137,10 +137,21 @@
 		$grid.datagrid({
 			queryParams : {
 				name : $('#name').val(),
-				status : $('#status').val(),
+				//status : $('#status').val(),
+				status : '1',
 				company : $('#company').val()
 			}
 		});
+	}
+	//导出excel
+	function toExcel(){
+		 var name=$('#name').val();
+			var status='1';
+			var company=$('#company').val();
+		    window.location.href='../goExcel?name='
+					+encodeURI(encodeURI(name))+'&status='+encodeURI(encodeURI(status))
+					+'&company='+encodeURI(encodeURI(company));  
+		
 	}
 </script>
 </head>
@@ -153,7 +164,7 @@
 						<div class="colRow">
 							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
-						<div class="colRow">
+						<!-- <div class="colRow">
 							<select class="easyui-combobox" name="status" id="status" data-options="label:'状态'" style="vertical-align: top; width: 120px;">
 								<option value=""></option>
 								<option value="">全部</option>
@@ -162,7 +173,7 @@
 								<option value="2">考试未通过</option>
 								<option value="3">出证完成</option>
 							</select>
-						</div>
+						</div> -->
 						<div class="colRow">
 							<input type="text" class="easyui-textbox" id="company" data-options="label:'公司名称'" />
 						</div>
@@ -171,6 +182,12 @@
 								<i class="fa fa-search"></i>
 								查询
 							</button>
+						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
 						</div>
 					</div>
 				</div>

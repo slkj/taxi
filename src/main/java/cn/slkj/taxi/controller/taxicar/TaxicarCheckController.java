@@ -1,8 +1,11 @@
 package cn.slkj.taxi.controller.taxicar;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,11 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Taxicar;
 import cn.slkj.taxi.entity.TaxicarCheck;
+import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.TaxicarCheckService;
 import cn.slkj.taxi.service.TaxicarService;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
@@ -249,5 +254,68 @@ public class TaxicarCheckController  extends BaseController{
 			return new JsonResult(false, "操作失败！");
 		}
 	
-    
+
+		  @RequestMapping({"/goExcel"})
+		  public ModelAndView goExcel(HttpSession session)
+		  {
+		    ModelAndView mv = getModelAndView();
+		    PageData pd = new PageData();
+		    pd = getPageData();
+		   
+		    try {
+		    	
+		    	if ((pd.getString("operatingnum") != null) && (!"".equalsIgnoreCase(pd.getString("operatingnum").trim()))) {
+			    	 String operatingnum= URLDecoder.decode(pd.getString("operatingnum"), "utf-8");
+			    	 pd.put("operatingnum", operatingnum);
+			    	}
+		    	if ((pd.getString("status") != null) && (!"".equalsIgnoreCase(pd.getString("status").trim()))) {
+			    	 String status= URLDecoder.decode(pd.getString("status"), "utf-8");
+			    	 pd.put("status", status);
+			    	}
+				
+		      Map dataMap = new HashMap();
+		      List titles = new ArrayList();
+
+		      titles.add("编号");
+		      titles.add("营运证号");
+		      titles.add("年审日期");
+		      titles.add("终止日期");
+		      titles.add("车辆级别");
+		      titles.add("添加日期");	
+		      titles.add("状态");	      
+		      dataMap.put("titles", titles);
+
+		      List emList = this.taxicarCheckService.excelList(pd);
+		      List varList = new ArrayList();
+		      for (int i = 0; i < emList.size(); i++) {
+		        PageData vpd = new PageData();
+		        vpd.put("var1", ((PageData)emList.get(i)).getString("id"));
+		        vpd.put("var2", ((PageData)emList.get(i)).getString("operatingnum"));
+		        vpd.put("var3", ((PageData)emList.get(i)).getString("annualdate"));
+		        vpd.put("var4", ((PageData)emList.get(i)).getString("nextannualdate"));
+		        vpd.put("var5", ((PageData)emList.get(i)).getString("vehicle"));
+		        vpd.put("var6", ((PageData)emList.get(i)).getString("addtime"));
+		        if (((PageData)emList.get(i)).getString("status") != null) {
+			          if (((PageData)emList.get(i)).getString("status").equals("0"))
+			            vpd.put("var7", "年审完成");
+			          else if (((PageData)emList.get(i)).getString("status").equals("1"))
+			            vpd.put("var7", "待上级审核");
+			          else if (((PageData)emList.get(i)).getString("status").equals("1"))
+				            vpd.put("var7", "上级审核成功");
+			          else if (((PageData)emList.get(i)).getString("status").equals("1"))
+				            vpd.put("var7", "上级审核失败");
+			        }
+		        varList.add(vpd);
+		      }
+
+		      dataMap.put("varList", varList);
+
+		      ObjectExcelView erv = new ObjectExcelView();
+
+		      mv = new ModelAndView(erv, dataMap);
+		    } catch (Exception e) {System.out.println(e.toString());
+		      this.logger.error(e.toString(), e);
+		    }
+		    return mv;
+		  }
 }

@@ -13,13 +13,20 @@
 $(function() {
 	
 	//添加部分公司列表
-	$('#parent_id1').combobox({
+	/* $('#parent_id1').combobox({
 		url : '../enterprise/queryEnterpriseList',
 		valueField : 'unitname',
 		textField : 'unitname',
 		onSelect : function(data) {
 			$("#parent_id1").textbox('setValue', data.unitname);
 		}
+	}); */
+	$('#parent_id1').combobox({
+		url : '../enterprise/queryEnterpriseList',
+		valueField : 'id',
+		textField : 'unitname',
+		editable : false,
+		cache : false				
 	});
 	
 });
@@ -77,12 +84,12 @@ $(function() {
 				</div>
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="reduction" value="${pd.reduction }" style="width: 100%" data-options="label:'减分:'">
+						<input class="easyui-textbox" name="reduction" value="${pd.reduction }" style="width: 100%" data-options="label:'减分:'"  validtype="integer">
 					</div>
 				</div>			
 				<div class="form-column1">
 					<div class="form-column-left">
-						<input class="easyui-textbox" name="plus" value="${pd.plus }" style="width: 100%" data-options="label:'加分:'">
+						<input class="easyui-textbox" name="plus" value="${pd.plus }" style="width: 100%" data-options="label:'加分:'"  validtype="integer">
 					</div>
 				</div>
 				<div class="form-column1">

@@ -1,7 +1,13 @@
 package cn.slkj.taxi.controller.enterprise;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +22,7 @@ import cn.slkj.taxi.entity.EnterpriseEval;
 import cn.slkj.taxi.service.EnterpriseEvalService;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
@@ -123,7 +130,7 @@ public class EnterpriseEvalController  extends BaseController{
 				rti = enterpriseEvalService.save(pd);
 			}
 			return rti > 0 ? true : false;
-		} catch (Exception e) {
+		} catch (Exception e) {System.out.println(e.toString());
 			this.logger.error(e.toString(), e);
 			return false;
 		}
@@ -147,4 +154,56 @@ public class EnterpriseEvalController  extends BaseController{
 		}
 
 	}
+	
+	@RequestMapping({"/goExcel"})
+	  public ModelAndView goExcel(HttpSession session)
+	  {
+	    ModelAndView mv = getModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	   
+	    try {
+	    	if ((pd.getString("unitname") != null) && (!"".equalsIgnoreCase(pd.getString("unitname").trim()))) {
+	    	 String unitname= URLDecoder.decode(pd.getString("unitname"), "utf-8");
+	    	 pd.put("unitname", unitname);
+	    	}
+	    	
+	      Map dataMap = new HashMap();
+	      List titles = new ArrayList();
+
+	      titles.add("编号");
+	      titles.add("单位名称");
+	      titles.add("日期");
+	      titles.add("考核项目");
+	      titles.add("减分");
+	      titles.add("加分");
+	      titles.add("备注");
+	      titles.add("添加日期");
+	      dataMap.put("titles", titles);
+
+	      List emList = this.enterpriseEvalService.excelList(pd);
+	      List varList = new ArrayList();
+	      for (int i = 0; i < emList.size(); i++) {
+	        PageData vpd = new PageData();
+	        vpd.put("var1", ((PageData)emList.get(i)).getString("ID"));
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("UNITNAME"));
+	        vpd.put("var3", ((PageData)emList.get(i)).getString("DATE"));
+	        vpd.put("var4", ((PageData)emList.get(i)).getString("PROJECT"));
+	        vpd.put("var5", ((PageData)emList.get(i)).getString("REDUCTION"));
+	        vpd.put("var6", ((PageData)emList.get(i)).getString("PLUS"));
+	        vpd.put("var7", ((PageData)emList.get(i)).getString("NOTE"));
+	        vpd.put("var8", ((PageData)emList.get(i)).getString("ADDTIME"));
+	        varList.add(vpd);
+	      }
+
+	      dataMap.put("varList", varList);
+
+	      ObjectExcelView erv = new ObjectExcelView();
+
+	      mv = new ModelAndView(erv, dataMap);
+	    } catch (Exception e) {System.out.println(e.toString());
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 }

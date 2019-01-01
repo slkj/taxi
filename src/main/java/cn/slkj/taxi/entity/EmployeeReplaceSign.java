@@ -11,12 +11,12 @@ package cn.slkj.taxi.entity;
 public class EmployeeReplaceSign
 {
 	  private String id;
-	  private String name;
-	  private String sex;
+	  private String name;//姓名
+	  private String sex;//性别
 	  private String borndate;//生日
-	  private String idcard;
-	  private String address;
-	  private String phone;
+	  private String idcard;//身份证号
+	  private String address;//地址
+	  private String phone;//电话
 	  private String drive_type;//准驾车型
 	  private String drive_start_date;//驾驶证初领日期
 	  private String company;//公司
@@ -25,7 +25,7 @@ public class EmployeeReplaceSign
 	  private String first_sign_date;//初领从业证日期
 	  private String passtime;//通过时间
 	  private String status;//状态
-	  private String addtime;
+	  private String addtime;//添加时间
 	public String getId() {
 		return id;
 	}

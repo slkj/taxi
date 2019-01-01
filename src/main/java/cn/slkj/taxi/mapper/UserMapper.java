@@ -18,4 +18,15 @@ public interface UserMapper {
 	int deleteUser(String id);
 
 	int editUser(PageData pd);
+	
+	/**
+	 * 
+	 * @Title: excelList   
+	 * @Description: 导出Excel  
+	 * @param: @param pd
+	 * @param: @return      
+	 * @return: List      
+	 * @throws
+	 */
+	List excelList(PageData pd);
 }

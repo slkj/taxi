@@ -27,6 +27,12 @@
 								查询
 							</button>
 						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
+						</div>
 					</div>
 				</div>
 				<table id="list_data"></table>
@@ -138,6 +144,15 @@
 					}
 				});
 		
+		}
+		//导出excel
+		function toExcel(){
+			 var name = $('#name').val();
+			 var cyzgCard = $('#cyzgCard').val();
+			    window.location.href='goExcel?name='
+						+encodeURI(encodeURI(name))
+						+'&cyzgCard='+encodeURI(encodeURI(cyzgCard)); 
+			
 		}
 	</script>
 </body>

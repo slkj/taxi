@@ -33,6 +33,33 @@
 			AND a.COMPANY = #{company}
 			</if>
 	</select>
+	<select id="excelList" parameterType="pd" resultType="pd">
+		select
+			a.ID, a.CYZG_CARD, a.NAME, a.SEX, a.BORNDATE, a.IDCARD, a.ADDRESS, a.PHONE,
+			a.DRIVE_CARD, a.DRIVE_START_DATE,
+			a.COMPANY, a.CARID, a.PASSTIME, a.STATUS, a.ADDTIME, a.FLAG, b.PERSONAL_ID as personalId, b.CARTYPE
+		from tb_employee_cancel a, tb_employee b
+		where
+		1 = 1 and a.IDCARD = b.IDCARD
+		<if test="name != null and name != ''"> <!-- 检索条件 -->
+				AND a.NAME like '%'+ #{name}+'%'
+			</if>
+			<if test="cyzgCard != null and cyzgCard != ''"> <!-- 检索条件 -->
+				AND a.CYZG_CARD like '%'+ #{cyzgCard}+'%'
+			</if>
+			<if test="status!=null and status!=''">
+			AND a.STATUS = #{status}
+			</if>
+			<if test="flag == 0">
+			and a.FLAG = 0
+			</if>
+			<if test="flag == 1">
+			and a.FLAG = 1
+			</if>			
+			<if test="company!=null and company!=''">
+			AND a.COMPANY = #{company}
+			</if>
+	</select>
 
 	<select id="selectOne" parameterType="pd"
 		resultType="EmployeeCancel">

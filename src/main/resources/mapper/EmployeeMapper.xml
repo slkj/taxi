@@ -96,7 +96,29 @@
 			</if>
 		</where>
 	</select>
-	
+	<!-- Excel列表 -->
+	<select id="excelList" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Base_Column_List" />
+		from tb_employee
+		<where>
+			<if test="company != null and company != ''"> <!-- 公司检索条件 -->
+				AND COMPANY like '%'+ #{company}+'%'
+			</if>
+			<if test="name != null and name != ''">
+				AND NAME LIKE '%'+ #{name}+'%'
+			</if>
+			<if test="status != null and status != ''">
+				AND STATUS = #{status}
+			</if>
+			<if test="shzt != null and shzt != ''">
+				AND SHZT = '死亡'
+			</if>
+			<if test="age != null and age != ''">
+				AND (year(getdate())- SUBSTRING(BORNDATE,1,4)) >60
+			</if>
+		</where>
+	</select>
 	<!-- 死亡库 -->
 	<select id="listDie" parameterType="hashMap" resultMap="BaseResultMap">
 		select

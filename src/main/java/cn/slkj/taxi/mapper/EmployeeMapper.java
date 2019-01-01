@@ -41,4 +41,15 @@ public interface EmployeeMapper {
 	 * 超龄库
 	 */
 	List<Employee> listOldAge(HashMap<String, Object> map, PageBounds pageBounds);
+	
+	/**
+	 * 
+	 * @Title: excelList   
+	 * @Description: 导出Excel  
+	 * @param: @param pd
+	 * @param: @return      
+	 * @return: List      
+	 * @throws
+	 */
+	List excelList(PageData pd);
 }

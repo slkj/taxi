@@ -56,4 +56,17 @@ public class UserService {
 	public int editUser(PageData pd) {
 		return userMapper.editUser(pd);
 	}
+	
+	/**
+	 * 
+	 * @Title: excelList   
+	 * @Description: 导出Excel 
+	 * @param: @param pd
+	 * @param: @return      
+	 * @return: List      
+	 * @throws
+	 */
+	public List excelList(PageData pd) {
+		return userMapper.excelList(pd);
+	}
 }

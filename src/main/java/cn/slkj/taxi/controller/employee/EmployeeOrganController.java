@@ -6,8 +6,11 @@ package cn.slkj.taxi.controller.employee;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +34,7 @@ import cn.slkj.taxi.util.Const;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.FileUtil;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
@@ -153,4 +157,57 @@ public class EmployeeOrganController extends BaseController {
 		}
 	}
 	
+	@RequestMapping({"/goExcel"})
+	  public ModelAndView goExcel(HttpSession session)
+	  {
+	    ModelAndView mv = getModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	   
+	    try {
+	    	if ((pd.getString("parent_id") != null) && (!"".equalsIgnoreCase(pd.getString("parent_id").trim()))) {
+	    	 String parent_id= URLDecoder.decode(pd.getString("parent_id"), "utf-8");
+	    	 pd.put("parent_id", parent_id);
+	    	}
+	    	
+	      Map dataMap = new HashMap();
+	      List titles = new ArrayList();
+
+	      titles.add("编号");
+	      titles.add("从业资格证号");
+	      titles.add("从业证类型");
+	      titles.add("初次领证日期");
+	      titles.add("有效期开始");
+	      titles.add("有效期结束");
+	      titles.add("补办日期");
+	      titles.add("换证日期");
+	      titles.add("添加时间");
+	      dataMap.put("titles", titles);
+
+	      List emList = this.employeeOrganService.excelList(pd);
+	      List varList = new ArrayList();
+	      for (int i = 0; i < emList.size(); i++) {
+	        PageData vpd = new PageData();
+	        vpd.put("var1", ((PageData)emList.get(i)).getString("ID"));
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("PARENT_ID"));
+	        vpd.put("var3", ((PageData)emList.get(i)).getString("TYPE"));
+	        vpd.put("var4", ((PageData)emList.get(i)).getString("FIRST_DATE"));
+	        vpd.put("var5", ((PageData)emList.get(i)).getString("VALID_STARTDATE"));
+	        vpd.put("var6", ((PageData)emList.get(i)).getString("VALID_ENDDATE"));
+	        vpd.put("var7", ((PageData)emList.get(i)).getString("BUBAN_DATE"));
+	        vpd.put("var8", ((PageData)emList.get(i)).getString("HUANZHENG_DATE"));
+	        vpd.put("var9", ((PageData)emList.get(i)).getString("ADD_DATE"));
+	        varList.add(vpd);
+	      }
+
+	      dataMap.put("varList", varList);
+
+	      ObjectExcelView erv = new ObjectExcelView();
+
+	      mv = new ModelAndView(erv, dataMap);
+	    } catch (Exception e) {System.out.println(e.toString());
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 }

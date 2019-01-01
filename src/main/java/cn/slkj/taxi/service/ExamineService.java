@@ -71,4 +71,17 @@ public class ExamineService {
 	public int delete(String id) {
 		return examineMapper.delete(id);
 	}
+	
+	/**
+	 * 
+	 * @Title: excelList   
+	 * @Description: 导出Excel 
+	 * @param: @param pd
+	 * @param: @return      
+	 * @return: List      
+	 * @throws
+	 */
+	public List excelList(PageData pd) {
+		return examineMapper.excelList(pd);
+	}
 }

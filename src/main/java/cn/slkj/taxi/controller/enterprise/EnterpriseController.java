@@ -1,10 +1,14 @@
 package cn.slkj.taxi.controller.enterprise;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +23,7 @@ import cn.slkj.taxi.entity.Taxicar;
 import cn.slkj.taxi.service.EnterpriseService;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
@@ -167,4 +172,69 @@ public class EnterpriseController  extends BaseController{
 		}
 
 	}
+	@RequestMapping({"/goExcel"})
+	  public ModelAndView goExcel(HttpSession session)
+	  {
+	    ModelAndView mv = getModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	   
+	    try {
+	    	if ((pd.getString("unitname") != null) && (!"".equalsIgnoreCase(pd.getString("unitname").trim()))) {
+	    	 String unitname= URLDecoder.decode(pd.getString("unitname"), "utf-8");
+	    	 pd.put("unitname", unitname);
+	    	}
+	    	
+	      Map dataMap = new HashMap();
+	      List titles = new ArrayList();
+
+	      titles.add("编号");
+	      titles.add("单位名称");
+	      titles.add("联系电话");
+	      titles.add("单位地址");
+	      titles.add("经营范围");
+	      titles.add("经营许可证号");
+	      titles.add("企业代码");
+	      titles.add("注册资本");
+	      titles.add("经济类型");
+	      titles.add("法人代表");
+	      titles.add("车辆总数");
+	      titles.add("从业人员总数");
+	      titles.add("安全管理人员总数");
+	      titles.add("企业自有车辆数");
+	      titles.add("添加日期");
+	      dataMap.put("titles", titles);
+
+	      List emList = this.enterpriseService.excelList(pd);
+	      List varList = new ArrayList();
+	      for (int i = 0; i < emList.size(); i++) {
+	        PageData vpd = new PageData();
+	        vpd.put("var1", ((PageData)emList.get(i)).getString("id"));
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("unitname"));
+	        vpd.put("var3", ((PageData)emList.get(i)).getString("phone"));
+	        vpd.put("var4", ((PageData)emList.get(i)).getString("unitaddr"));
+	        vpd.put("var5", ((PageData)emList.get(i)).getString("businessscope"));
+	        vpd.put("var6", ((PageData)emList.get(i)).getString("businessno"));
+	        vpd.put("var7", ((PageData)emList.get(i)).getString("enterprisecode"));
+	        vpd.put("var8", ((PageData)emList.get(i)).getString("regcapital"));
+	        vpd.put("var9", ((PageData)emList.get(i)).getString("economytype"));
+	        vpd.put("var10", ((PageData)emList.get(i)).getString("legalrepresentative"));
+	        vpd.put("var11", ((PageData)emList.get(i)).getString("vehiclesnum"));
+	        vpd.put("var12", ((PageData)emList.get(i)).getString("employeescount"));
+	        vpd.put("var13", ((PageData)emList.get(i)).getString("manageersonnel"));
+	        vpd.put("var14", ((PageData)emList.get(i)).getString("carnum"));
+	        vpd.put("var15", ((PageData)emList.get(i)).getString("addtime"));
+	        varList.add(vpd);
+	      }
+
+	      dataMap.put("varList", varList);
+
+	      ObjectExcelView erv = new ObjectExcelView();
+
+	      mv = new ModelAndView(erv, dataMap);
+	    } catch (Exception e) {System.out.println(e.toString());
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 }

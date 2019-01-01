@@ -31,4 +31,14 @@ public interface EmployeeCancelMapper {
 	
 	int updateStatus(PageData pd);
 	
+	/**
+	 * 
+	 * @Title: excelList   
+	 * @Description: 导出Excel  
+	 * @param: @param pd
+	 * @param: @return      
+	 * @return: List      
+	 * @throws
+	 */
+	List excelList(PageData pd);
 }

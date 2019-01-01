@@ -22,6 +22,12 @@
 								<i class="fa fa-search"></i>查询
 							</button>
 						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
+						</div>
 					</div>
 				</div>
 				<div class="btnbar-tools">
@@ -38,13 +44,20 @@
 			$grid = $("#list_data");
 			initGrid();
 			//查询部分公司列表
-			$('#parent_id').combobox({
+			 /* $('#parent_id').combobox({
 				url : '../enterprise/queryEnterpriseList',
 				valueField : 'unitname',
 				textField : 'unitname',
 				onSelect : function(data) {
 					$("#parent_id").textbox('setValue', data.unitname);
 				}
+			});  */
+			$('#parent_id').combobox({
+				url : '../enterprise/queryEnterpriseList',
+				valueField : 'id',
+				textField : 'unitname',
+				editable : false,
+				cache : false				
 			});
 			//新增数据
 			$('#newData').on('click', function(){
@@ -85,7 +98,7 @@
 			}
 		function getColumns() {
 			return [ [
-					{title : '企业名称',field : 'parent_id'},
+					{title : '企业名称',field : 'unitname'},
 					{title : '日期',field : 'date'},
 					{title : '减分',field : 'reduction'},
  					{title : '加分',field : 'plus'},
@@ -133,6 +146,13 @@
 				});
 				
 			}
+		}
+		//导出excel
+		function toExcel(){
+			 var parent_id = $('#parent_id').val();
+			    window.location.href='goExcel?parent_id='
+						+encodeURI(encodeURI(parent_id));  
+			
 		}
 	</script>
 </body>

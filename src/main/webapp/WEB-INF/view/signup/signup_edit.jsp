@@ -135,7 +135,7 @@
 				<td>
 					<span style="margin-left: 20px;">姓名：</span>
 					<span style="margin-left: 10px;">
-						<input id="name" name="name" value="${pd.name }" style="width: 120px;" type="text" class="easyui-textbox" >
+						<input id="name" name="name" value="${pd.name }" style="width: 120px;" type="text" class="easyui-textbox" data-options="required:true" >
 					</span>
 					<span style="margin-left: 20px;">性别：</span>
 					<span style="margin-left: 10px;">
@@ -177,7 +177,7 @@
 					</span>
 					<span style="margin-left: 20px;">身份证号：</span>
 					<span style="margin-left: 10px;">
-						<input id="idcard" name="idcard" value="${pd.idcard }" style="width: 150px;" type="text" class="easyui-textbox" validtype="idcard">
+						<input id="idcard" name="idcard" value="${pd.idcard }" style="width: 150px;" type="text" class="easyui-textbox" validtype="idcard" data-options="required:true">
 					</span>
 					<span style="margin-left: 20px;">文化程度：</span>
 					<span style="margin-left: 10px;">
@@ -189,7 +189,7 @@
 				<td>
 					<span style="margin-left: 20px;">联系电话：</span>
 					<span style="margin-left: 10px;">
-						<input id="phone" name="phone" value="${pd.phone }" style="width: 180px;" type="text" class="easyui-textbox" validtype="mobile">
+						<input id="phone" name="phone" value="${pd.phone }" style="width: 180px;" type="text" class="easyui-textbox" validtype="mobile" data-options="required:true">
 					</span>
 					<span style="margin-left: 20px;">申报材料页数：</span>
 					<span style="margin-left: 10px;">

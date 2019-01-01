@@ -107,6 +107,13 @@
 			}
 		});
 	}
+	//导出excel
+	function toExcel(){
+		 var parent_id = $('#parent_id').val();
+		    window.location.href='goExcel?parent_id='
+					+encodeURI(encodeURI(parent_id));  
+		
+	}
 </script>
 </head>
 <body scroll="no" class="body-pd10">
@@ -124,6 +131,12 @@
 								<i class="fa fa-search"></i>
 								查询
 							</button>
+						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
 						</div>
 					</div>
 				</div>

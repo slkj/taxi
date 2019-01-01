@@ -35,6 +35,12 @@
 								查询
 							</button>
 						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
+						</div>
 					</div>
 				</div>
 				<div class="btnbar-tools">
@@ -161,6 +167,17 @@
 					}
 				});
 			//}
+		}
+		//导出excel
+		function toExcel(){
+			 var name = $('#name').val();
+			 var cyzgCard = $('#cyzgCard').val();
+			 var status = $('#status').val();
+			    window.location.href='goExcel?name='
+						+encodeURI(encodeURI(name))
+						+'&cyzgCard='+encodeURI(encodeURI(cyzgCard))
+						+'&status='+encodeURI(encodeURI(status));  
+			
 		}
 	</script>
 </body>

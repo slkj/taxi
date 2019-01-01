@@ -28,6 +28,28 @@
 			<if test="Area != null and Area != ''">
 				AND Area LIKE '%'+#{Area}+'%'
 			</if>
+			<if test="company != null and company != ''">
+				AND CorpName LIKE '%'+#{company}+'%'
+			</if>
+		</where>		
+	</select>
+	<select id="excelList"  parameterType="pd" resultType="Taxicar">
+		SELECT
+		<include refid="sql_base"></include>
+		FROM TB_TAXICAR
+		<where>
+			<if test="PlateNum != null and PlateNum != ''">
+				AND PlateNum LIKE '%'+#{PlateNum}+'%'
+			</if>
+			<if test="OpretaCertNum != null and OpretaCertNum != ''">
+				AND OpretaCertNum LIKE '%'+#{OpretaCertNum}+'%'
+			</if>
+			<if test="OwnerName != null and OwnerName != ''">
+				AND OwnerName LIKE '%'+#{OwnerName}+'%'
+			</if>
+			<if test="Area != null and Area != ''">
+				AND Area LIKE '%'+#{Area}+'%'
+			</if>
 		</where>		
 	</select>
 	<select id="queryOne" parameterType="hashMap" resultType="Taxicar">

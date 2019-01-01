@@ -26,6 +26,19 @@
 				and em.name LIKE '%'+ #{name}+'%'
 			</if>
 	</select>
+	<select id="excelList" parameterType="pd" resultType="pd">
+		select te.id,te.empId,te.ordinalId+tex.standard as
+		ordinal,te.scoring,te.examineTime,te.remark,em.name as name,
+		em.cyzg_card as cyzgCard from tb_examine
+		te,tb_examineStandard tex,tb_employee em
+		where te.ordinalId = tex.ordinal and te.empId=em.idcard
+		<if test="cyzgCard != null and cyzgCard != ''"> <!-- 公司检索条件 -->
+				and em.cyzg_card like '%'+ #{cyzgCard}+'%'
+			</if>
+			<if test="name != null and name != ''">
+				and em.name LIKE '%'+ #{name}+'%'
+			</if>
+	</select>
 	<select id="getOne" parameterType="String" resultType="Examine">
 		select <include refid="Base_Column_List"></include> from tb_examine		
 		where id = #{id}

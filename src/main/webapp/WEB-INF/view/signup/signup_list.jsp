@@ -31,6 +31,12 @@
 								查询
 							</button>
 						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+								<i class="fa fa-download"></i>
+								导出
+							</button>						
+						</div>
 					</div>
 				</div>
 				<div class="btnbar-tools">
@@ -44,7 +50,7 @@
 		</div>
 	</div>
 	<!-- 新增和编辑数据 -->
-	<div class="dig-wrapper" id="newData-wrapper">
+	<!-- <div class="dig-wrapper" id="newData-wrapper">
 		<div class="form1-column" title="表单示例">
 			<form id="vui_sample" class="easyui-form">
 				<input type="hidden" name="id">
@@ -78,7 +84,7 @@
 				</div>
 			</form>
 		</div>
-	</div>
+	</div> -->
 	<script type="text/javascript">
 		var $grid;
 		var curUserComCode;
@@ -210,6 +216,17 @@
 					}
 				});
 			//}
+		}
+		//导出excel
+		function toExcel(){
+			 var name = $('#name').val();
+			 var status = $('#status').val();
+			 var company = $('#company').val();
+			    window.location.href='goExcel?name='
+						+encodeURI(encodeURI(name))
+						+'&status='+encodeURI(encodeURI(status))
+						+'&company='+encodeURI(encodeURI(compnay));  
+			
 		}
 	</script>
 </body>

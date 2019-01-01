@@ -2,8 +2,11 @@ package cn.slkj.taxi.controller.taxicar;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +30,7 @@ import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.FileUtil;
 import cn.slkj.taxi.util.JsonResult;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
@@ -219,7 +223,144 @@ public class TaxicarController extends BaseController{
 	  }
 	  
 
+	  @RequestMapping({"/goExcel"})
+	  public ModelAndView goExcel(HttpSession session)
+	  {
+	    ModelAndView mv = getModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	   
+	    try {
+	    	if ((pd.getString("PlateNum") != null) && (!"".equalsIgnoreCase(pd.getString("PlateNum").trim()))) {
+	    	 String PlateNum= URLDecoder.decode(pd.getString("PlateNum"), "utf-8");
+	    	 pd.put("PlateNum", PlateNum);
+	    	}
+	    	if ((pd.getString("OpretaCertNum") != null) && (!"".equalsIgnoreCase(pd.getString("OpretaCertNum").trim()))) {
+		    	 String OpretaCertNum= URLDecoder.decode(pd.getString("OpretaCertNum"), "utf-8");
+		    	 pd.put("OpretaCertNum", OpretaCertNum);
+		    	}
+	    	if ((pd.getString("OwnerName") != null) && (!"".equalsIgnoreCase(pd.getString("OwnerName").trim()))) {
+		    	 String OwnerName= URLDecoder.decode(pd.getString("OwnerName"), "utf-8");
+		    	 pd.put("OwnerName", OwnerName);
+		    	}
+	    	if ((pd.getString("Area") != null) && (!"".equalsIgnoreCase(pd.getString("Area").trim()))) {
+		    	 String Area= URLDecoder.decode(pd.getString("Area"), "utf-8");
+		    	 pd.put("Area", Area);
+		    	}
+	    	User user = (User)session.getAttribute("sessionUser");
+			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+				pd.put("company", user.getDepartName());
+		      }else{
+		    	  if ((pd.getString("unitname") != null) && (!"".equalsIgnoreCase(pd.getString("unitname").trim()))) {
+		 	    	 String unitname= URLDecoder.decode(pd.getString("unitname"), "utf-8");
+		 	    	 pd.put("company", pd.getString("company"));
+		 	    	}		    	 
+		      }
+			
+	      Map dataMap = new HashMap();
+	      List titles = new ArrayList();
 
+	      titles.add("编号");
+	      titles.add("档案号");
+	      titles.add("营运证号");
+	      titles.add("车牌号");
+	      titles.add("公司名称");
+	      titles.add("车主姓名");
+	      titles.add("车主性别");
+	      titles.add("所属地区");
+	      titles.add("原车主");
+	      titles.add("原车牌号");
+	      titles.add("操作人员");
+	      titles.add("颜色");
+	      titles.add("车型");
+	      titles.add("查封记录");
+	      titles.add("家庭住址");
+	      titles.add("联系电话");
+	      titles.add("身份证号");
+	      titles.add("变更记录");
+	      titles.add("行驶证初次登记");
+	      titles.add("车辆审验记录");
+	      titles.add("吨位");
+	      titles.add("长");
+	      titles.add("宽");
+	      titles.add("高");
+	      titles.add("车架号");
+	      titles.add("发动机号");
+	      titles.add("操作日期");
+	      titles.add("发证日期");
+	      titles.add("变更日期");	      
+	      dataMap.put("titles", titles);
+
+	      List emList = this.taxicarService.excelList(pd);
+	      List varList = new ArrayList();
+	      for (int i = 0; i < emList.size(); i++) {
+	        PageData vpd = new PageData();
+	        vpd.put("var1", ((PageData)emList.get(i)).getString("ID"));
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("FileNum"));
+	        vpd.put("var3", ((PageData)emList.get(i)).getString("OpretaCertNum"));
+	        vpd.put("var4", ((PageData)emList.get(i)).getString("PlateNum"));
+	        vpd.put("var5", ((PageData)emList.get(i)).getString("CorpName"));
+	        vpd.put("var6", ((PageData)emList.get(i)).getString("OwnerName"));
+	        //vpd.put("var7", ((PageData)emList.get(i)).getString("OwnerSex"));
+	        if (((PageData)emList.get(i)).getString("OwnerSex") != null) {
+		          if (((PageData)emList.get(i)).getString("OwnerSex").equals("0"))
+		            vpd.put("var7", "男");
+		          else if (((PageData)emList.get(i)).getString("OwnerSex").equals("1"))
+		            vpd.put("var7", "女");
+		          else
+		            vpd.put("var7", "不详");
+		        }
+		        else {
+		          vpd.put("var7", "不详");
+		        }
+	        //vpd.put("var8", ((PageData)emList.get(i)).getString("Area"));
+	        if (((PageData)emList.get(i)).getString("Area") != null) {
+		          if (((PageData)emList.get(i)).getString("Area").equals("0"))
+		            vpd.put("var8", "市区");
+		          else if (((PageData)emList.get(i)).getString("Area").equals("1"))
+		            vpd.put("var8", "双滦");
+		          else if (((PageData)emList.get(i)).getString("Area").equals("2"))
+			            vpd.put("var8", "双滦代管");
+		          else
+		            vpd.put("var8", "不详");
+		        }
+		        else {
+		          vpd.put("var8", "不详");
+		        }
+	        vpd.put("var9", ((PageData)emList.get(i)).getString("OrigOwnerName"));
+	        vpd.put("var10", ((PageData)emList.get(i)).getString("OrigPlateNum"));
+	        vpd.put("var11", ((PageData)emList.get(i)).getString("EmployPerson"));
+	        vpd.put("var12", ((PageData)emList.get(i)).getString("Color"));
+	        vpd.put("var13", ((PageData)emList.get(i)).getString("Sign"));
+	        vpd.put("var14", ((PageData)emList.get(i)).getString("SealRecord"));
+	        vpd.put("var15", ((PageData)emList.get(i)).getString("Address"));
+	        vpd.put("var16", ((PageData)emList.get(i)).getString("PhoneNum"));
+	        vpd.put("var17", ((PageData)emList.get(i)).getString("IDNumber"));
+	        vpd.put("var18", ((PageData)emList.get(i)).getString("OwnerChange"));
+	        vpd.put("var19", ((PageData)emList.get(i)).getString("DrvLicenseDate"));
+	        vpd.put("var20", ((PageData)emList.get(i)).getString("VehicleInspRec"));
+	        vpd.put("var21", ((PageData)emList.get(i)).getString("TonsSeat"));
+	        vpd.put("var22", ((PageData)emList.get(i)).getString("CarLen"));
+	        vpd.put("var23", ((PageData)emList.get(i)).getString("CarWidth"));
+	        vpd.put("var24", ((PageData)emList.get(i)).getString("CarHigh"));
+	        vpd.put("var25", ((PageData)emList.get(i)).getString("FrameNumber"));
+	        vpd.put("var26", ((PageData)emList.get(i)).getString("EngineNumber"));
+	        vpd.put("var27", ((PageData)emList.get(i)).getString("ADDTIME"));
+	        vpd.put("var28", ((PageData)emList.get(i)).getString("CheckDate"));
+	        vpd.put("var29", ((PageData)emList.get(i)).getString("TransferDate"));
+	        varList.add(vpd);
+	      }
+
+	      dataMap.put("varList", varList);
+
+	      ObjectExcelView erv = new ObjectExcelView();
+
+	      mv = new ModelAndView(erv, dataMap);
+	    } catch (Exception e) {System.out.println(e.toString());
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 	
     
 }

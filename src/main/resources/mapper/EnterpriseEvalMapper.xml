@@ -7,13 +7,22 @@
 	
 	<select id="queryList" resultType="EnterpriseEval" parameterType="pd">
 		SELECT
-		<include refid="sql_temp" />
-		FROM tb_enterprise_eval
-		<where>
+		a.ID, a.PARENT_ID, a.DATE, a.PROJECT, a.REDUCTION, a.PLUS, a.NOTE, a.ADDTIME,
+		b.UNITNAME
+		FROM tb_enterprise_eval a,tb_enterprise_info b where 1=1 and a.PARENT_ID=b.id
 			<if test="parent_id != null and parent_id != ''">
-				AND PARENT_ID LIKE '%'+#{parent_id}+'%' 
+				AND a.PARENT_ID = #{parent_id} 
 			</if>
-		</where>
+	</select>
+	
+	<select id="excelList" resultType="pd" parameterType="pd">
+		SELECT
+		a.ID, a.PARENT_ID, a.DATE, a.PROJECT, a.REDUCTION, a.PLUS, a.NOTE, a.ADDTIME,
+		b.UNITNAME
+		FROM tb_enterprise_eval a,tb_enterprise_info b where 1=1 and a.PARENT_ID=b.id
+			<if test="parent_id != null and parent_id != ''">
+				AND a.PARENT_ID = #{parent_id} 
+			</if>
 	</select>
 
 	<select id="queryOne" resultType="EnterpriseEval" parameterType="string">

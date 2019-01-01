@@ -30,6 +30,22 @@
 			</if>
 		</where>
 	</select>
+	<select id="excelList" resultType="Enterprise" parameterType="pd">
+		SELECT
+		<include refid="sql_temp" />
+		FROM tb_enterprise_info
+		<where>
+			<if test="unitname != null and unitname != ''">
+				AND unitname LIKE '%'+ #{unitname} +'%'
+			</if>
+			<if test="businessno != null and businessno != ''">
+				AND businessno LIKE '%'+ #{businessno} +'%'
+			</if>
+			<if test="legalrepresentative != null and legalrepresentative != ''">
+				AND legalrepresentative LIKE '%'+ #{legalrepresentative} +'%'
+			</if>
+		</where>
+	</select>
 
 	<select id="queryOne" resultType="Enterprise" parameterType="string">
 		SELECT <include refid="sql_temp" /> FROM tb_enterprise_info WHERE ID = #{id}
