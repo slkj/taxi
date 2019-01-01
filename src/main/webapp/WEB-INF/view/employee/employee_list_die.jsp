@@ -152,7 +152,7 @@
 		var status=$('#status').val();
 		var company=$('#company').val();
 		var shzt="shzt";
-		window.location.href='../goExcel?name='
+		window.location.href='goExcel?name='
 				+encodeURI(encodeURI(name))+'&status='+encodeURI(encodeURI(status))
 				+'&company='+encodeURI(encodeURI(company))
 				+'&shzt='+encodeURI(encodeURI(shzt)); 

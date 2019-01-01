@@ -13,10 +13,10 @@
 				<div class="comp-search-box">
 					<div class="screen-top">
 						<div class="colRow">
-							<input id="txtNewPass" type="text" class="easyui-textbox" name="name" data-options="label:'名称'" />
+							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
 						<div class="colRow">
-							<button class="easyui-linkbutton btnDefault">
+							<button class="easyui-linkbutton btnDefault" id="queryData">
 								<i class="fa fa-search"></i>查询
 							</button>
 						</div>
@@ -100,6 +100,14 @@
 				nowrap : true,//设置为true，当数据长度超出列宽时将会自动截取  
 				striped : true,//设置为true将交替显示行背景。 
 				columns : getColumns()
+			});
+			//查询数据
+			$('#queryData').on('click', function() {
+				$('#userList_dg').datagrid({
+					queryParams : {
+						name : $('#name').val()
+					}
+				});
 			});
 			//新增数据
 			$('#newData').on('click', function(){

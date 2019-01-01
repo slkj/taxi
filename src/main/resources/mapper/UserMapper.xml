@@ -16,13 +16,19 @@
 			<if test="username != null and password != null">
 				AND USERNAME = #{username} AND PASSWORD = #{password}
 			</if>
+			<if test="name != null">
+				AND realname  like '%'+ #{name}+'%'
+			</if>
 		</where>
 	</select>
-	<select id="excelList" parameterType="pd" resultType="User">
+	<select id="excelList" parameterType="pd" resultType="pd">
 		SELECT * FROM SYS_USER
 		<where>
 			<if test="username != null and password != null">
 				AND USERNAME = #{username} AND PASSWORD = #{password}
+			</if>
+			<if test="name != null">
+				AND realname  like '%'+ #{name}+'%'
 			</if>
 		</where>
 	</select>

@@ -16,6 +16,7 @@
 				<div class="comp-search-box">
 					<div class="screen-top">
 						<div class="colRow">
+						<input type="hidden" name="company" id="company" value="${sessionUser.departName }" />
 							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
 						<div class="colRow">
@@ -181,12 +182,12 @@
 				var status=$('#status').val();
 				var cyzgCard=$('#cyzgCard').val();
 				var flag='1';
-				var right='1';
+				 var company = $('#company').val();
 			    window.location.href='../employeeCancel/goExcel?name='
 						+encodeURI(encodeURI(name))+'&status='+encodeURI(encodeURI(status))
 						+'&cyzgCard='+encodeURI(encodeURI(cyzgCard))
-						+'&flag='+encodeURI(encodeURI(flag)); 
-			    		+'&right='+encodeURI(encodeURI(right));  
+						+'&flag='+encodeURI(encodeURI(flag)) 
+			    		+'&company='+encodeURI(encodeURI(company));  
 			
 		}
 	</script>

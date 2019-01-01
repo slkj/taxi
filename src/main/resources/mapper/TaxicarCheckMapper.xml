@@ -15,7 +15,7 @@
 			</if>
 		</where>
 	</select>
-	<select id="excelList"  parameterType="pd" resultType="TaxicarCheck">
+	<select id="excelList"  parameterType="pd" resultType="pd">
 		SELECT
 		<include refid="sql_base"></include>
 		FROM TB_TAXICAR_CHECK

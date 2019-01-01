@@ -24,8 +24,9 @@
 						<div class="colRow">
 						<select class="easyui-combobox" name="status" id="status" data-options="label:'状态'" style="vertical-align: top; width: 120px;">
 						<option value="">全部</option>
-						<option value="0">提交成功</option>
-						<option value="1">注册完成</option>
+						<option value="0">待审核</option>
+						<option value="2">审核失败</option>
+						<option value="1">审核成功</option>
 					  	</select>
 						</div>
 						<div class="colRow">
@@ -43,11 +44,11 @@
 					</div>
 				</div>
 				<div class="btnbar-tools">
-					<a href="javascript:;" class="add" onclick="changeStatus(2)">
+					<a href="javascript:;" class="add" onclick="changeStatus(1)">
 						<i class="fa fa-check"></i>
 						通过
 					</a>
-					<a href="javascript:;" class="add" onclick="changeStatus(1)">
+					<a href="javascript:;" class="add" onclick="changeStatus(2)">
 						<i class="fa fa-times"></i>
 						未通过
 					</a>
@@ -134,9 +135,9 @@
 					if (value == 0) {
 						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">待审核</div>';
 					} else if (value == 1) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核失败</div>';
-					}else if (value == 2) {
 						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核成功</div>';
+					}else if (value == 2) {
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核失败</div>';
 					}
 				}
 			}, {

@@ -16,6 +16,7 @@
 				<div class="comp-search-box">
 					<div class="screen-top">
 						<div class="colRow">
+						<input type="hidden" name="company" id="company" value="${sessionUser.departName }" />
 							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
 						<div class="colRow">
@@ -166,10 +167,12 @@
 			 var name = $('#name').val();
 			 var cyzgCard = $('#cyzgCard').val();
 			 var status = $('#status').val();
+			 var company = $('#company').val();
 			    window.location.href='goExcel?name='
 						+encodeURI(encodeURI(name))
 						+'&cyzgCard='+encodeURI(encodeURI(cyzgCard))
-						+'&status='+encodeURI(encodeURI(status));  
+						+'&status='+encodeURI(encodeURI(status))
+						+'&company='+encodeURI(encodeURI(company));  
 			
 		}
 	</script>

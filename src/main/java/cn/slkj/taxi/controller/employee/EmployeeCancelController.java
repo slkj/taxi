@@ -260,28 +260,16 @@ public class EmployeeCancelController extends BaseController {
 	    	 String cyzgCard= URLDecoder.decode(pd.getString("cyzgCard"), "utf-8");
 	    	 pd.put("cyzgCard", cyzgCard);
 	    	}
-	    	/*if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+	    	if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
 		    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
 		    	 pd.put("company", company);
-		    	}*/
+		    	}
 	    	//注销类型
 	    	if ((pd.getString("flag") != null) && (!"".equalsIgnoreCase(pd.getString("flag").trim()))) {
 		    	 String flag= URLDecoder.decode(pd.getString("flag"), "utf-8");
 		    	 pd.put("flag", flag);
 		    	}
-	    	//权限，是否按公司查询
-	    	if ((pd.getString("right") != null) && (!"".equalsIgnoreCase(pd.getString("right").trim()))) {
-		    	 String right= URLDecoder.decode(pd.getString("right"), "utf-8");
-		    	 if(right.equals("1")){
-		    		 User user = (User)session.getAttribute("sessionUser");
-		   		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
-		   		        pd.put("company", user.getDepartName());
-		   		      }else{
-		   		    	pd.put("company", "总公司");
-		   		      } 
-		    	 }
-		    	 
-		    	}
+	    
 	    	 
 	      Map dataMap = new HashMap();
 	      List titles = new ArrayList();

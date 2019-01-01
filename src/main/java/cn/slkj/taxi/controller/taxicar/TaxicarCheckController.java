@@ -293,16 +293,22 @@ public class TaxicarCheckController  extends BaseController{
 		        vpd.put("var2", ((PageData)emList.get(i)).getString("operatingnum"));
 		        vpd.put("var3", ((PageData)emList.get(i)).getString("annualdate"));
 		        vpd.put("var4", ((PageData)emList.get(i)).getString("nextannualdate"));
-		        vpd.put("var5", ((PageData)emList.get(i)).getString("vehicle"));
+		        //vpd.put("var5", ((PageData)emList.get(i)).getString("vehicle"));
+		        if (((PageData)emList.get(i)).getString("vehicle") != null) {
+			          if (((PageData)emList.get(i)).getString("vehicle").equals("1"))
+			            vpd.put("var5", "一级车");
+			          else if (((PageData)emList.get(i)).getString("vehicle").equals("2"))
+			            vpd.put("var5", "二级车");			          
+			        }
 		        vpd.put("var6", ((PageData)emList.get(i)).getString("addtime"));
 		        if (((PageData)emList.get(i)).getString("status") != null) {
 			          if (((PageData)emList.get(i)).getString("status").equals("0"))
 			            vpd.put("var7", "年审完成");
 			          else if (((PageData)emList.get(i)).getString("status").equals("1"))
 			            vpd.put("var7", "待上级审核");
-			          else if (((PageData)emList.get(i)).getString("status").equals("1"))
+			          else if (((PageData)emList.get(i)).getString("status").equals("2"))
 				            vpd.put("var7", "上级审核成功");
-			          else if (((PageData)emList.get(i)).getString("status").equals("1"))
+			          else if (((PageData)emList.get(i)).getString("status").equals("3"))
 				            vpd.put("var7", "上级审核失败");
 			        }
 		        varList.add(vpd);

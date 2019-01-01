@@ -244,24 +244,12 @@ public class EmployeeContinueRegisterController extends BaseController {
 	    	 String cyzgCard= URLDecoder.decode(pd.getString("cyzgCard"), "utf-8");
 	    	 pd.put("cyzgCard", cyzgCard);
 	    	}
-	    	/*if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+	    	if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
 		    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
 		    	 pd.put("company", company);
-		    	}*/
-	    	
-	    	//权限，是否按公司查询
-	    	if ((pd.getString("right") != null) && (!"".equalsIgnoreCase(pd.getString("right").trim()))) {
-		    	 String right= URLDecoder.decode(pd.getString("right"), "utf-8");
-		    	 if(right.equals("1")){
-		    		 User user = (User)session.getAttribute("sessionUser");
-		   		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
-		   		        pd.put("company", user.getDepartName());
-		   		      }else{
-		   		    	pd.put("company", "总公司");
-		   		      } 
-		    	 }
-		    	 
 		    	}
+	    	
+	    	
 	    	 
 	      Map dataMap = new HashMap();
 	      List titles = new ArrayList();
@@ -351,9 +339,9 @@ public class EmployeeContinueRegisterController extends BaseController {
 	        if (((PageData)emList.get(i)).getString("STATUS") != null) {
 	          if (((PageData)emList.get(i)).getString("STATUS").equals("0"))
 	            vpd.put("var19", "待审核");
-	          else if (((PageData)emList.get(i)).getString("STATUS").equals("1"))
-	            vpd.put("var19", "审核失败");
 	          else if (((PageData)emList.get(i)).getString("STATUS").equals("2"))
+	            vpd.put("var19", "审核失败");
+	          else if (((PageData)emList.get(i)).getString("STATUS").equals("1"))
 	            vpd.put("var19", "审核通过");	        
 	          else
 	            vpd.put("var19", "未填写");

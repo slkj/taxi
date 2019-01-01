@@ -30,7 +30,7 @@
 			</if>
 		</where>
 	</select>
-	<select id="excelList" resultType="Enterprise" parameterType="pd">
+	<select id="excelList" resultType="pd" parameterType="pd">
 		SELECT
 		<include refid="sql_temp" />
 		FROM tb_enterprise_info

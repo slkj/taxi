@@ -4,8 +4,13 @@
 package cn.slkj.taxi.controller.examine;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +32,7 @@ import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.service.ExamineService;
 import cn.slkj.taxi.util.EPager;
 import cn.slkj.taxi.util.JsonResult;
+import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
@@ -260,4 +266,59 @@ public class ExamineController extends BaseController {
 		}
 
 	}
+	 @RequestMapping({"/goExcel"})
+	  public ModelAndView goExcel(HttpSession session)
+	  {
+	    ModelAndView mv = getModelAndView();
+	    PageData pd = new PageData();
+	    pd = getPageData();
+	   
+	    try {
+	    	
+	    	if ((pd.getString("name") != null) && (!"".equalsIgnoreCase(pd.getString("name").trim()))) {
+		    	 String name= URLDecoder.decode(pd.getString("name"), "utf-8");
+		    	 pd.put("name", name);
+		    	}
+	    	if ((pd.getString("cyzgCard") != null) && (!"".equalsIgnoreCase(pd.getString("cyzgCard").trim()))) {
+		    	 String cyzgCard= URLDecoder.decode(pd.getString("cyzgCard"), "utf-8");
+		    	 pd.put("cyzgCard", cyzgCard);
+		    	}
+	      Map dataMap = new HashMap();
+	      List titles = new ArrayList();
+
+	      titles.add("编号");
+	      titles.add("姓名");
+	      titles.add("身份证号");
+	      titles.add("从业资格证号");
+	      titles.add("扣分项");
+	      titles.add("扣分分数");
+	      titles.add("日期");	
+	      titles.add("备注");	      
+	      dataMap.put("titles", titles);
+
+	      List emList = this.examineService.excelList(pd);
+	      List varList = new ArrayList();
+	      for (int i = 0; i < emList.size(); i++) {
+	        PageData vpd = new PageData();
+	        vpd.put("var1", ((PageData)emList.get(i)).getIntegr("id").toString());
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("name"));
+	        vpd.put("var3", ((PageData)emList.get(i)).getString("empId"));
+	        vpd.put("var4", ((PageData)emList.get(i)).getString("cyzgCard"));
+	        vpd.put("var5", ((PageData)emList.get(i)).getString("ordinal"));
+	        vpd.put("var6", ((PageData)emList.get(i)).getString("scoring"));
+	        vpd.put("var7", ((PageData)emList.get(i)).getString("examineTime"));
+	        vpd.put("var8", ((PageData)emList.get(i)).getString("remark"));
+	        varList.add(vpd);
+	      }
+
+	      dataMap.put("varList", varList);
+
+	      ObjectExcelView erv = new ObjectExcelView();
+
+	      mv = new ModelAndView(erv, dataMap);
+	    } catch (Exception e) {System.out.println(e.toString());
+	      this.logger.error(e.toString(), e);
+	    }
+	    return mv;
+	  }
 }

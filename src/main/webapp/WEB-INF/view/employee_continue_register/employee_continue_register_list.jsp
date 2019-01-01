@@ -16,6 +16,7 @@
 				<div class="comp-search-box">
 					<div class="screen-top">
 						<div class="colRow">
+						<input type="hidden" name="company" id="company" value="${sessionUser.departName }" />
 							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
 						<div class="colRow">
@@ -24,8 +25,9 @@
 						<div class="colRow">
 						<select class="easyui-combobox" name="status" id="status" data-options="label:'状态'" style="vertical-align: top; width: 120px;">
 						<option value="">全部</option>
-						<option value="0">提交成功</option>
-						<option value="1">注册完成</option>
+						<option value="0">待审核</option>
+						<option value="1">审核成功</option>
+						<option value="2">审核失败</option>
 					  	</select>
 						</div>
 						<div class="colRow">
@@ -134,9 +136,9 @@
 					if (value == 0) {
 						return '<div style="background-color:#7b6f6f;text-align:center;color:#FFFFFF;">待审核</div>';
 					} else if (value == 1) {
-						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">审核失败</div>';
+						return '<div style="background-color:#3a87ad;text-align:center;color:#FFFFFF;">审核成功</div>';
 					} else if (value == 2) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核成功</div>';
+						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">审核失败</div>';
 					}
 				}
 			}, {
@@ -178,10 +180,12 @@
 			 var name = $('#name').val();
 			 var cyzgCard = $('#cyzgCard').val();
 			 var status = $('#status').val();
+			 var company = $('#company').val();
 			    window.location.href='goExcel?name='
 						+encodeURI(encodeURI(name))
 						+'&cyzgCard='+encodeURI(encodeURI(cyzgCard))
-						+'&status='+encodeURI(encodeURI(status));  
+						+'&status='+encodeURI(encodeURI(status))
+						+'&company='+encodeURI(encodeURI(company));  
 			
 		}
 	</script>

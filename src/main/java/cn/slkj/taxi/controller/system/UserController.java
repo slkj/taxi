@@ -121,7 +121,7 @@ public class UserController extends BaseController {
 	      titles.add("编号");
 	      titles.add("姓名");
 	      titles.add("邮箱");
-	      titles.add("真是姓名");
+	      titles.add("真实姓名");
 	      titles.add("性别");
 	      titles.add("联系电话");	
 	      titles.add("地址");	
@@ -132,12 +132,12 @@ public class UserController extends BaseController {
 	      titles.add("状态");	      
 	      dataMap.put("titles", titles);
 
-	      List emList = this.userService.excelList(pd);
+	      List emList = this.userService.excelList(pd);System.out.println("到这里了？？");
 	      List varList = new ArrayList();
 	      for (int i = 0; i < emList.size(); i++) {
 	        PageData vpd = new PageData();
-	        vpd.put("var1", ((PageData)emList.get(i)).getString("id"));
-	        vpd.put("var2", ((PageData)emList.get(i)).getString("username"));
+	        vpd.put("var1", ((PageData)emList.get(i)).getIntegr("id").toString());System.out.println("还是到这里了？？");
+	        vpd.put("var2", ((PageData)emList.get(i)).getString("username"));System.out.println("还是到这里了？？");
 	        vpd.put("var3", ((PageData)emList.get(i)).getString("email"));
 	        vpd.put("var4", ((PageData)emList.get(i)).getString("realname"));
 	        //vpd.put("var5", ((PageData)emList.get(i)).getString("sex"));
@@ -162,7 +162,7 @@ public class UserController extends BaseController {
 		          if (((PageData)emList.get(i)).getString("status").equals("enabled"))
 		            vpd.put("var12", "启用");
 		          else 
-		            vpd.put("var7", "禁用");
+		            vpd.put("var12", "禁用");
 		          
 		        }
 	        varList.add(vpd);

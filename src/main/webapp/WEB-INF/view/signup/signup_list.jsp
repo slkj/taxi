@@ -13,6 +13,7 @@
 				<div class="comp-search-box">
 					<div class="screen-top">
 						<div class="colRow">
+						<input type="hidden" name="company" id="company" value="${sessionUser.departName }" />
 							<input type="text" class="easyui-textbox" id="name" data-options="label:'姓名'" />
 						</div>
 						<div class="colRow">
@@ -225,7 +226,7 @@
 			    window.location.href='goExcel?name='
 						+encodeURI(encodeURI(name))
 						+'&status='+encodeURI(encodeURI(status))
-						+'&company='+encodeURI(encodeURI(compnay));  
+						+'&company='+encodeURI(encodeURI(company));  
 			
 		}
 	</script>
