@@ -481,10 +481,19 @@ public class EmployeeController extends BaseController {
 	    	 String status= URLDecoder.decode(pd.getString("status"), "utf-8");
 	    	 pd.put("status", status);
 	    	}
-	    	if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+	    	/*if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
 	    	 pd.put("company", company);
-	    	}
+	    	}*/
+	    	User user = (User)session.getAttribute("sessionUser");
+			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+				pd.put("company", user.getDepartName());
+		      }else{
+		    	  if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+		 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+		 	    	 pd.put("company", company);
+		 	    	}		    	 
+		      }
 	    	if ((pd.getString("shzt") != null) && (!"".equalsIgnoreCase(pd.getString("shzt").trim()))) {
 		    	 String shzt= URLDecoder.decode(pd.getString("shzt"), "utf-8");
 		    	 pd.put("shzt", shzt);

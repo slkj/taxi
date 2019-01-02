@@ -251,9 +251,9 @@ public class TaxicarController extends BaseController{
 			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
 				pd.put("company", user.getDepartName());
 		      }else{
-		    	  if ((pd.getString("unitname") != null) && (!"".equalsIgnoreCase(pd.getString("unitname").trim()))) {
-		 	    	 String unitname= URLDecoder.decode(pd.getString("unitname"), "utf-8");
-		 	    	 pd.put("company", pd.getString("company"));
+		    	  if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+		 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+		 	    	 pd.put("company", company);
 		 	    	}		    	 
 		      }
 			

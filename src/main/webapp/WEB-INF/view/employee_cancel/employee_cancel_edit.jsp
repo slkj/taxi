@@ -120,7 +120,7 @@
 						</div>
 					</div>
 								
-						<div  class="form-btnBar pl75">
+						<div  class="form-btnBar pl75" style="text-align: center;">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 
 							<input type="submit" value="取消" class="easyui-linkbutton btnDefault"

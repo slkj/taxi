@@ -92,7 +92,7 @@
 						</div>
 						</div>
 										
-						<div  class="form-btnBar pl75">
+						<div  class="form-btnBar pl75" style="text-align: center;">
 							<input type="submit" value="申请变更为本公司人员" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 150px" /> 
 							<input type="submit" value="取消" class="easyui-linkbutton btnDefault"

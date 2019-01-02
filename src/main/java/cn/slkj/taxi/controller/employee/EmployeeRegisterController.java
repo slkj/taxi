@@ -140,7 +140,7 @@ public class EmployeeRegisterController extends BaseController {
 				EmployeeRegister employeeRegister=employeeRegisterService.selectById(pd);
 				HashMap<String, Object> hashMap = new HashMap<String, Object>();
 				hashMap.put("idcard", employeeRegister.getIdcard());
-				hashMap.put("status", "1");
+				//hashMap.put("status", "1");
 				Employee employee = this.employeeService.selectOne(hashMap);
 				mv.addObject("employee", employee);
 				mv.addObject("pd", employeeRegister);
