@@ -24,6 +24,9 @@
 		ORDER BY SORT
 	</select>
 	
+	<select id="queryOne" resultType="Menu" parameterType="String">
+		SELECT <include refid="Base_Column_List"/> FROM SYS_MENU where ID = #{id}		
+	</select>
 	<select id="listAllMenu" resultType="Menu" parameterType="pd">
 		SELECT * FROM SYS_MENU 
 		<where>

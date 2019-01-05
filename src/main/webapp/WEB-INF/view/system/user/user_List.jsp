@@ -129,10 +129,10 @@
 					{title : '电话',field : 'phone'},
 // 					{title : '性别',field : 'sex',formatter : function(value) {if (value == "1") {return "男";} else {return "女";}	}},
 					{title : '单位',field : 'departName'},
-					{field : 'opt',title : '操作',align : 'center',	formatter : function(value, row) {
+					{field : 'opt',title : '操作',align : 'center',	formatter : function(value, row,index) {
 						var s = '<div class ="updateBtn">';
 						s += '<a href="javascript:void(0);" title="删除"  onclick="delRow('+row.id+')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-						s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+						s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow('+index+')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
 						return s;
 						}
 					} ] ];
@@ -182,8 +182,9 @@
 				}
 			});
 		}
-		function editRow() {
-			var row = $('#userList_dg').datagrid('getSelected');
+		function editRow(index) {
+			var row = $('#userList_dg').datagrid('getData').rows[index];
+			//var row = $('#userList_dg').datagrid('getSelected');
 			if (row) {
 				layer.open({
 					type : 1,

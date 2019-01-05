@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
+import cn.slkj.taxi.entity.Enterprise;
 import cn.slkj.taxi.entity.Menu;
 import cn.slkj.taxi.entity.Menus;
 import cn.slkj.taxi.entity.User;
@@ -36,6 +38,30 @@ public class MenuController extends BaseController {
 		return "system/menu/menu_list";
 	}
 
+	@RequestMapping({ "/goAdd" })
+	public ModelAndView goAdd() {
+		ModelAndView mv = new ModelAndView();
+		try {
+			mv.setViewName("system/menu/menu_edit");
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
+	@RequestMapping({ "/goEdit" })
+	public ModelAndView goEdit() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			Menu menu = menuService.queryOne(pd.getString("id"));
+			mv.setViewName("system/menu/menu_edit");
+			mv.addObject("pd", menu);
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
 	@ResponseBody
 	@RequestMapping(value = "/menusListByUser")
 	public Map<String, Object> menusListByUser(HttpSession session) {

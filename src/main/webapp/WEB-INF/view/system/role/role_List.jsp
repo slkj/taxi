@@ -85,7 +85,7 @@
 					{field : 'opt',title : '操作',align : 'center',width: 50,formatter : function(value, row, index) {
 							var s = '<div class ="updateBtn">';
 							s += '<a href="javascript:;" title="删除"  onclick="delRole('+row.id+')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-							s += ' <a href="javascript:void(0);;" title="编辑" onclick="editRow()" class="info"><i class="fa fa-pencil-square-o"></i></a>';
+							s += ' <a href="javascript:void(0);;" title="编辑" onclick="editRow('+index+')" class="info"><i class="fa fa-pencil-square-o"></i></a>';
 							s += ' <a href="javascript:void(0);;" title="权限" onclick="qxRow('+index+')" class="info"><i class="fa fa-check-circle yellow"></i>权限</a></div>';
 							return s;
 						}
@@ -153,8 +153,9 @@
 				});
 			}
 		}
-		function editRow() {
-			var row = $('#roleList_dg').datagrid('getSelected');
+		function editRow(index) {
+			var row = $('#roleList_dg').datagrid('getData').rows[index];
+			//var row = $('#roleList_dg').datagrid('getSelected');
 			if (row) {
 				layer.open({
 					type : 1,

@@ -10,6 +10,8 @@ public interface MenuMapper {
 
 	public List<Menu> listAllParentMenu(Map<String, Object> hasMap);
 
+	public Menu queryOne(String id);
+	
 	public List<Menu> listAllMenu(PageData pd);
 
 	public int save(PageData pd);

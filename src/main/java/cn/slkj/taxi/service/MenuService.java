@@ -22,6 +22,10 @@ public class MenuService {
 		return menuMapper.listAllParentMenu(hasMap);
 	}
 
+	public Menu queryOne(String id) {
+		return menuMapper.queryOne(id);
+	}
+	
 	public List<Menu> listAllMenu(PageData pd) {
 		return menuMapper.listAllMenu(pd);
 	}
