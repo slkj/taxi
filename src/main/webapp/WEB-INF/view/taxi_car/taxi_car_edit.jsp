@@ -187,9 +187,9 @@
 					<span style="margin-left: 2px;">
 						<select  class="easyui-combobox" style="width: 120px;" id="area" name="area">
 							<option value=''></option>
-							<option value='市区' <c:if test="${pd.area == '0' }">selected</c:if>>市区</option>
-							<option value='双滦' <c:if test="${pd.area == '1' }">selected</c:if>>双滦</option>
-							<option value='双滦代管' <c:if test="${pd.area == '2' }">selected</c:if>>双滦代管</option>
+							<option value='市区' <c:if test="${pd.area == '市区' }">selected</c:if>>市区</option>
+							<option value='双滦' <c:if test="${pd.area == '双滦' }">selected</c:if>>双滦</option>
+							<option value='双滦代管' <c:if test="${pd.area == '双滦代管' }">selected</c:if>>双滦代管</option>
 						</select>
 					</span></td>
 			<td colspan="4" style="width: 202px;" rowspan="4">

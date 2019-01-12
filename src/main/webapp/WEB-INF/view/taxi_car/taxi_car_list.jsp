@@ -42,6 +42,12 @@
 								导出
 							</button>						
 						</div>
+						<div class="colRow">
+						<button class="easyui-linkbutton btnDefault" onclick="fromExcel()">
+								<i class="fa fa-upload"></i>
+								导入
+							</button>						
+						</div>
 					</div>
 				</div>
 				<div class="btnbar-tools">
@@ -190,6 +196,19 @@
 						+'&OpretaCertNum='+encodeURI(encodeURI(OpretaCertNum))
 						+'&OwnerName='+encodeURI(encodeURI(OwnerName))
 						+'&Area='+encodeURI(encodeURI(Area));  
+			
+		}
+		function fromExcel() {
+			
+				layer.open({
+					type : 2,
+					skin : 'layui-layer-rim', //加上边框
+					hade : [ 0.5, '#000', false ],
+					area : [ '450px', '200px'], //宽高
+					title : [ '导入excel', false ],
+					content : 'goUploadExcel'
+				});
+				
 			
 		}
 	</script>

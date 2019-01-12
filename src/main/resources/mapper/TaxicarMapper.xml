@@ -63,6 +63,9 @@
 			<if test="opretaCertNum != null and opretaCertNum != ''">
 				AND OpretaCertNum = #{opretaCertNum}
 			</if>
+			<if test="PlateNum != null and PlateNum != ''">
+				AND PlateNum LIKE '%'+#{PlateNum}+'%'
+			</if>
 		</where>
 	</select>
 	<insert  id="save" parameterType="Taxicar">

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -22,16 +21,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
-import cn.slkj.taxi.entity.ExamineStandard;
 import cn.slkj.taxi.entity.Taxicar;
 import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.TaxicarService;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
+import cn.slkj.taxi.util.FileDownload;
+import cn.slkj.taxi.util.FileUpload;
 import cn.slkj.taxi.util.FileUtil;
 import cn.slkj.taxi.util.JsonResult;
+import cn.slkj.taxi.util.ObjectExcelRead;
 import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.PathUtil;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
 
@@ -154,7 +156,7 @@ public class TaxicarController extends BaseController{
 				rti = taxicarService.save(taxicar);
 			}
 			return rti > 0 ? true : false;
-		} catch (Exception e) {
+		} catch (Exception e) {System.out.println(e.toString());
 			e.printStackTrace();
 			return false;
 		}
@@ -286,7 +288,7 @@ public class TaxicarController extends BaseController{
 	      titles.add("高");
 	      titles.add("车架号");
 	      titles.add("发动机号");
-	      titles.add("操作日期");
+	      titles.add("添加日期");
 	      titles.add("发证日期");
 	      titles.add("变更日期");	      
 	      dataMap.put("titles", titles);
@@ -313,8 +315,8 @@ public class TaxicarController extends BaseController{
 		        else {
 		          vpd.put("var7", "不详");
 		        }
-	        //vpd.put("var8", ((PageData)emList.get(i)).getString("Area"));
-	        if (((PageData)emList.get(i)).getString("Area") != null) {
+	        vpd.put("var8", ((PageData)emList.get(i)).getString("Area"));
+	        /*if (((PageData)emList.get(i)).getString("Area") != null) {
 		          if (((PageData)emList.get(i)).getString("Area").equals("0"))
 		            vpd.put("var8", "市区");
 		          else if (((PageData)emList.get(i)).getString("Area").equals("1"))
@@ -326,7 +328,7 @@ public class TaxicarController extends BaseController{
 		        }
 		        else {
 		          vpd.put("var8", "不详");
-		        }
+		        }*/
 	        vpd.put("var9", ((PageData)emList.get(i)).getString("OrigOwnerName"));
 	        vpd.put("var10", ((PageData)emList.get(i)).getString("OrigPlateNum"));
 	        vpd.put("var11", ((PageData)emList.get(i)).getString("EmployPerson"));
@@ -362,5 +364,91 @@ public class TaxicarController extends BaseController{
 	    return mv;
 	  }
 	
-    
+	  @RequestMapping({ "/goUploadExcel" })
+		public ModelAndView goUploadExcel() {
+			ModelAndView mv = new ModelAndView();
+			try {
+				mv.setViewName("taxi_car/taxi_car_upload_excel");
+			} catch (Exception e) {
+				this.logger.error(e.toString(), e);
+			}
+			return mv;
+		}
+	  @RequestMapping({"/downExcel"})
+	  public void downExcel(HttpServletResponse response)
+	    throws Exception
+	  {
+	    FileDownload.fileDownload(response, PathUtil.getClasspath() + "uploadFiles/templetFile/" + "taxicar.xls", "taxicar.xls");
+	  }
+	  
+	    @ResponseBody
+		@RequestMapping(value = "/readExcel", method = RequestMethod.POST)
+		public int readExcel(@RequestParam(value="excel", required=false) MultipartFile excel) {
+			try {
+				Taxicar taxicar=new Taxicar();
+				 int rti = 0;
+			    if ((excel != null) && (!excel.isEmpty())) {
+			      String filePath = PathUtil.getClasspath() + "uploadFiles/file/";
+			      String fileName = FileUpload.fileUp(excel, filePath, "taxicarexcel");
+			      List listPd = ObjectExcelRead.readExcel(filePath, fileName, 1, 0, 0);
+			      for (int i = 0; i < listPd.size(); i++) {
+			    	  taxicar.setId(UuidUtil.get32UUID());
+			    	 taxicar.setFileNum(((PageData)listPd.get(i)).getString("var1"));
+			    	 taxicar.setOpretaCertNum(((PageData)listPd.get(i)).getString("var2"));
+			    	 taxicar.setPlateNum(((PageData)listPd.get(i)).getString("var3"));
+			    	 taxicar.setCorpName(((PageData)listPd.get(i)).getString("var4"));
+			    	 taxicar.setOwnerName(((PageData)listPd.get(i)).getString("var5"));
+			    	 //taxicar.setOwnerSex(((PageData)listPd.get(i)).getString("var6"));
+			    	 if (((PageData)listPd.get(i)).getString("var6").equals("男"))
+			        	  taxicar.setOwnerSex("0");
+			          else if (((PageData)listPd.get(i)).getString("var6").equals("女"))
+			        	  taxicar.setOwnerSex("1");
+			          else
+			        	  taxicar.setOwnerSex("");
+				       
+			    	 taxicar.setArea(((PageData)listPd.get(i)).getString("var7"));
+			    	/* if (((PageData)listPd.get(i)).getString("var7").equals("市区"))
+			        	  taxicar.setArea("0");
+			          else if (((PageData)listPd.get(i)).getString("var7").equals("双滦"))
+			        	  taxicar.setArea("1");
+			          else if (((PageData)listPd.get(i)).getString("var7").equals("双滦代管"))
+			        	  taxicar.setArea("2");
+			          else
+			        	  taxicar.setArea("");*/
+			    	 taxicar.setOrigOwnerName(((PageData)listPd.get(i)).getString("var8")); 
+			    	 taxicar.setOrigPlateNum(((PageData)listPd.get(i)).getString("var9")); 
+			    	 taxicar.setEmployPerson(((PageData)listPd.get(i)).getString("var10"));
+			    	 taxicar.setColor(((PageData)listPd.get(i)).getString("var11")); 
+			    	 taxicar.setSign(((PageData)listPd.get(i)).getString("var12")); 
+			    	 taxicar.setSealRecord(((PageData)listPd.get(i)).getString("var13")); 
+			    	 taxicar.setAddress(((PageData)listPd.get(i)).getString("var14")); 
+			    	 taxicar.setPhoneNum(((PageData)listPd.get(i)).getString("var15")); 
+			    	 taxicar.setiDNumber(((PageData)listPd.get(i)).getString("var16"));
+			    	 taxicar.setOwnerChange(((PageData)listPd.get(i)).getString("var17")); 
+			    	 taxicar.setDrvLicenseDate(((PageData)listPd.get(i)).getString("var18")); 
+			    	 taxicar.setVehicleInspRec(((PageData)listPd.get(i)).getString("var19"));
+			    	 taxicar.setTonsSeat(((PageData)listPd.get(i)).getString("var20")); 
+			    	 taxicar.setCarLen(((PageData)listPd.get(i)).getString("var21")); 
+			    	 taxicar.setCarWidth(((PageData)listPd.get(i)).getString("var22")); 
+			    	 taxicar.setCarHigh(((PageData)listPd.get(i)).getString("var23")); 
+			    	 taxicar.setFrameNumber(((PageData)listPd.get(i)).getString("var24"));
+			    	 taxicar.setEngineNumber(((PageData)listPd.get(i)).getString("var25")); 
+			    	 taxicar.setaDDTIME(DateUtil.getTime()); 
+			    	 taxicar.setCheckDate(((PageData)listPd.get(i)).getString("var27")); 
+			    	 taxicar.setTransferDate(((PageData)listPd.get(i)).getString("var28"));
+			    	 HashMap<String, Object> hashMap = new HashMap<String, Object>();
+					 hashMap.put("PlateNum", taxicar.getPlateNum());
+					 if(taxicarService.queryOne(hashMap)!=null)
+						 continue;
+			    	  taxicarService.save(taxicar);
+			    	  rti++;
+			      }
+			    }				
+				
+				return rti;
+			} catch (Exception e) {System.out.println(e.toString());
+				e.printStackTrace();
+				return 0;
+			}
+		}
 }
