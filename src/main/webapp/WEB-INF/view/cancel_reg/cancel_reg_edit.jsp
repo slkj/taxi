@@ -10,6 +10,42 @@
 <%@ include file="/common/taglibs.jsp"%>
 <script src="${pageContext.request.contextPath}/assets/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/My97DatePicker/skin/WdatePicker.css">
+<style type="text/css">
+.a-upload {
+	padding: 4px 10px;
+	height: 20px;
+	width: 128px;
+	line-height: 6px;
+	position: relative;
+	cursor: pointer;
+	color: #888;
+	background: #fafafa;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	overflow: hidden;
+	display: inline-block;
+	*display: inline;
+	*zoom: 1
+}
+
+.a-upload  input {
+	position: absolute;
+	font-size: 100px;
+	right: 0;
+	top: 0;
+	opacity: 0;
+	filter: alpha(opacity = 0);
+	cursor: pointer
+}
+
+.a-upload:hover {
+	color: #444;
+	background: #eee;
+	border-color: #ccc;
+	text-decoration: none
+}
+</style>
+
 <script type="text/javascript">
 	//检索
 	function search() {
@@ -20,14 +56,16 @@
 		if (!validate) {
 			return validate;
 		}
-		//var formData = new FormData(document.getElementById("vui_sample"));
-		var data =$("#vui_sample").serializeArray();
+		var formData = new FormData(document.getElementById("vui_sample"));
+		//var data =$("#vui_sample").serializeArray();
 		$.ajax({
 			url : "save",
 			type : "POST",
-			data : data,
+			data : formData,
 			async : false,
 			cache : false,
+			contentType: false,
+            processData: false,
 			success : function(res) {
 				if (res) {
 					var index = parent.layer.getFrameIndex(window.name);
@@ -119,7 +157,23 @@
 							<input class="easyui-textbox" style="width: 100%" name="cartype" data-options="label:'注册时间:'" value="${employee.registerDate}" editable="false">
 						</div>
 					</div>
-									
+						
+						<div  style="text-align: center;">
+						<div  style="text-align: center;">
+						<img id="cancelRegPic" style="width: 255px; height: 155px;"/>
+						<!-- <img id="cancelRegPic0" style="width: 125px; height: 155px;"/>
+						<img id="cancelRegPic1" style="width: 125px; height: 155px;"/>
+						<img id="cancelRegPic2" style="width: 125px; height: 155px;"/>
+						<img id="cancelRegPic3" style="width: 125px; height: 155px;"/>
+						 <img id="cancelRegPic4" style="width: 125px; height: 155px;"/>  -->
+						</div>
+						<a href="javascript:;" class="a-upload" style="margin-top: 5px;">
+							<!-- <input id="cancelRegfile" name="cancelRegfile"  type="file" multiple="multiple"
+							  onchange="loadImageFileVehiclepic();"/>上传报废单 -->
+							  <input id="cancelRegfile" name="cancelRegfile"  type="file" 
+							  onchange="loadImageFileVehiclepic();"/>上传报废单
+						</a>
+						</div>			
 						<div  class="form-btnBar pl75" style="text-align: center;">
 							<input type="submit" value="保存" class="easyui-linkbutton btnPrimary" onclick="submitForm()"
 							style="width: 80px" /> 
@@ -136,6 +190,23 @@
 		</div>
 	</div>
 </div>
-
+<script type="text/javascript">
+			rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+			//var j=0;
+			
+			function loadImageFileVehiclepic() {
+				var cancelFile=document.getElementById("cancelRegfile").files;				
+			  if (cancelFile.length == 0 ){return; }
+			 // for(var i=0;i<cancelFile.length;i++){
+				  var oFile = cancelFile[0];
+				  if (!rFilter.test(oFile.type)) { alert("上传图片类型不符!"); return; }
+				  $("#cancelRegPic").attr("src",URL.createObjectURL(oFile));
+				  //$("#cancelRegPic"+j).attr("src",URL.createObjectURL(oFile));
+			//	  j++;
+			//  }
+			 
+			}
+			
+		</script>
 </body>
 </html>

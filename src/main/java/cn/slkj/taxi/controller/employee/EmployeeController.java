@@ -28,14 +28,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
+import cn.slkj.taxi.entity.Taxicar;
 import cn.slkj.taxi.entity.User;
 import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.util.Const;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
+import cn.slkj.taxi.util.FileDownload;
+import cn.slkj.taxi.util.FileUpload;
 import cn.slkj.taxi.util.FileUtil;
+import cn.slkj.taxi.util.ObjectExcelRead;
 import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.PathUtil;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
 
@@ -225,7 +230,12 @@ public class EmployeeController extends BaseController {
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
 		User user = (User) session.getAttribute(Const.SESSION_USER);
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("company", user.getDepartName());
+		//hashMap.put("company", user.getDepartName());
+		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+			hashMap.put("company", user.getDepartName());
+	      }else{
+	    	  hashMap.put("company", pd.getString("company"));
+	      }	
 		hashMap.put("name", pd.getString("name"));
 		hashMap.put("status", pd.getString("status"));
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
@@ -654,4 +664,73 @@ public class EmployeeController extends BaseController {
 	    return mv;
 	  }
 
+	  @RequestMapping({ "/goUploadExcel" })
+		public ModelAndView goUploadExcel() {
+			ModelAndView mv = new ModelAndView();
+			try {
+				mv.setViewName("employee/employee_upload_excel");
+			} catch (Exception e) {
+				this.logger.error(e.toString(), e);
+			}
+			return mv;
+		}
+	  @RequestMapping({"/downExcel"})
+	  public void downExcel(HttpServletResponse response)
+	    throws Exception
+	  {
+	    FileDownload.fileDownload(response, PathUtil.getClasspath() + "uploadFiles/templetFile/" + "employee.xls", "employee.xls");
+	  }
+	  
+	    @ResponseBody
+		@RequestMapping(value = "/readExcel", method = RequestMethod.POST)
+		public int readExcel(@RequestParam(value="excel", required=false) MultipartFile excel) {
+			try {
+				Employee employee=new Employee();
+				 int rti = 0;
+			    if ((excel != null) && (!excel.isEmpty())) {
+			      String filePath = PathUtil.getClasspath() + "uploadFiles/file/";
+			      String fileName = FileUpload.fileUp(excel, filePath, "employeeexcel");
+			      List listPd = ObjectExcelRead.readExcel(filePath, fileName, 1, 0, 0);
+			      PageData pd = new PageData();
+			      for (int i = 0; i < listPd.size(); i++) {			    	 
+			    	pd = getPageData();
+			  		pd.put("id", UuidUtil.get32UUID());
+			  		pd.put("name", ((PageData)listPd.get(i)).getString("var1"));
+			  		//pd.put("sex", ((PageData)listPd.get(i)).getString("var2"));
+			  		if (((PageData)listPd.get(i)).getString("var2").equals("男"))
+			  			pd.put("sex","0");
+			          else if (((PageData)listPd.get(i)).getString("var2").equals("女"))
+			        	  pd.put("sex","1");
+			          else
+			        	  pd.put("sex","");
+			  		pd.put("borndate", ((PageData)listPd.get(i)).getString("var3"));
+			  		pd.put("nationality", ((PageData)listPd.get(i)).getString("var4"));
+			  		pd.put("idcard", ((PageData)listPd.get(i)).getString("var5"));
+			  		pd.put("educated", ((PageData)listPd.get(i)).getString("var6"));
+			  		pd.put("phone", ((PageData)listPd.get(i)).getString("var7"));
+			  		pd.put("address", ((PageData)listPd.get(i)).getString("var8"));
+			  		pd.put("driveCard", ((PageData)listPd.get(i)).getString("var9"));
+			  		pd.put("driveStartDate", ((PageData)listPd.get(i)).getString("var10"));
+			  		pd.put("driveType", ((PageData)listPd.get(i)).getString("var11"));
+			  		pd.put("company", ((PageData)listPd.get(i)).getString("var12"));
+			  		pd.put("oldCompany", ((PageData)listPd.get(i)).getString("var13"));
+			  		pd.put("infoPages", ((PageData)listPd.get(i)).getString("var14"));
+			  		pd.put("status", "0");
+			  		pd.put("addtime", DateUtil.getTime());
+			    	 
+			    	 HashMap<String, Object> hashMap = new HashMap<String, Object>();
+					 hashMap.put("idcard", pd.getString("idcard"));
+					 if(employeeService.selectOne(hashMap)!=null)
+						 continue;
+					 employeeService.insertSelective(pd);
+			    	  rti++;
+			      }
+			    }				
+				
+				return rti;
+			} catch (Exception e) {System.out.println(e.toString());
+				e.printStackTrace();
+				return 0;
+			}
+		}
 }

@@ -29,6 +29,10 @@ public interface EmployeeCancelMapper {
 
 	int update(PageData pd);
 	
+	int save(EmployeeCancel employeeCancel);
+	
+	int edit(EmployeeCancel employeeCancel);
+	
 	int updateStatus(PageData pd);
 	
 	/**

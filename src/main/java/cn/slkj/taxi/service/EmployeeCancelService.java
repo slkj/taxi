@@ -60,6 +60,14 @@ public class EmployeeCancelService {
 		return mapper.update(pd);
 	}
 	
+	public int save(EmployeeCancel employeeCancel) {
+		return mapper.save(employeeCancel);
+	}
+
+	public int edit(EmployeeCancel employeeCancel) {
+		return mapper.edit(employeeCancel);
+	}
+	
 	/**
 	 * 根据id删除一条记录
 	 * 

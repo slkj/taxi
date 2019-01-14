@@ -8,11 +8,8 @@
  */
 package cn.slkj.taxi.controller.employee;
 
-import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -23,21 +20,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.slkj.taxi.controller.base.BaseController;
 import cn.slkj.taxi.entity.Employee;
 import cn.slkj.taxi.entity.EmployeeCancel;
-import cn.slkj.taxi.entity.EmployeeReplaceSign;
-import cn.slkj.taxi.entity.Role;
 import cn.slkj.taxi.entity.User;
+import cn.slkj.taxi.service.CancelRegfileService;
 import cn.slkj.taxi.service.EmployeeCancelService;
 import cn.slkj.taxi.service.EmployeeService;
 import cn.slkj.taxi.util.DateUtil;
 import cn.slkj.taxi.util.EPager;
+import cn.slkj.taxi.util.FileUpload;
 import cn.slkj.taxi.util.JsonResult;
-import cn.slkj.taxi.util.ObjectExcelView;
 import cn.slkj.taxi.util.PageData;
+import cn.slkj.taxi.util.PathUtil;
 import cn.slkj.taxi.util.Tools;
 import cn.slkj.taxi.util.UuidUtil;
 
@@ -61,6 +59,8 @@ public class CancelRegfileController extends BaseController {
 	private EmployeeCancelService employeeCancelService;
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private CancelRegfileService cancelRegfileService;
 
 	@RequestMapping({ "/listPage" })
 	public ModelAndView listPage() throws Exception {
@@ -155,23 +155,40 @@ public class CancelRegfileController extends BaseController {
 	  }
 	@ResponseBody
 	@RequestMapping(value = "/save", method = { RequestMethod.POST })
-	public boolean save(HttpSession session)  throws Exception{
-		
+	public boolean save(@RequestParam(value="cancelRegfile", required=false) MultipartFile cancelRegfile,
+			EmployeeCancel employeeCancel,HttpSession session)  throws Exception{
+		System.out.println(cancelRegfile.isEmpty());
+		System.out.println(cancelRegfile.getName());
+		System.out.println(cancelRegfile.getSize());
 		PageData pd = new PageData();
 		try {
 			pd = getPageData();
+			
 			int rti = 0;
-			User user = (User)session.getAttribute("sessionUser");				 
-	        pd.put("company", user.getDepartName());
-	        pd.put("addtime", DateUtil.getTime());
-	        pd.put("flag", Integer.valueOf(1));
-			String id = pd.getString("id");
+			User user = (User)session.getAttribute("sessionUser");	
+			employeeCancel.setCompany(user.getDepartName());
+			employeeCancel.setAddtime(DateUtil.getTime());
+			employeeCancel.setFlag(Integer.valueOf(1));
+			String id = employeeCancel.getId();
 			if (Tools.notEmpty(id)) {
-				rti = employeeCancelService.update(pd);
+				rti = employeeCancelService.edit(employeeCancel);
 			} else {
-				//pd.put("id", UuidUtil.get32UUID());
-				pd.put("id", (DateUtil.getDayss() + new Random().nextInt()).substring(0, 15).replace("-", ""));
-				rti = employeeCancelService.insert(pd);
+				//pd.put("idcard", employeeCancel.getIdcard());
+				//if(){
+				//pd.put("id", (DateUtil.getDayss() + new Random().nextInt()).substring(0, 15).replace("-", ""));
+				
+				employeeCancel.setId((DateUtil.getDayss() + new Random().nextInt()).substring(0, 15).replace("-", ""));
+				rti = employeeCancelService.save(employeeCancel);
+				if((!cancelRegfile.isEmpty())&&(cancelRegfile!=null)){
+					 String ffile = DateUtil.getDays(); String fileName = "";
+					 String filePath = PathUtil.getClasspath() + "uploadFiles/uploadImgs/" + ffile;
+				     fileName = FileUpload.fileUp(cancelRegfile, filePath, get32UUID());
+					pd.put("id", UuidUtil.get32UUID());
+					pd.put("pid", employeeCancel.getId());
+					pd.put("path", ffile + "/" + fileName);
+					pd.put("createtime", DateUtil.getTime());
+					cancelRegfileService.savePic(pd);
+				}
 			}
 			return rti > 0 ? true : false;
 		} catch (Exception e) {

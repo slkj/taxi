@@ -37,7 +37,7 @@ public class Employee extends EmployeeRank {
 	private String carid;// 车牌号
 	private String cartype;// 车辆类型
 	private String company;// 公司
-	private String littCompany;
+	private String littCompany;//公司简称
 	private String oldCompany;// 原公司
 	private String engageConn;// 与车主关系
 	private String engageTime;// 经营时间
