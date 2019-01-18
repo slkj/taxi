@@ -68,7 +68,13 @@ public class TaxicarController extends BaseController{
 		Integer page = pd.getIntegr("page");
 		 User user = (User)session.getAttribute("sessionUser");
 			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
-				pd.put("company", user.getDepartName());
+				//pd.put("company", user.getDepartName());
+				if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+					pd.put("company", user.getDepartName());
+					}
+					else{
+						pd.put("company", pd.getString("company"));
+				      }	
 		      }else{
 		    	  pd.put("company", pd.getString("company"));
 		      }	

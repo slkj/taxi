@@ -168,7 +168,12 @@ public class EmployeeController extends BaseController {
 		hashMap.put("status", pd.getString("status"));
 		 User user = (User)session.getAttribute("sessionUser");
 		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+			if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
 			hashMap.put("company", user.getDepartName());
+			}
+			else{
+		    	  hashMap.put("company", pd.getString("company"));
+		      }	
 	      }else{
 	    	  hashMap.put("company", pd.getString("company"));
 	      }		
@@ -232,7 +237,13 @@ public class EmployeeController extends BaseController {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		//hashMap.put("company", user.getDepartName());
 		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
-			hashMap.put("company", user.getDepartName());
+			//hashMap.put("company", user.getDepartName());
+			if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+				hashMap.put("company", user.getDepartName());
+				}
+				else{
+					hashMap.put("company", pd.getString("company"));
+			      }	
 	      }else{
 	    	  hashMap.put("company", pd.getString("company"));
 	      }	
