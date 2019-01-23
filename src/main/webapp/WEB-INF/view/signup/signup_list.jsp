@@ -226,7 +226,8 @@
 			    window.location.href='goExcel?name='
 						+encodeURI(encodeURI(name))
 						+'&status='+encodeURI(encodeURI(status))
-						+'&company='+encodeURI(encodeURI(company));  
+						+'&company='+encodeURI(encodeURI(company))
+						+'&right=1';  
 			
 		}
 	</script>

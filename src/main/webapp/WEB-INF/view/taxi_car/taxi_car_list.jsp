@@ -13,6 +13,7 @@
 				<div class="comp-search-box">
 					<div class="screen-top">
 						<div class="colRow">
+						<input type="hidden" name="company" id="company" value="${sessionUser.departName }" />
 							<input type="text" class="easyui-textbox" id="PlateNum" data-options="label:'车牌号'" />
 						</div>
 						<div class="colRow">
@@ -25,9 +26,8 @@
 							<select  class="easyui-combobox" id="Area" data-options="label:'所属地区'"  value="${pd.area }">
 							<option value=''></option>
 							<option value=''>全部</option>
-							<option value='市区'>市区</option>
-							<option value='双滦'>双滦</option>
-							<option value='双滦代管'>双滦代管</option>
+							<option value='河北省承德市双桥区'>河北省承德市双桥区</option>
+							<option value='河北省承德市双滦区'>河北省承德市双滦区</option>
 						</select>
 						</div>
 						<div class="colRow">
@@ -124,27 +124,37 @@
 				title : '车主性别',
 				field : 'ownerSex',
 				formatter : function(value) {
-					if (value == "0") {
-						return "男";
-					} else {
+					if (value == "1") {
 						return "女";
+					} else {
+						return "男";
 					}
 				}
 			}, {
 				field : 'opretaCertNum',
 				title : '营运证号'
 			}, {
+				field : 'licenseKey',
+				title : '许可证号'
+			} , {
 				field : 'corpName',
 				title : '公司名称'
-			} , {
+			}, {
+				field : 'manageNature',
+				title : '经营性质'
+			}  , {
 				field : 'opt',
 				title : '操作',
 				align : 'center',
 				formatter : function(value, row) {
+					if(($('#company').val()=="超级管理员")||($('#company').val()=="")){
 					var s = '<div class ="updateBtn">';
 					s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
 					s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
 					return s;
+					}else{
+						return "";
+					}
 				}
 			} ] ];
 		}

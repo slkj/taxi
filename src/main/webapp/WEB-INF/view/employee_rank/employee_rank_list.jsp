@@ -162,7 +162,8 @@
 			    window.location.href='goExcel?name='
 						+encodeURI(encodeURI(name))
 						+'&cyzgCard='+encodeURI(encodeURI(cyzgCard))
-						+'&company='+encodeURI(encodeURI(company));  
+						+'&company='+encodeURI(encodeURI(company))
+						+'&right=1';  
 			
 		}
 	</script>

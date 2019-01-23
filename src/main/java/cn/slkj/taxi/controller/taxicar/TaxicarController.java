@@ -257,12 +257,20 @@ public class TaxicarController extends BaseController{
 		    	}
 	    	User user = (User)session.getAttribute("sessionUser");
 			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
-				pd.put("company", user.getDepartName());
+				if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+					pd.put("company", user.getDepartName());
+				}
+				else{
+					if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+			 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+			 	    	 pd.put("company", company);
+			 	    	}
+			      }
 		      }else{
 		    	  if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
-		 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
-		 	    	 pd.put("company", company);
-		 	    	}		    	 
+			 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+			 	    	 pd.put("company", company);
+			 	    	}
 		      }
 			
 	      Map dataMap = new HashMap();
@@ -286,7 +294,7 @@ public class TaxicarController extends BaseController{
 	      titles.add("联系电话");
 	      titles.add("身份证号");
 	      titles.add("变更记录");
-	      titles.add("行驶证初次登记");
+	      titles.add("行驶证初次登记日期");
 	      titles.add("车辆审验记录");
 	      titles.add("吨位");
 	      titles.add("长");
@@ -296,7 +304,11 @@ public class TaxicarController extends BaseController{
 	      titles.add("发动机号");
 	      titles.add("添加日期");
 	      titles.add("发证日期");
-	      titles.add("变更日期");	      
+	      titles.add("变更日期");
+	      titles.add("许可证号");	
+	      titles.add("经营性质");	
+	      titles.add("座位数");	
+	      titles.add("燃料类型");	
 	      dataMap.put("titles", titles);
 
 	      List emList = this.taxicarService.excelList(pd);
@@ -356,6 +368,10 @@ public class TaxicarController extends BaseController{
 	        vpd.put("var27", ((PageData)emList.get(i)).getString("ADDTIME"));
 	        vpd.put("var28", ((PageData)emList.get(i)).getString("CheckDate"));
 	        vpd.put("var29", ((PageData)emList.get(i)).getString("TransferDate"));
+	        vpd.put("var30", ((PageData)emList.get(i)).getString("LicenseKey"));
+	        vpd.put("var31", ((PageData)emList.get(i)).getString("ManageNature"));
+	        vpd.put("var32", ((PageData)emList.get(i)).getString("Seating"));
+	        vpd.put("var33", ((PageData)emList.get(i)).getString("FuelType"));
 	        varList.add(vpd);
 	      }
 
@@ -442,6 +458,10 @@ public class TaxicarController extends BaseController{
 			    	 taxicar.setaDDTIME(DateUtil.getTime()); 
 			    	 taxicar.setCheckDate(((PageData)listPd.get(i)).getString("var27")); 
 			    	 taxicar.setTransferDate(((PageData)listPd.get(i)).getString("var28"));
+			    	 taxicar.setLicenseKey(((PageData)listPd.get(i)).getString("var29"));
+			    	 taxicar.setManageNature(((PageData)listPd.get(i)).getString("var30"));
+			    	 taxicar.setSeating(((PageData)listPd.get(i)).getString("var31"));
+			    	 taxicar.setFuelType(((PageData)listPd.get(i)).getString("var32"));
 			    	 HashMap<String, Object> hashMap = new HashMap<String, Object>();
 					 hashMap.put("PlateNum", taxicar.getPlateNum());
 					 if(taxicarService.queryOne(hashMap)!=null)

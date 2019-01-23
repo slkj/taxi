@@ -179,7 +179,8 @@
 						+encodeURI(encodeURI(name))
 						+'&cyzgCard='+encodeURI(encodeURI(cyzgCard))
 						+'&status='+encodeURI(encodeURI(status))
-						+'&company='+encodeURI(encodeURI(company));  
+						+'&company='+encodeURI(encodeURI(company))
+						+'&right=1';  
 			
 		}
 	</script>

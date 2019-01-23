@@ -1,4 +1,7 @@
 package cn.slkj.taxi.entity;
+
+import java.util.Arrays;
+
 /**
  * 
 
@@ -29,7 +32,7 @@ public class Taxicar {
 	private String phoneNum; //联系电话
 	private String iDNumber; //身份证号
 	private String ownerChange;// 变更记录
-	private String drvLicenseDate;// 行驶证初次登记
+	private String drvLicenseDate;// 行驶证初次登记日期
 	private String vehicleInspRec;//车辆审验记录
 	private byte[] ownerNamePic; //车主照片
 	private byte[] vehiclePic; //车辆照片
@@ -42,6 +45,10 @@ public class Taxicar {
 	private String aDDTIME; //操作日期
 	private String checkDate; //发证日期
 	private String transferDate;//变更日期
+	private String licenseKey;//许可证号
+	private String manageNature;//经营性质
+	private String seating;//座位数
+	private String fuelType;//燃料类型
 	public String getId() {
 		return id;
 	}
@@ -229,24 +236,53 @@ public class Taxicar {
 	public void setTransferDate(String transferDate) {
 		this.transferDate = transferDate;
 	}
+	
+	public String getLicenseKey() {
+		return licenseKey;
+	}
+	public void setLicenseKey(String licenseKey) {
+		this.licenseKey = licenseKey;
+	}
+	public String getManageNature() {
+		return manageNature;
+	}
+	public void setManageNature(String manageNature) {
+		this.manageNature = manageNature;
+	}
+	public String getSeating() {
+		return seating;
+	}
+	public void setSeating(String seating) {
+		this.seating = seating;
+	}
+	public String getFuelType() {
+		return fuelType;
+	}
+	public void setFuelType(String fuelType) {
+		this.fuelType = fuelType;
+	}
 	@Override
 	public String toString() {
-		return "Vehicle [id=" + id + ", fileNum=" + fileNum
+		return "Taxicar [id=" + id + ", fileNum=" + fileNum
 				+ ", opretaCertNum=" + opretaCertNum + ", plateNum=" + plateNum
 				+ ", corpName=" + corpName + ", ownerName=" + ownerName
+				+ ", ownerSex=" + ownerSex + ", area=" + area
 				+ ", origOwnerName=" + origOwnerName + ", origPlateNum="
 				+ origPlateNum + ", employPerson=" + employPerson + ", color="
 				+ color + ", sign=" + sign + ", sealRecord=" + sealRecord
 				+ ", address=" + address + ", phoneNum=" + phoneNum
 				+ ", iDNumber=" + iDNumber + ", ownerChange=" + ownerChange
 				+ ", drvLicenseDate=" + drvLicenseDate + ", vehicleInspRec="
-				+ vehicleInspRec + ", ownerNamePic=" + ownerNamePic
-				+ ", vehiclePic=" + vehiclePic + ", tonsSeat=" + tonsSeat
+				+ vehicleInspRec + ", ownerNamePic="
+				+ Arrays.toString(ownerNamePic) + ", vehiclePic="
+				+ Arrays.toString(vehiclePic) + ", tonsSeat=" + tonsSeat
 				+ ", carLen=" + carLen + ", carWidth=" + carWidth
 				+ ", carHigh=" + carHigh + ", frameNumber=" + frameNumber
 				+ ", engineNumber=" + engineNumber + ", aDDTIME=" + aDDTIME
 				+ ", checkDate=" + checkDate + ", transferDate=" + transferDate
-				+ "]";
+				+ ", licenseKey=" + licenseKey + ", manageNature="
+				+ manageNature + ", seating=" + seating + ", fuelType="
+				+ fuelType + "]";
 	}
 	
 	

@@ -172,11 +172,12 @@
           <tr>
             <td colspan="8">
               <span style="margin-left:20px;">车牌号：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="plateNum" value="${pd.plateNum }" type="text" style="width: 100px;"  data-options="required:true"/></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="plateNum" value="${pd.plateNum }" type="text" style="width: 120px;"  data-options="required:true"/></span>
               <span style="margin-left:20px;">原车号：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="origPlateNum" value="${pd.origPlateNum }" type="text" style="width: 100px;" /></span>
-              <span style="margin-left:20px;">行驶证初次登记：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="drvLicenseDate" value="${pd.drvLicenseDate }" type="text" style="width: 180px;" /></span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="origPlateNum" value="${pd.origPlateNum }" type="text" style="width: 120px;" /></span>
+              <span style="margin-left:20px;">行驶证初次登记日期：</span>
+                    <span style="margin-left:2px;"><input class="Wdate" name="drvLicenseDate" value="${pd.drvLicenseDate }" type="text" style="width: 150px;" 
+                    onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"/></span>
             </td>
           </tr>
           <tr>
@@ -185,20 +186,19 @@
 				style="margin-left: 2px;"><input class="easyui-textbox" name="iDNumber" value="${pd.iDNumber }" type="text" style="width: 250px;"  validtype="idcard"/></span></td>
 			<td colspan="3"> <span style="margin-left: 20px;">车辆所属地区：</span>
 					<span style="margin-left: 2px;">
-						<select  class="easyui-combobox" style="width: 120px;" id="area" name="area">
+						<select  class="easyui-combobox" style="width: 140px;" id="area" name="area">
 							<option value=''></option>
-							<option value='市区' <c:if test="${pd.area == '市区' }">selected</c:if>>市区</option>
-							<option value='双滦' <c:if test="${pd.area == '双滦' }">selected</c:if>>双滦</option>
-							<option value='双滦代管' <c:if test="${pd.area == '双滦代管' }">selected</c:if>>双滦代管</option>
+							<option value='河北省承德市双桥区' <c:if test="${pd.area == '河北省承德市双桥区' }">selected</c:if>>河北省承德市双桥区</option>
+							<option value='河北省承德市双滦区' <c:if test="${pd.area == '河北省承德市双滦区' }">selected</c:if>>河北省承德市双滦区</option>
 						</select>
 					</span></td>
 			<td colspan="4" style="width: 202px;" rowspan="4">
-				<div style="width: 185px; height: 110px; margin: 2px;margin-left: 15px;">
+				<div style="width: 200px; height: 150px; margin: 2px;margin-left: 15px;">
 				<c:if test="${pd != null && pd.vehiclePic != '' && pd.vehiclePic != null}">
-						<img id="uploadPreviewVehiclePic" style="width: 185px; height: 110px;"  src="../taxicar/getVehiclepic?id=${pd.id}"/>
+						<img id="uploadPreviewVehiclePic" style="width: 210px; height: 145px;"  src="../taxicar/getVehiclepic?id=${pd.id}"/>
 				</c:if>
 						<c:if test="${pd == null || pd.vehiclePic == '' || pd.vehiclePic == null}">
-							<img id="uploadPreviewVehiclePic" style="width: 185px; height: 110px;" />
+							<img id="uploadPreviewVehiclePic" style="width: 210px; height: 145px;" />
 						</c:if>	
 					<div style="text-align: center;">
 	         			<a href="javascript:;" class="a-upload" style="margin-top: 3px;width: 150px;" >
@@ -227,21 +227,46 @@
             </td>
           </tr>
           <tr>
-          	<td colspan="7">
+          	<td colspan="4">
               <span style="margin-left:20px;">车架号：</span>
                     <span style="margin-left:2px;"><input class="easyui-textbox" name="frameNumber" value="${pd.frameNumber }" style="width:270px;" type="text"></span>
             </td>
-            
+            <td colspan="3">
+              <span style="margin-left:20px;">发动机号：</span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="engineNumber" value="${pd.engineNumber }" style="width:200px;" type="text"></span>
+            </td>
           </tr>
           <tr>
-          <td colspan="6">
-              <span style="margin-left:20px;">发动机号：</span>
-                    <span style="margin-left:2px;"><input class="easyui-textbox" name="engineNumber" value="${pd.engineNumber }" style="width:270px;" type="text"></span>
+          <td colspan="5">
+              <span style="margin-left:20px;">许可证号：</span>
+                    <span style="margin-left:2px;"><input class="easyui-textbox" name="licenseKey" value="${pd.licenseKey }" style="width:270px;" type="text"></span>
             </td>
-          	<td colspan="5">
+          	<td colspan="6">
               <span style="margin-left:20px;">发证日期：</span>
                     <span style="margin-left:2px;"><input  class="Wdate" name="checkDate" value="${pd.checkDate }" style="width: 200px;" 
 				onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd'})"/></span>
+            </td>
+          </tr>
+          <tr>
+          <td colspan="11">
+              <span style="margin-left:20px;">座位数：</span>
+                    <span style="margin-left:2px;"><input  name="seating" value="${pd.seating }" style="width:200px;" type="text" class="easyui-numberspinner"></span>
+           
+              <span style="margin-left:20px;">经营性质：</span>
+                    <span style="margin-left:2px;">
+                    <select  class="easyui-combobox" style="width: 200px;" id="manageNature" name="manageNature">
+							<option value='个体' <c:if test="${pd.manageNature == '个体' }">selected</c:if>>个体</option>
+							<option value='企业' <c:if test="${pd.manageNature == '企业' }">selected</c:if>>企业</option>
+						</select>
+				</span>
+            
+              <span style="margin-left:20px;">燃料类型：</span>
+                    <span style="margin-left:2px;">
+                    <select  class="easyui-combobox" style="width: 150px;" id="fuelType" name="fuelType" >
+							<option value='汽油' <c:if test="${pd.fuelType == '汽油' }">selected</c:if>>汽油</option>
+							<option value='汽油天然气' <c:if test="${pd.fuelType == '汽油天然气' }">selected</c:if>>汽油天然气</option>
+						</select>
+				</span>
             </td>
           </tr>
           <tr>

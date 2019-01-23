@@ -186,7 +186,8 @@
 						+encodeURI(encodeURI(name))+'&status='+encodeURI(encodeURI(status))
 						+'&cyzgCard='+encodeURI(encodeURI(cyzgCard))
 						+'&flag='+encodeURI(encodeURI(flag)) 
-			    	+'&company='+encodeURI(encodeURI(company));   
+			    	+'&company='+encodeURI(encodeURI(company))
+			    	+'&right=1';   
 			
 		}
 	</script>

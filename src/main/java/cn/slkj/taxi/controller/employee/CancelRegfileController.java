@@ -90,6 +90,17 @@ public class CancelRegfileController extends BaseController {
 		Integer page = pd.getIntegr("page");
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
 		pd.put("flag", Integer.valueOf(1));
+		 User user = (User)session.getAttribute("sessionUser");
+			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+				if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+					pd.put("company", user.getDepartName());
+				}
+				else{
+					pd.put("company", pd.getString("company"));
+			      }	
+		      }else{
+		    	  pd.put("company", pd.getString("company"));
+		      }	
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeCancel> list = employeeCancelService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
@@ -104,11 +115,16 @@ public class CancelRegfileController extends BaseController {
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
 		pd.put("flag", Integer.valueOf(1));
 		User user = (User)session.getAttribute("sessionUser");
-		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
-		        pd.put("company", user.getDepartName());
-		      }else{
-		    	pd.put("company", "总公司");
-		      }
+		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+			if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+				pd.put("company", user.getDepartName());
+				}
+				else{
+					pd.put("company", "管理员");
+			      }	
+	      }else{
+	    	  pd.put("company", "超级管理员");
+	      }	
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeCancel> list = employeeCancelService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;

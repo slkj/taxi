@@ -84,6 +84,17 @@ public class EmployeeContinueRegisterController extends BaseController {
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
+		User user = (User)session.getAttribute("sessionUser");
+		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+			if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+				pd.put("company", user.getDepartName());
+			}
+			else{
+				pd.put("company", pd.getString("company"));
+		      }	
+	      }else{
+	    	  pd.put("company", pd.getString("company"));
+	      }	
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeContinueRegister> list = employeeContinueRegisterService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
@@ -97,11 +108,16 @@ public class EmployeeContinueRegisterController extends BaseController {
 		Integer page = pd.getIntegr("page");
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
 		User user = (User)session.getAttribute("sessionUser");
-		  if ((user.getDepartName() != null) && (!"".equals(user.getDepartName()))) {
-		        pd.put("company", user.getDepartName());
-		      }else{
-	      pd.put("company", "总公司");
-		      }
+		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+			if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+				pd.put("company", user.getDepartName());
+				}
+				else{
+					pd.put("company", "管理员");
+			      }	
+	      }else{
+	    	  pd.put("company", "超级管理员");
+	      }	
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<EmployeeContinueRegister> list = employeeContinueRegisterService.list(pd, pageBounds);
 		PageList pageList = (PageList) list;
@@ -244,10 +260,38 @@ public class EmployeeContinueRegisterController extends BaseController {
 	    	 String cyzgCard= URLDecoder.decode(pd.getString("cyzgCard"), "utf-8");
 	    	 pd.put("cyzgCard", cyzgCard);
 	    	}
-	    	if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
-		    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
-		    	 pd.put("company", company);
-		    	}
+	    	if((pd.getString("right") != null) && (!"".equalsIgnoreCase(pd.getString("right").trim()))){
+				User user = (User)session.getAttribute("sessionUser");
+				if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+					if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+						pd.put("company", user.getDepartName());
+						}
+						else{
+							pd.put("company", "管理员");
+					      }	
+			      }else{
+			    	  pd.put("company", "超级管理员");
+			      }
+						
+				}else{
+					User user = (User)session.getAttribute("sessionUser");
+					if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+						if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+							pd.put("company", user.getDepartName());
+						}
+						else{
+							if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+					 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+					 	    	 pd.put("company", company);
+					 	    	}
+					      }	
+				      }else{
+				    	  if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+					 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+					 	    	 pd.put("company", company);
+					 	    	}
+				      }			
+				}
 	    	
 	    	
 	    	 

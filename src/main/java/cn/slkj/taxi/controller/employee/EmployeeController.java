@@ -235,17 +235,16 @@ public class EmployeeController extends BaseController {
 		String sortString = "ADDTIME.DESC";// 如果你想排序的话逗号分隔可以排序多列
 		User user = (User) session.getAttribute(Const.SESSION_USER);
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		//hashMap.put("company", user.getDepartName());
+		
 		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
-			//hashMap.put("company", user.getDepartName());
 			if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
 				hashMap.put("company", user.getDepartName());
 				}
 				else{
-					hashMap.put("company", pd.getString("company"));
+					hashMap.put("company", "管理员");
 			      }	
 	      }else{
-	    	  hashMap.put("company", pd.getString("company"));
+	    	  hashMap.put("company", "超级管理员");
 	      }	
 		hashMap.put("name", pd.getString("name"));
 		hashMap.put("status", pd.getString("status"));
@@ -438,7 +437,7 @@ public class EmployeeController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/employeeDieList", method = { RequestMethod.POST })
-	public EPager<Employee> employeeDieList() {System.out.println("进去了么");
+	public EPager<Employee> employeeDieList(HttpSession session) {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
@@ -446,7 +445,18 @@ public class EmployeeController extends BaseController {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		hashMap.put("name", pd.getString("name"));
 		hashMap.put("status", pd.getString("status"));
-		hashMap.put("company", pd.getString("company"));
+		//hashMap.put("company", pd.getString("company"));
+		 User user = (User)session.getAttribute("sessionUser");
+			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+				if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+				hashMap.put("company", user.getDepartName());
+				}
+				else{
+			    	  hashMap.put("company", pd.getString("company"));
+			      }	
+		      }else{
+		    	  hashMap.put("company", pd.getString("company"));
+		      }
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<Employee> list = employeeService.listDie(hashMap, pageBounds);
 		PageList pageList = (PageList) list;
@@ -471,7 +481,7 @@ public class EmployeeController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/employeeOldAgeList", method = { RequestMethod.POST })
-	public EPager<Employee> employeeOldAgeList() {
+	public EPager<Employee> employeeOldAgeList(HttpSession session) {
 		PageData pd = getPageData();
 		Integer rows = pd.getIntegr("rows");
 		Integer page = pd.getIntegr("page");
@@ -479,7 +489,18 @@ public class EmployeeController extends BaseController {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		hashMap.put("name", pd.getString("name"));
 		hashMap.put("status", pd.getString("status"));
-		hashMap.put("company", pd.getString("company"));
+		//hashMap.put("company", pd.getString("company"));
+		User user = (User)session.getAttribute("sessionUser");
+		if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+			if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+			hashMap.put("company", user.getDepartName());
+			}
+			else{
+		    	  hashMap.put("company", pd.getString("company"));
+		      }	
+	      }else{
+	    	  hashMap.put("company", pd.getString("company"));
+	      }
 		PageBounds pageBounds = new PageBounds(page, rows, Order.formString(sortString));
 		List<Employee> list = employeeService.listOldAge(hashMap, pageBounds);
 		PageList pageList = (PageList) list;
@@ -502,19 +523,39 @@ public class EmployeeController extends BaseController {
 	    	 String status= URLDecoder.decode(pd.getString("status"), "utf-8");
 	    	 pd.put("status", status);
 	    	}
-	    	/*if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
-	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
-	    	 pd.put("company", company);
-	    	}*/
-	    	User user = (User)session.getAttribute("sessionUser");
-			if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
-				pd.put("company", user.getDepartName());
-		      }else{
-		    	  if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
-		 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
-		 	    	 pd.put("company", company);
-		 	    	}		    	 
-		      }
+			if((pd.getString("right") != null) && (!"".equalsIgnoreCase(pd.getString("right").trim()))){
+				User user = (User)session.getAttribute("sessionUser");
+				if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+					if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+						pd.put("company", user.getDepartName());
+						}
+						else{
+							pd.put("company", "管理员");
+					      }	
+			      }else{
+			    	  pd.put("company", "超级管理员");
+			      }
+						
+				}else{
+					User user = (User)session.getAttribute("sessionUser");
+					if ((user.getDepartName() != "超级管理员") && (!"超级管理员".equals(user.getDepartName()))) {
+						if((user.getDepartName()!=null)&&(!user.getDepartName().trim().equals(""))){
+							pd.put("company", user.getDepartName());
+						}
+						else{
+							if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+					 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+					 	    	 pd.put("company", company);
+					 	    	}
+					      }	
+				      }else{
+				    	  if ((pd.getString("company") != null) && (!"".equalsIgnoreCase(pd.getString("company").trim()))) {
+					 	    	 String company= URLDecoder.decode(pd.getString("company"), "utf-8");
+					 	    	 pd.put("company", company);
+					 	    	}
+				      }			
+				}
+	 	    	
 	    	if ((pd.getString("shzt") != null) && (!"".equalsIgnoreCase(pd.getString("shzt").trim()))) {
 		    	 String shzt= URLDecoder.decode(pd.getString("shzt"), "utf-8");
 		    	 pd.put("shzt", shzt);
