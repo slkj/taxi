@@ -5,12 +5,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -95,7 +98,7 @@ public class Tools {
 	}
 
 	public static void writeFile(String fileP, String content) {
-		String filePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")) + "../../";
+		String filePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""));
 		filePath = (filePath.trim() + fileP.trim()).substring(6).trim();
 		if (filePath.indexOf(":") != 1) {
 			filePath = File.separator + filePath;
@@ -142,7 +145,7 @@ public class Tools {
 
 	public static String readTxtFile(String fileP) {
 		try {
-			String filePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource("")) + "../../";
+			String filePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""));
 			filePath = filePath.replaceAll("file:/", "");
 			filePath = filePath.replaceAll("%20", " ");
 			filePath = filePath.trim() + fileP.trim();
@@ -168,7 +171,60 @@ public class Tools {
 		return "";
 	}
 
-	public static void main(String[] args) {
-		System.out.println(getRandomNum());
+	public static String txt2String(String path) {
+		String filePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""));
+		filePath = filePath.replaceAll("file:/", "");
+		filePath = filePath.replaceAll("%20", " ");
+		filePath = filePath.trim() + path.trim();
+		if (filePath.indexOf(":") != 1) {
+			filePath = File.separator + filePath;
+		}
+		File file = new File(filePath);
+		StringBuilder result = new StringBuilder();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));// 构造一个BufferedReader类来读取文件
+			String s = null;
+			while ((s = br.readLine()) != null) {// 使用readLine方法，一次读一行
+				result.append(System.lineSeparator() + s);
+			}
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result.toString();
+	}
+
+	/**
+	 * 读取一个文本 一行一行读取
+	 *
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
+	public static List<String> readFile02(String path) throws IOException {
+		String filePath = String.valueOf(Thread.currentThread().getContextClassLoader().getResource(""));
+		filePath = filePath.replaceAll("file:/", "");
+		filePath = filePath.replaceAll("%20", " ");
+		filePath = filePath.trim() + path.trim();
+		if (filePath.indexOf(":") != 1) {
+			filePath = File.separator + filePath;
+		}
+		// 使用一个字符串集合来存储文本中的路径 ，也可用String []数组
+		List<String> list = new ArrayList<String>();
+		FileInputStream fis = new FileInputStream(filePath);
+		// 防止路径乱码 如果utf-8 乱码 改GBK eclipse里创建的txt 用UTF-8，在电脑上自己创建的txt 用GBK
+		InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+		BufferedReader br = new BufferedReader(isr);
+		String line = "";
+		while ((line = br.readLine()) != null) {
+			// 如果 t x t文件里的路径 不包含---字符串 这里是对里面的内容进行一个筛选
+			if (line.lastIndexOf("---") < 0) {
+				list.add(line);
+			}
+		}
+		br.close();
+		isr.close();
+		fis.close();
+		return list;
 	}
 }

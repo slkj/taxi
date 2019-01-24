@@ -86,14 +86,14 @@
 						<!-- end -->
 						<div class="user_parent">
 							<div class="login_input user_bg unm">
-								<input name="username" id="loginname" tabindex="1" value="admin" type="text" class="usernameSty">
+								<input name="username" id="loginname" tabindex="1" value="" type="text" class="usernameSty">
 							</div>
 						</div>
 
 						<div class="user_paswd">
 							<div class="login_input user_bg pwd" name="pwdParent" id="pwdParent">
 								<div id="newPwd" class="keyboards-box">
-									<input id="password" value="000000" type="password" name="password" tabindex="2" class="styTextinput w162px">
+									<input id="password" value="" type="password" name="password" tabindex="2" class="styTextinput w162px">
 								</div>
 							</div>
 						</div>
