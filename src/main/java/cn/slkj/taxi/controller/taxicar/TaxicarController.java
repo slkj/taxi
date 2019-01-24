@@ -108,6 +108,20 @@ public class TaxicarController extends BaseController{
 		}
 		return mv;
 	}
+	@RequestMapping({ "/goShow" })
+	public ModelAndView goShow() {
+		ModelAndView mv = new ModelAndView();
+		PageData pd = new PageData();
+		pd = getPageData();
+		try {
+			Taxicar taxicar = taxicarService.queryOne(pd);
+			mv.setViewName("taxi_car/taxi_car_show");
+			mv.addObject("pd", taxicar);
+		} catch (Exception e) {
+			this.logger.error(e.toString(), e);
+		}
+		return mv;
+	}
 	/**
 	 * 查询单条信息
 	 */

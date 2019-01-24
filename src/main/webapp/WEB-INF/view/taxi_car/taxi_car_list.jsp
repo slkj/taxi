@@ -153,7 +153,9 @@
 					s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
 					return s;
 					}else{
-						return "";
+						var s = '<div class ="updateBtn">';
+						s += ' <a href="javascript:void(0);" title="编辑" onclick="showRow(\''+row.id+'\')" class="info"><i class="fa fa-eye"></i></a></div>';
+						return s;
 					}
 				}
 			} ] ];
@@ -194,6 +196,20 @@
 					}
 				});
 				}
+		}
+		//查看
+		function showRow(id) {
+			if (id) {
+				layer.open({
+					type : 2,
+					skin : 'layui-layer-rim', //加上边框
+					hade : [ 0.5, '#000', false ],
+					area : [ '1000px', '460px'], //宽高
+					title : [ '查看信息', false ],
+					content : 'goShow?id=' + id
+				});
+				
+			}
 		}
 		//导出excel
 		function toExcel(){
