@@ -45,11 +45,11 @@
 				</div>
 				<div class="btnbar-tools">
 					<a href="javascript:;" class="add" onclick="changeStatus(1)">
-						<i class="fa fa-check"></i>
+						<i class="fa fa-check-square-o"></i>
 						通过
 					</a>
 					<a href="javascript:;" class="add" onclick="changeStatus(2)">
-						<i class="fa fa-times"></i>
+						<i class="fa fa-close"></i>
 						未通过
 					</a>
 				</div>

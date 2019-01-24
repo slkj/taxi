@@ -402,5 +402,11 @@
 	<delete id="delete" parameterType="string">
 		DELETE FROM TB_TAXICAR WHERE ID = #{id}
 	</delete>
-	
+	<delete id="deletes" parameterType="list">
+		DELETE FROM TB_TAXICAR WHERE ID in
+		<foreach item="ids" collection="array" open="(" separator=","
+			close=")">
+			#{ids}
+		</foreach>
+	</delete>
 </mapper>

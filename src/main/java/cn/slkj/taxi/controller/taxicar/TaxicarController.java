@@ -133,17 +133,7 @@ public class TaxicarController extends BaseController{
 		Taxicar taxicar = taxicarService.queryOne(pd);
 		return taxicar;
 	}
-	/**
-	 * 查询单条信息
-	 */
-	/*@ResponseBody
-	@RequestMapping(value = "/queryOneByOpr", method = { RequestMethod.POST })
-	public Taxicar queryOneByOpr(String opretaCertNum) {
-		HashMap<String, Object> hashMap = new HashMap<String, Object>();
-		hashMap.put("OpretaCertNum", opretaCertNum);
-		Taxicar taxicar = taxicarService.queryOne(hashMap);
-		return taxicar;
-	}*/
+	
 	/**
 	 * 保存车辆信息
 	 * 
@@ -187,8 +177,25 @@ public class TaxicarController extends BaseController{
 	/** 删除 */
 	@ResponseBody
 	@RequestMapping(value = "/delete")
-	public JsonResult deletes(String id) {
+	public JsonResult delete(String id) {
 		int i = taxicarService.delete(id);
+		try {
+			if (i > 0) {
+				return new JsonResult(true, "");
+			} else {
+				return new JsonResult(false, "操作失败！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new JsonResult(false, e.toString());
+		}
+
+	}
+	/** 删除 */
+	@ResponseBody
+	@RequestMapping(value = "/deletes")
+	public JsonResult deletes(@RequestParam(value = "ids[]")String[] ids) {
+		int i = taxicarService.deletes(ids);
 		try {
 			if (i > 0) {
 				return new JsonResult(true, "");

@@ -55,6 +55,10 @@
 						<i class="fa fa-plus-square success"></i>
 						添加
 					</a>
+					<a href="javascript:;" class="add" onclick="delRows()">
+						<i class="fa fa-close"></i>
+						批量删除
+					</a>
 				</div>
 				<table id="list_data"></table>
 			</div>
@@ -99,16 +103,22 @@
 				loadMsg : '正在加载中，请稍等... ',
 				emptyMsg : '<span>无记录</span>',
 				pagination : true,
-				singleSelect : true,
+				//singleSelect : true,
 				fitColumns : true,
 				idField : 'pkey',
 				pageSize : 10,
 				pageList : [ 10, 20, 30, 40, 50, 100 ],
-				columns : getColumns()
+				columns : getColumns(),
+				onLoadSuccess : function() {
+					$grid.datagrid('clearSelections'); // 一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+				}
 			});
 		}
 		function getColumns() {
 			return [ [ {
+                field : 'id',
+                checkbox : true
+            },{
 				field : 'fileNum',
 				title : '档案号'
 			}, {
@@ -154,7 +164,7 @@
 					return s;
 					}else{
 						var s = '<div class ="updateBtn">';
-						s += ' <a href="javascript:void(0);" title="编辑" onclick="showRow(\''+row.id+'\')" class="info"><i class="fa fa-eye"></i></a></div>';
+						s += ' <a href="javascript:void(0);" title="查看" onclick="showRow(\''+row.id+'\')" class="info"><i class="fa fa-eye"></i></a></div>';
 						return s;
 					}
 				}
@@ -210,6 +220,40 @@
 				});
 				
 			}
+		}
+		//删除
+		function delRows() {
+			// 得到选中的行
+			var selRow = $grid.datagrid("getSelections");// 返回选中多行
+			if (selRow.length == 0) {
+				alert("请至少选择一行数据!");
+				return false;
+			}
+			var ids = [];
+			for (var i = 0; i < selRow.length; i++) {
+				// 获取自定义table 的中的checkbox值
+				var id = selRow[i].id; // id这个是你要在列表中取的单个id
+				ids.push(id); // 然后把单个id循环放到ids的数组中
+			}
+			var param = {
+				ids : ids
+			};
+			if (confirm("确定要删除吗？")) {
+				$.ajax({
+					cache : false,
+					type : "POST",
+					url : "../taxicar/deletes",
+					data : param,
+					async : false,
+					success : function(data) {
+						if (data) {
+							$grid.datagrid('reload');// 刷新datagrid
+						} else {
+							msgShow('系统提示', '出现异常');
+						}
+					}
+				});
+				}
 		}
 		//导出excel
 		function toExcel(){

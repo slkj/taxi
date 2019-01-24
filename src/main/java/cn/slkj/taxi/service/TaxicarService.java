@@ -88,6 +88,18 @@ public class TaxicarService {
 	public int delete(String id) {
 		return mapper.delete(id);
 	}
+	/**
+	 * 
+	 * @Title: deletes   
+	 * @Description: 批量删除
+	 * @param: @param ids
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	public int deletes(String[] ids) {
+		return mapper.deletes(ids);
+	}
 	
 	/**
 	 * 

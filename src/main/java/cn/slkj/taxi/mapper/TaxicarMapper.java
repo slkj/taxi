@@ -26,6 +26,8 @@ public interface TaxicarMapper {
 	
 	int delete(String id);
 	
+	int deletes(String[] ids);
+	
 	/**
 	 * 
 	 * @Title: excelList   
