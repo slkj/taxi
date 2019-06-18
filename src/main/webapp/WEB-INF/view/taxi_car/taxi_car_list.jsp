@@ -51,6 +51,7 @@
 						</c:if>
 					</div>
 				</div>
+<<<<<<< HEAD
 				<c:if test="${flag == '0' }">
 					<div class="btnbar-tools">
 						<a href="javascript:;" class="add" id="newData"> <i class="fa fa-plus-square success"></i> 添加
@@ -58,6 +59,20 @@
 						</a>
 					</div>
 				</c:if>
+=======
+				<div class="btnbar-tools">
+					<a href="javascript:;" class="add" id="newData">
+						<i class="fa fa-plus-square success"></i>
+						添加
+					</a>
+					<c:if test="${sessionUser.departName=='超级管理员' || sessionUser.departName == '' || sessionUser.departName == null}">
+					<a href="javascript:;" class="add" onclick="delRows()">
+						<i class="fa fa-close"></i>
+						批量删除
+					</a>
+					</c:if>
+				</div>
+>>>>>>> branch 'master' of https://github.com/slkj/taxi.git
 				<table id="list_data"></table>
 			</div>
 		</div>
