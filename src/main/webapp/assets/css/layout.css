@@ -467,7 +467,7 @@ a {
 	font-size: 14px;
 	overflow: hidden;
 	display: inline-block;
-	width: 100px !important
+/* 	width: 100px !important */
 }
 
 .comp-search-box .screen-top .colRow .textbox, .comp-search-box .screen-top .colRow input,

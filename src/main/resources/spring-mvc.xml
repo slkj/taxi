@@ -77,5 +77,13 @@
 			</bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
-	 
+	 <!-- 注册XmlViewResolver，用于iReport & JasperReports报表生成 -->
+		<bean id="jasperReportResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+				<property name="order">
+						<value>0</value>
+				</property>
+				<property name="location">
+						<value>classpath:jasper-views.xml</value>
+				</property>
+		</bean>
 </beans>

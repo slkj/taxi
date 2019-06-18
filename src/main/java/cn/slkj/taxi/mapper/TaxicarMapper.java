@@ -38,5 +38,17 @@ public interface TaxicarMapper {
 	 * @throws
 	 */
 	List excelList(PageData pd);
+
+	public List<Taxicar> getchangeAllList(PageData pd, PageBounds pageBounds);
+
+	public int saveChange(Taxicar taxicar);
+
+	public int change(PageData pd);
+
+	public Taxicar queryOneChange(PageData pd);
+
+	public void copyChange(PageData pd);
+
+	public int delChange(String id);
 	
 }

@@ -14,85 +14,93 @@
 	});
 	function initGrid() {
 		//datagrid初始化 
-		$grid.datagrid({
-			url : '../employeeList',
-			queryParams : {
-				status : '3'
-			},
-			striped : true,
-			nowrap : false,
-			rownumbers : true,
-			loadMsg : '正在加载中，请稍等... ',
-			emptyMsg : '<span>无记录</span>',
-			pagination : true,
-			singleSelect : true,
-			// 			fitColumns : true,
-			idField : 'pkey',
-			pageSize : 10,
-			pageList : [ 10, 20, 30, 40, 50, 100 ],
-			columns : [ [ {
-				field : 'name',
-				title : '姓名',
-				width : 100
-			}, {
-				field : 'sex',
-				title : '性别',
-				align : 'center',
-				width : 50,
-				formatter : function(value, record, index) {
-					if (value == 0) {
-						return '<span style=color:red; >男</span>';
-					} else if (value == 1) {
-						return '<span style=color:green; >女</span>';
+		$grid
+				.datagrid({
+					url : '../employeeList',
+					queryParams : {
+						status : '3'
+					},
+					striped : true,
+					nowrap : false,
+					rownumbers : true,
+					loadMsg : '正在加载中，请稍等... ',
+					emptyMsg : '<span>无记录</span>',
+					pagination : true,
+					singleSelect : true,
+					// 			fitColumns : true,
+					idField : 'pkey',
+					pageSize : 10,
+					pageList : [ 10, 20, 30, 40, 50, 100 ],
+					columns : [ [
+							{
+								field : 'name',
+								title : '姓名',
+								width : 100
+							},
+							{
+								field : 'sex',
+								title : '性别',
+								align : 'center',
+								width : 50,
+								formatter : function(value, record, index) {
+									if (value == 0) {
+										return '<span style=color:red; >男</span>';
+									} else if (value == 1) {
+										return '<span style=color:green; >女</span>';
+									}
+								}
+							},
+							{
+								field : 'idcard',
+								title : '身份证号',
+								width : 150
+							},
+							{
+								field : 'littCompany',
+								title : '公司',
+								width : 300
+							},
+							{
+								field : 'carid',
+								title : '车号',
+								width : 100
+							},
+							{
+								field : 'cyzgCard',
+								title : '从业资格证号',
+								width : 150
+							},
+							{
+								field : 'status',
+								title : '状态',
+								align : 'center',
+								width : 80,
+								formatter : function(value, row, index) {
+									if (value == 3) {
+										return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">出证完成</div>';
+									}
+								}
+							},
+							{
+								field : 'opt',
+								title : '操作',
+								align : 'center',
+								formatter : function(value, row) {
+									var s = '<div class ="updateBtn">';
+									s += '<a href="javascript:void(0);" title="查看" onclick="show(\''+ row.id+ '\')" class="danger delMsg"><i class="fa fa-eye"></i></a>';
+									s += '<a href="javascript:void(0);" title="删除" onclick="del(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
+									s += '<a href="javascript:void(0);" title="编辑" onclick="edit(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
+									return s;
+								}
+							} ] ],
+					onLoadSuccess : function(data) {
+						if (data && data.rows && data.rows.length > 0) {
+							$grid.datagrid("clearSelections");
+						} else {
+							$grid.datagrid("clearSelections");
+						}
 					}
-				}
-			}, {
-				field : 'idcard',
-				title : '身份证号',
-				width : 150
-			}, {
-				field : 'littCompany',
-				title : '公司',
-				width : 300
-			}, {
-				field : 'carid',
-				title : '车号',
-				width : 100
-			}, {
-				field : 'cyzgCard',
-				title : '从业资格证号',
-				width : 150
-			}, {
-				field : 'status',
-				title : '状态',
-				align : 'center',
-				width : 80,
-				formatter : function(value, row, index) {
-					if (value == 3) {
-						return '<div style="background-color:#356635;text-align:center;color:#FFFFFF;">出证完成</div>';
-					}
-				}
-			}, {
-				field : 'opt',
-				title : '操作',
-				align : 'center',
-				formatter : function(value, row) {
-					var s = '<div class ="updateBtn">';
-					s += '<a href="javascript:void(0);" title="查看" onclick="show(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-eye"></i>查看</a></div>';
-					//s += '<a href="javascript:void(0);" title="查看" onclick="show(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-eye"></i></a>';
-					//s += '<a href="javascript:void(0);" title="删除" onclick="del(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-					//s += '<a href="javascript:void(0);" title="编辑" onclick="edit(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
-					return s;
-				}
-			} ] ],
-			onLoadSuccess : function(data) {
-				if (data && data.rows && data.rows.length > 0) {
-					$grid.datagrid("clearSelections");
-				} else {
-					$grid.datagrid("clearSelections");
-				}
-			}
-		});
+				});
 	}
 	//修改
 	function edit(id) {
@@ -139,19 +147,20 @@
 				name : $('#name').val(),
 				//status : $('#status').val(),
 				status : '3',
-				company : $('#company').val()
+				company : $('#company').val(),
+				idcard : $('#idcard').val()
 			}
 		});
 	}
 	//导出excel
-	function toExcel(){
-		 var name=$('#name').val();
-			var status='3';
-			var company=$('#company').val();
-		    window.location.href='../goExcel?name='
-					+encodeURI(encodeURI(name))+'&status='+encodeURI(encodeURI(status))
-					+'&company='+encodeURI(encodeURI(company));  
-		
+	function toExcel() {
+		var name = $('#name').val();
+		var status = '3';
+		var company = $('#company').val();
+		window.location.href = '../goExcel?name=' + encodeURI(encodeURI(name))
+				+ '&status=' + encodeURI(encodeURI(status)) + '&company='
+				+ encodeURI(encodeURI(company));
+
 	}
 </script>
 </head>
@@ -178,16 +187,23 @@
 							<input type="text" class="easyui-textbox" id="company" data-options="label:'公司名称'" />
 						</div>
 						<div class="colRow">
-							<button class="easyui-linkbutton btnDefault" id="queryData" onclick="query()">
-								<i class="fa fa-search"></i>
-								查询
-							</button>
+							<input type="text" class="easyui-textbox" id="idcard" data-options="label:'身份证'" />
 						</div>
 						<div class="colRow">
-						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
-								<i class="fa fa-download"></i>
-								导出
-							</button>						
+							<button class="easyui-linkbutton btnDefault" id="queryData" onclick="query()"
+								data-options="iconCls:'fa fa-search'">查询</button>
+						</div>
+						<div class="colRow">
+							<button class="easyui-linkbutton btnDefault" onclick="toExcel()" data-options="iconCls:'fa fa-download'">
+								导出</button>
+						</div>
+						<div class="colRow">
+							<button class="easyui-linkbutton btnDefault" onclick="toExcel()" data-options="iconCls:'fa fa-download'">
+								导出</button>
+						</div>
+						<div class="colRow">
+							<button class="easyui-linkbutton btnDefault" onclick="toExcel()" data-options="iconCls:'fa fa-download'">
+								导出</button>
 						</div>
 					</div>
 				</div>

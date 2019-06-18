@@ -116,7 +116,7 @@ public class TaxicarController extends BaseController {
 	}
 
 	@RequestMapping({ "/goShow" })
-	public ModelAndView goShow() {
+	public ModelAndView goShow(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		PageData pd = new PageData();
 		pd = getPageData();
@@ -124,6 +124,13 @@ public class TaxicarController extends BaseController {
 			Taxicar taxicar = taxicarService.queryOne(pd);
 			mv.setViewName("taxi_car/taxi_car_show");
 			mv.addObject("pd", taxicar);
+			User user = (User) session.getAttribute("sessionUser");
+			if (user.getDepartName().isEmpty() ) {
+				mv.addObject("flag", "0");
+			} else {
+				mv.addObject("flag", "1");
+			}
+			
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);
 		}
@@ -167,7 +174,8 @@ public class TaxicarController extends BaseController {
 			// String id = pd.getString("id");
 			String id = taxicar.getId();
 			if (Tools.notEmpty(id)) {
-				rti = taxicarService.edit(taxicar);
+				taxicar.setState("0");
+				rti = taxicarService.saveChange(taxicar);
 			} else {
 				taxicar.setId(UuidUtil.get32UUID());
 				rti = taxicarService.save(taxicar);
@@ -495,17 +503,16 @@ public class TaxicarController extends BaseController {
 	@RequestMapping({ "/TradingCards" })
 	public String TradingCards(Model model) {
 		PageData pd = new PageData();
+		pd = getPageData();
 		try {
-			pd = getPageData();
 			pd.put("id", pd.get("id"));
 			Taxicar taxicar = taxicarService.queryOne(pd);
-			List<Taxicar> TaxiCarWithBLOBs = new ArrayList<>();
-			TaxiCarWithBLOBs.add(taxicar);
-			JRDataSource jrDataSource = new JRBeanCollectionDataSource(TaxiCarWithBLOBs);
-
-			model.addAttribute("url", "/WEB-INF/jasper/TradingCards.jrxml");
+			List<Taxicar> TaxiCarList = new ArrayList<>();
+			taxicar.setCheckDateFormat(DateUtil.fomatDate(taxicar.getCheckDate()));
+			TaxiCarList.add(taxicar);
+			JRDataSource jrDataSource = new JRBeanCollectionDataSource(TaxiCarList);
+			model.addAttribute("url", "/jasper/TradingCards.jrxml");
 			model.addAttribute("format", "pdf");
-
 			model.addAttribute("datasource", jrDataSource);
 		} catch (Exception e) {
 			this.logger.error(e.toString(), e);

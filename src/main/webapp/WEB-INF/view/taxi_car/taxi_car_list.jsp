@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,8 +15,8 @@
 				<div class="comp-search-box">
 					<div class="screen-top">
 						<div class="colRow">
-						<input type="hidden" name="company" id="company" value="${sessionUser.departName }" />
-							<input type="text" class="easyui-textbox" id="PlateNum" data-options="label:'车牌号'" />
+							<input type="hidden" name="company" id="company" value="${sessionUser.departName }" /> <input type="text"
+								class="easyui-textbox" id="PlateNum" data-options="label:'车牌号'" />
 						</div>
 						<div class="colRow">
 							<input type="text" class="easyui-textbox" id="OpretaCertNum" data-options="label:'营运证号'" />
@@ -23,53 +25,49 @@
 							<input type="text" class="easyui-textbox" id="OwnerName" data-options="label:'车主姓名'" />
 						</div>
 						<div class="colRow">
-							<select  class="easyui-combobox" id="Area" data-options="label:'所属地区'"  value="${pd.area }">
-							<option value=''></option>
-							<option value=''>全部</option>
-							<option value='河北省承德市双桥区'>河北省承德市双桥区</option>
-							<option value='河北省承德市双滦区'>河北省承德市双滦区</option>
-						</select>
+							<select class="easyui-combobox" id="Area" data-options="label:'所属地区'" value="${pd.area }">
+								<option value=''></option>
+								<option value=''>全部</option>
+								<option value='河北省承德市双桥区'>河北省承德市双桥区</option>
+								<option value='河北省承德市双滦区'>河北省承德市双滦区</option>
+							</select>
 						</div>
 						<div class="colRow">
 							<button class="easyui-linkbutton btnDefault" id="queryData">
-								<i class="fa fa-search"></i>
-								查询
+								<i class="fa fa-search"></i> 查询
 							</button>
 						</div>
 						<div class="colRow">
-						<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
-								<i class="fa fa-download"></i>
-								导出
-							</button>						
-						</div>
-						<div class="colRow">
-						<button class="easyui-linkbutton btnDefault" onclick="fromExcel()">
-								<i class="fa fa-upload"></i>
-								导入
-							</button>						
-						</div>
+								<button class="easyui-linkbutton btnDefault" onclick="toExcel()">
+									<i class="fa fa-download"></i> 导出
+								</button>
+							</div>
+						<c:if test="${flag == '0' }">
+							<div class="colRow">
+								<button class="easyui-linkbutton btnDefault" onclick="fromExcel()">
+									<i class="fa fa-upload"></i> 导入
+								</button>
+							</div>
+						</c:if>
 					</div>
 				</div>
-				<div class="btnbar-tools">
-					<a href="javascript:;" class="add" id="newData">
-						<i class="fa fa-plus-square success"></i>
-						添加
-					</a>
-					<a href="javascript:;" class="add" onclick="delRows()">
-						<i class="fa fa-close"></i>
-						批量删除
-					</a>
-				</div>
+				<c:if test="${flag == '0' }">
+					<div class="btnbar-tools">
+						<a href="javascript:;" class="add" id="newData"> <i class="fa fa-plus-square success"></i> 添加
+						</a> <a href="javascript:;" class="add" onclick="delRows()"> <i class="fa fa-close"></i> 批量删除
+						</a>
+					</div>
+				</c:if>
 				<table id="list_data"></table>
 			</div>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript">
 		var $grid;
 		$(function() {
 			$grid = $("#list_data");
-			initGrid();			
+			initGrid();
 			//新增数据
 			$('#newData').on('click', function() {
 				layer.open({
@@ -80,7 +78,7 @@
 					title : [ '编辑信息', false ],
 					content : 'goAdd'
 				});
-				
+
 			});
 			$('#queryData').on('click', function() {
 				$grid.datagrid({
@@ -116,21 +114,18 @@
 		}
 		function getColumns() {
 			return [ [ {
-                field : 'id',
-                checkbox : true
-            },{
+				field : 'id',
+				checkbox : true
+			}, {
 				field : 'fileNum',
 				title : '档案号'
 			}, {
 				field : 'plateNum',
 				title : '车牌号'
-			},{
-				field : 'area',
-				title : '车辆所属地区'
-			},  {
+			}, {
 				field : 'ownerName',
 				title : '车主'
-			},{
+			}, {
 				title : '车主性别',
 				field : 'ownerSex',
 				formatter : function(value) {
@@ -146,31 +141,32 @@
 			}, {
 				field : 'licenseKey',
 				title : '许可证号'
-			} , {
+			}, {
 				field : 'corpName',
 				title : '公司名称'
 			}, {
 				field : 'manageNature',
 				title : '经营性质'
-			}  , {
+			}, {
 				field : 'opt',
 				title : '操作',
 				align : 'center',
 				formatter : function(value, row) {
-					if(($('#company').val()=="超级管理员")||($('#company').val()=="")){
-					var s = '<div class ="updateBtn">';
-					s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
-					s += ' <a href="javascript:void(0);" title="编辑" onclick="editRow(\''+row.id+'\')" class="info"><i class="fa fa-pencil-square-o"></i></a></div>';
-					return s;
-					}else{
+					if (($('#company').val() == "超级管理员") || ($('#company').val() == "")) {
 						var s = '<div class ="updateBtn">';
-						s += ' <a href="javascript:void(0);" title="查看" onclick="showRow(\''+row.id+'\')" class="info"><i class="fa fa-eye"></i></a></div>';
+						s += ' <a href="javascript:void(0);" title="查看" onclick="showRow(\'' + row.id + '\')" class="info"><i class="fa fa-eye"></i></a></div>';
+						return s;
+					} else {
+						var s = '<div class ="updateBtn">';
+						// 						s += '<a href="javascript:void(0);" title="删除"  onclick="delRow(\''+row.id+'\')" class="danger delMsg"><i class="fa fa-trash"></i></a>';
+						s += ' <a href="javascript:void(0);" title="变更" onclick="editRow(\'' + row.id + '\')" class="info"><i class="fa fa-pencil-square-o"></i></a>';
+						s += ' <a href="javascript:void(0);" title="查看" onclick="showRow(\'' + row.id + '\')" class="info"><i class="fa fa-eye"></i></a></div>';
 						return s;
 					}
 				}
 			} ] ];
 		}
-	
+
 		//修改
 		function editRow(id) {
 			if (id) {
@@ -178,14 +174,14 @@
 					type : 2,
 					skin : 'layui-layer-rim', //加上边框
 					hade : [ 0.5, '#000', false ],
-					area : [ '1000px', '460px'], //宽高
+					area : [ '1000px', '460px' ], //宽高
 					title : [ '编辑信息', false ],
 					content : 'goEdit?id=' + id
 				});
-				
+
 			}
 		}
-		
+
 		//删除
 		function delRow(id) {
 			if (confirm("确定要删除吗？")) {
@@ -205,7 +201,7 @@
 						}
 					}
 				});
-				}
+			}
 		}
 		//查看
 		function showRow(id) {
@@ -214,11 +210,11 @@
 					type : 2,
 					skin : 'layui-layer-rim', //加上边框
 					hade : [ 0.5, '#000', false ],
-					area : [ '1000px', '460px'], //宽高
+					area : [ '1000px', '460px' ], //宽高
 					title : [ '查看信息', false ],
 					content : 'goShow?id=' + id
 				});
-				
+
 			}
 		}
 		//删除
@@ -253,36 +249,32 @@
 						}
 					}
 				});
-				}
+			}
 		}
 		//导出excel
-		function toExcel(){
-			 var PlateNum = $('#PlateNum').val();
-			 var OpretaCertNum = $('#OpretaCertNum').val();
-			 var OwnerName = $('#OwnerName').val();
-			 var Area = $('#Area').val();
-			    window.location.href='goExcel?PlateNum='
-						+encodeURI(encodeURI(PlateNum))
-						+'&OpretaCertNum='+encodeURI(encodeURI(OpretaCertNum))
-						+'&OwnerName='+encodeURI(encodeURI(OwnerName))
-						+'&Area='+encodeURI(encodeURI(Area));  
-			
+		function toExcel() {
+			var PlateNum = $('#PlateNum').val();
+			var OpretaCertNum = $('#OpretaCertNum').val();
+			var OwnerName = $('#OwnerName').val();
+			var Area = $('#Area').val();
+			window.location.href = 'goExcel?PlateNum=' + encodeURI(encodeURI(PlateNum)) + '&OpretaCertNum=' + encodeURI(encodeURI(OpretaCertNum)) + '&OwnerName='
+					+ encodeURI(encodeURI(OwnerName)) + '&Area=' + encodeURI(encodeURI(Area));
+
 		}
 		function fromExcel() {
-			
-				layer.open({
-					type : 2,
-					skin : 'layui-layer-rim', //加上边框
-					hade : [ 0.5, '#000', false ],
-					area : [ '450px', '200px'], //宽高
-					title : [ '导入excel', false ],
-					content : 'goUploadExcel'
-				});
-				
-			
+
+			layer.open({
+				type : 2,
+				skin : 'layui-layer-rim', //加上边框
+				hade : [ 0.5, '#000', false ],
+				area : [ '450px', '200px' ], //宽高
+				title : [ '导入excel', false ],
+				content : 'goUploadExcel'
+			});
+
 		}
 	</script>
-	
+
 </body>
 
 </html>
