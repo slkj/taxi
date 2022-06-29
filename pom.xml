@@ -242,7 +242,7 @@
 				<dependency>
 						<groupId>org.apache.poi</groupId>
 						<artifactId>poi</artifactId>
-						<version>3.11</version>
+						<version>4.1.1</version>
 				</dependency>
 				<!-- jasperreports Start -->
 				<!-- 该包的作用完成ireport中Preview按扭功能。通过该包可以通过java来ireport生成摸班（.jrxml或.jasper)填充数据源并导出pdf,excel,html等格式文件 -->
